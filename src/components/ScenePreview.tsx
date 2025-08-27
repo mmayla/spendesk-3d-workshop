@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState } from "react";
-import * as THREE from "three";
+import { useEffect, useRef, useState } from 'react';
+import * as THREE from 'three';
 import {
   createSceneInstance,
   validateSceneInterface,
-} from "../scenes/registry";
-import type { SceneInterface } from "../types/scene";
+} from '../scenes/registry';
+import type { SceneInterface } from '../types/scene';
 
 interface ScenePreviewProps {
   sceneId: string;
@@ -53,14 +53,14 @@ export default function ScenePreview({ sceneId, onBack }: ScenePreviewProps) {
         }
 
         // Create scene instance
-        console.log("Creating scene instance for:", sceneId);
+        console.log('Creating scene instance for:', sceneId);
         const instance = createSceneInstance(sceneId);
-        console.log("Scene instance created:", instance);
+        console.log('Scene instance created:', instance);
         setSceneInstance(instance);
       } catch (error) {
-        console.error("Error creating scene:", error);
+        console.error('Error creating scene:', error);
         setError(
-          error instanceof Error ? error.message : "Failed to create scene"
+          error instanceof Error ? error.message : 'Failed to create scene'
         );
         setLoading(false);
       }
@@ -74,11 +74,11 @@ export default function ScenePreview({ sceneId, onBack }: ScenePreviewProps) {
     const initThreeJS = async () => {
       try {
         if (!canvasRef.current || !sceneInstance) {
-          console.error("Canvas or scene instance not available");
+          console.error('Canvas or scene instance not available');
           return;
         }
 
-        console.log("Canvas found, initializing Three.js...");
+        console.log('Canvas found, initializing Three.js...');
 
         // Initialize Three.js
         const scene = new THREE.Scene();
@@ -130,24 +130,24 @@ export default function ScenePreview({ sceneId, onBack }: ScenePreviewProps) {
         scene.add(gridHelper);
 
         // Build team scene at origin for preview
-        console.log("Building scene:", sceneInstance.sceneId);
+        console.log('Building scene:', sceneInstance.sceneId);
         await sceneInstance.buildScene(scene);
-        console.log("Scene built successfully, setting up controls...");
+        console.log('Scene built successfully, setting up controls...');
 
         // Add event listeners
         setupEventListeners();
 
         // Start render loop
         animate();
-        console.log("Animation started, preview ready!");
+        console.log('Animation started, preview ready!');
 
         setLoading(false);
       } catch (error) {
-        console.error("Error initializing Three.js:", error);
+        console.error('Error initializing Three.js:', error);
         setError(
           error instanceof Error
             ? error.message
-            : "Failed to initialize 3D scene"
+            : 'Failed to initialize 3D scene'
         );
         setLoading(false);
       }
@@ -165,13 +165,13 @@ export default function ScenePreview({ sceneId, onBack }: ScenePreviewProps) {
     const canvas = canvasRef.current;
 
     // Mouse controls
-    canvas.addEventListener("mousedown", onMouseDown);
-    canvas.addEventListener("mousemove", onMouseMove);
-    canvas.addEventListener("mouseup", onMouseUp);
-    canvas.addEventListener("wheel", onWheel);
+    canvas.addEventListener('mousedown', onMouseDown);
+    canvas.addEventListener('mousemove', onMouseMove);
+    canvas.addEventListener('mouseup', onMouseUp);
+    canvas.addEventListener('wheel', onWheel);
 
     // Window resize
-    window.addEventListener("resize", onWindowResize);
+    window.addEventListener('resize', onWindowResize);
   };
 
   const onMouseDown = (event: MouseEvent) => {
@@ -373,23 +373,23 @@ export default function ScenePreview({ sceneId, onBack }: ScenePreviewProps) {
   }, [sceneInstance]);
 
   return (
-    <div style={{ position: "relative", width: "100%", height: "100vh" }}>
-      <canvas ref={canvasRef} style={{ display: "block" }} />
+    <div style={{ position: 'relative', width: '100%', height: '100vh' }}>
+      <canvas ref={canvasRef} style={{ display: 'block' }} />
 
       {/* Loading Overlay */}
       {loading && (
         <div
           style={{
-            position: "absolute",
+            position: 'absolute',
             top: 0,
             left: 0,
-            width: "100%",
-            height: "100%",
-            backgroundColor: "rgba(240, 240, 240, 0.9)",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            fontSize: "18px",
+            width: '100%',
+            height: '100%',
+            backgroundColor: 'rgba(240, 240, 240, 0.9)',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            fontSize: '18px',
             zIndex: 1000,
           }}
         >
@@ -401,27 +401,27 @@ export default function ScenePreview({ sceneId, onBack }: ScenePreviewProps) {
       {error && (
         <div
           style={{
-            position: "absolute",
+            position: 'absolute',
             top: 0,
             left: 0,
-            width: "100%",
-            height: "100%",
-            backgroundColor: "rgba(240, 240, 240, 0.9)",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: "20px",
+            width: '100%',
+            height: '100%',
+            backgroundColor: 'rgba(240, 240, 240, 0.9)',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: '20px',
             zIndex: 1000,
           }}
         >
-          <div style={{ color: "red", fontSize: "18px" }}>
+          <div style={{ color: 'red', fontSize: '18px' }}>
             Error loading scene: {error}
           </div>
           {onBack && (
             <button
               onClick={onBack}
-              style={{ padding: "10px 20px", fontSize: "16px" }}
+              style={{ padding: '10px 20px', fontSize: '16px' }}
             >
               Go Back
             </button>
@@ -432,20 +432,20 @@ export default function ScenePreview({ sceneId, onBack }: ScenePreviewProps) {
       {/* Scene Info Panel */}
       <div
         style={{
-          position: "absolute",
-          top: "20px",
-          left: "20px",
-          backgroundColor: "rgba(0, 0, 0, 0.8)",
-          color: "white",
-          padding: "15px",
-          borderRadius: "8px",
-          fontSize: "14px",
-          maxWidth: "300px",
+          position: 'absolute',
+          top: '20px',
+          left: '20px',
+          backgroundColor: 'rgba(0, 0, 0, 0.8)',
+          color: 'white',
+          padding: '15px',
+          borderRadius: '8px',
+          fontSize: '14px',
+          maxWidth: '300px',
         }}
       >
-        <h3 style={{ margin: "0 0 10px 0" }}>{sceneInstance?.sceneName}</h3>
-        <p style={{ margin: "0 0 10px 0" }}>{sceneInstance?.description}</p>
-        <div style={{ fontSize: "12px", opacity: 0.8 }}>
+        <h3 style={{ margin: '0 0 10px 0' }}>{sceneInstance?.sceneName}</h3>
+        <p style={{ margin: '0 0 10px 0' }}>{sceneInstance?.description}</p>
+        <div style={{ fontSize: '12px', opacity: 0.8 }}>
           <div>Scene: {sceneInstance?.sceneName}</div>
           <div>Scene ID: {sceneInstance?.sceneId}</div>
         </div>
@@ -454,20 +454,20 @@ export default function ScenePreview({ sceneId, onBack }: ScenePreviewProps) {
       {/* Controls Panel */}
       <div
         style={{
-          position: "absolute",
-          top: "20px",
-          right: "20px",
-          backgroundColor: "rgba(0, 0, 0, 0.8)",
-          color: "white",
-          padding: "15px",
-          borderRadius: "8px",
-          fontSize: "14px",
+          position: 'absolute',
+          top: '20px',
+          right: '20px',
+          backgroundColor: 'rgba(0, 0, 0, 0.8)',
+          color: 'white',
+          padding: '15px',
+          borderRadius: '8px',
+          fontSize: '14px',
         }}
       >
-        <div style={{ marginBottom: "10px", fontWeight: "bold" }}>
+        <div style={{ marginBottom: '10px', fontWeight: 'bold' }}>
           Controls:
         </div>
-        <div style={{ fontSize: "12px", lineHeight: "1.4" }}>
+        <div style={{ fontSize: '12px', lineHeight: '1.4' }}>
           • Left click + drag: Orbit camera
           <br />
           • Mouse wheel: Zoom in/out
@@ -478,24 +478,24 @@ export default function ScenePreview({ sceneId, onBack }: ScenePreviewProps) {
       {/* Action Buttons */}
       <div
         style={{
-          position: "absolute",
-          bottom: "50px",
-          left: "20px",
-          display: "flex",
-          gap: "10px",
+          position: 'absolute',
+          bottom: '50px',
+          left: '20px',
+          display: 'flex',
+          gap: '10px',
         }}
       >
         {onBack && (
           <button
             onClick={onBack}
             style={{
-              padding: "10px 20px",
-              backgroundColor: "#666",
-              color: "white",
-              border: "none",
-              borderRadius: "5px",
-              cursor: "pointer",
-              fontSize: "14px",
+              padding: '10px 20px',
+              backgroundColor: '#666',
+              color: 'white',
+              border: 'none',
+              borderRadius: '5px',
+              cursor: 'pointer',
+              fontSize: '14px',
             }}
           >
             ← Back
@@ -508,16 +508,16 @@ export default function ScenePreview({ sceneId, onBack }: ScenePreviewProps) {
               <button
                 onClick={showTour ? stopTour : startTour}
                 style={{
-                  padding: "10px 20px",
-                  backgroundColor: showTour ? "#dc3545" : "#28a745",
-                  color: "white",
-                  border: "none",
-                  borderRadius: "5px",
-                  cursor: "pointer",
-                  fontSize: "14px",
+                  padding: '10px 20px',
+                  backgroundColor: showTour ? '#dc3545' : '#28a745',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '5px',
+                  cursor: 'pointer',
+                  fontSize: '14px',
                 }}
               >
-                {showTour ? "Stop Tour" : "Start Auto Tour"}
+                {showTour ? 'Stop Tour' : 'Start Auto Tour'}
               </button>
 
               {showTour && (
@@ -525,13 +525,13 @@ export default function ScenePreview({ sceneId, onBack }: ScenePreviewProps) {
                   <button
                     onClick={goToPreviousTourPoint}
                     style={{
-                      padding: "10px 15px",
-                      backgroundColor: "#6c757d",
-                      color: "white",
-                      border: "none",
-                      borderRadius: "5px",
-                      cursor: "pointer",
-                      fontSize: "14px",
+                      padding: '10px 15px',
+                      backgroundColor: '#6c757d',
+                      color: 'white',
+                      border: 'none',
+                      borderRadius: '5px',
+                      cursor: 'pointer',
+                      fontSize: '14px',
                     }}
                   >
                     ← Prev
@@ -539,13 +539,13 @@ export default function ScenePreview({ sceneId, onBack }: ScenePreviewProps) {
                   <button
                     onClick={goToNextTourPoint}
                     style={{
-                      padding: "10px 15px",
-                      backgroundColor: "#6c757d",
-                      color: "white",
-                      border: "none",
-                      borderRadius: "5px",
-                      cursor: "pointer",
-                      fontSize: "14px",
+                      padding: '10px 15px',
+                      backgroundColor: '#6c757d',
+                      color: 'white',
+                      border: 'none',
+                      borderRadius: '5px',
+                      cursor: 'pointer',
+                      fontSize: '14px',
                     }}
                   >
                     Next →
@@ -560,25 +560,25 @@ export default function ScenePreview({ sceneId, onBack }: ScenePreviewProps) {
       {showTour && sceneInstance?.getTourPoints && (
         <div
           style={{
-            position: "absolute",
-            bottom: "20px",
-            right: "20px",
-            backgroundColor: "rgba(0, 0, 0, 0.8)",
-            color: "white",
-            padding: "15px",
-            borderRadius: "8px",
-            fontSize: "14px",
-            maxWidth: "300px",
+            position: 'absolute',
+            bottom: '20px',
+            right: '20px',
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            color: 'white',
+            padding: '15px',
+            borderRadius: '8px',
+            fontSize: '14px',
+            maxWidth: '300px',
           }}
         >
-          <div style={{ fontWeight: "bold", marginBottom: "5px" }}>
-            Tour Point: {currentTourPoint + 1} /{" "}
+          <div style={{ fontWeight: 'bold', marginBottom: '5px' }}>
+            Tour Point: {currentTourPoint + 1} /{' '}
             {sceneInstance.getTourPoints().length}
           </div>
-          <div style={{ marginBottom: "5px" }}>
+          <div style={{ marginBottom: '5px' }}>
             {sceneInstance.getTourPoints()[currentTourPoint]?.name}
           </div>
-          <div style={{ fontSize: "12px", opacity: 0.8 }}>
+          <div style={{ fontSize: '12px', opacity: 0.8 }}>
             {sceneInstance.getTourPoints()[currentTourPoint]?.description}
           </div>
         </div>

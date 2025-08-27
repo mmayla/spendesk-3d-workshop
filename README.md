@@ -5,10 +5,12 @@ A Three.js workshop platform for building 3D scenes using TypeScript and primiti
 ## 🚀 Quick Setup
 
 ### Prerequisites
+
 - Node.js 20.19+ or 22.12+
 - Modern web browser with WebGL support
 
 ### Installation & Development
+
 ```bash
 # Install dependencies
 npm install
@@ -69,27 +71,29 @@ npx tsc --noEmit        # Check TypeScript types
 ## 📚 Key Interfaces
 
 ### SceneInterface
+
 All scenes must implement this interface:
 
 ```typescript
 export interface SceneInterface {
-  readonly sceneId: string        // Unique identifier
-  readonly sceneName: string      // Display name
-  readonly description: string    // Brief description
-  buildScene(scene: THREE.Scene): Promise<void>  // Main build method
-  getTourPoints?(): TourPoint[]   // Optional tour points
+  readonly sceneId: string; // Unique identifier
+  readonly sceneName: string; // Display name
+  readonly description: string; // Brief description
+  buildScene(scene: THREE.Scene): Promise<void>; // Main build method
+  getTourPoints?(): TourPoint[]; // Optional tour points
 }
 ```
 
 ### Scene Registration
+
 Add scenes to the registry in `src/scenes/registry.ts`:
 
 ```typescript
 export const SCENE_REGISTRY: SceneRegistryEntry[] = [
   {
     sceneClass: YourSceneClass,
-    enabled: true
-  }
+    enabled: true,
+  },
 ];
 ```
 
@@ -98,7 +102,7 @@ export const SCENE_REGISTRY: SceneRegistryEntry[] = [
 The project includes utility functions for creating 3D shapes:
 
 - `createBox()` - Cubes and rectangular objects
-- `createSphere()` - Balls and round objects  
+- `createSphere()` - Balls and round objects
 - `createCylinder()` - Pillars and cylindrical shapes
 - `createCone()` - Cones and pyramid-like shapes
 - `createGroundPlane()` - Ground surfaces
@@ -109,13 +113,16 @@ Color constants available in `COLORS` object.
 ## 🔍 Scene System
 
 ### Individual Scene Mode
+
 - Each scene is completely independent
 - Scenes control their own environment (ground, space, etc.)
 - Preview scenes in isolation via Scene Selector
 - Optional tour points for guided viewing
 
 ### Scene Validation
+
 The registry automatically validates scenes for:
+
 - Required interface properties (`sceneId`, `sceneName`, `description`, `buildScene`)
 - Proper method signatures
 - Error handling and logging
@@ -137,4 +144,4 @@ Built for educational workshop purposes.
 
 ---
 
-*Happy building! 🎉*
+_Happy building! 🎉_

@@ -1,5 +1,5 @@
-import * as THREE from "three";
-import type { SceneInterface, TourPoint } from "../../types/scene";
+import * as THREE from 'three';
+import type { SceneInterface, TourPoint } from '../../types/scene';
 import {
   createBox,
   createSphere,
@@ -7,7 +7,7 @@ import {
   createCone,
   createGroundPlane,
   COLORS,
-} from "../../utils/primitives";
+} from '../../utils/primitives';
 
 /**
  * Example team scene: Village Builders
@@ -16,10 +16,10 @@ import {
  * Shows complete creative freedom with optional ground plane
  */
 export class VillageScene implements SceneInterface {
-  readonly sceneId = "village-builders";
-  readonly sceneName = "Village Builders";
+  readonly sceneId = 'village-builders';
+  readonly sceneName = 'Village Builders';
   readonly description =
-    "A peaceful medieval village with houses, trees, and a well";
+    'A peaceful medieval village with houses, trees, and a well';
 
   async buildScene(scene: THREE.Scene): Promise<void> {
     // Optional: Add a ground plane (teams can choose to use this or not)
@@ -170,15 +170,15 @@ export class VillageScene implements SceneInterface {
   getTourPoints(): TourPoint[] {
     return [
       {
-        name: "Village Overview",
+        name: 'Village Overview',
         description:
-          "Welcome to our peaceful medieval village! See the main house, trees, and well.",
+          'Welcome to our peaceful medieval village! See the main house, trees, and well.',
         cameraPosition: new THREE.Vector3(8, 6, 8),
         lookAtTarget: new THREE.Vector3(0, 2, 0),
         duration: 3,
       },
       {
-        name: "Main House",
+        name: 'Main House',
         description:
           "The village's main house with a red roof and stone chimney.",
         cameraPosition: new THREE.Vector3(3, 4, 3),
@@ -186,16 +186,16 @@ export class VillageScene implements SceneInterface {
         duration: 2,
       },
       {
-        name: "Village Well",
-        description: "The community well where villagers gather water.",
+        name: 'Village Well',
+        description: 'The community well where villagers gather water.',
         cameraPosition: new THREE.Vector3(-2, 3, 7),
         lookAtTarget: new THREE.Vector3(-2, 1, 4),
         duration: 2,
       },
       {
-        name: "Ancient Oak",
+        name: 'Ancient Oak',
         description:
-          "This majestic oak tree has watched over the village for generations.",
+          'This majestic oak tree has watched over the village for generations.',
         cameraPosition: new THREE.Vector3(-9, 5, 3),
         lookAtTarget: new THREE.Vector3(-6, 3, 0),
         duration: 2,

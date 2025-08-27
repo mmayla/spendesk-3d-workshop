@@ -1,7 +1,7 @@
-import type { SceneRegistryEntry } from "../types/scene";
-import { VillageScene } from "./village-builders/VillageScene";
-import { SpaceStationScene } from "./space-station/SpaceStationScene";
-import { TemplateScene } from "./team-template/TemplateScene";
+import type { SceneRegistryEntry } from '../types/scene';
+import { VillageScene } from './village-builders/VillageScene';
+import { SpaceStationScene } from './space-station/SpaceStationScene';
+import { TemplateScene } from './team-template/TemplateScene';
 
 /**
  * Central registry for all scenes
@@ -69,12 +69,10 @@ export function getAllSceneIds(): string[] {
  * Get all enabled scene IDs
  */
 export function getEnabledSceneIds(): string[] {
-  return SCENE_REGISTRY
-    .filter((entry) => entry.enabled)
-    .map((entry) => {
-      const instance = new entry.sceneClass();
-      return instance.sceneId;
-    });
+  return SCENE_REGISTRY.filter((entry) => entry.enabled).map((entry) => {
+    const instance = new entry.sceneClass();
+    return instance.sceneId;
+  });
 }
 
 /**
@@ -86,7 +84,7 @@ export function createSceneInstance(sceneId: string) {
     const instance = new entry.sceneClass();
     return instance.sceneId === sceneId;
   });
-  
+
   if (!entry) {
     throw new Error(`Scene not found for scene ID: ${sceneId}`);
   }
@@ -102,7 +100,7 @@ export function validateSceneInterface(sceneId: string): boolean {
     const scene = createSceneInstance(sceneId);
 
     // Check required properties
-    const requiredProps = ["sceneId", "sceneName", "description", "buildScene"];
+    const requiredProps = ['sceneId', 'sceneName', 'description', 'buildScene'];
     for (const prop of requiredProps) {
       if (!(prop in scene)) {
         console.error(`Scene ${sceneId} missing required property: ${prop}`);
@@ -111,7 +109,7 @@ export function validateSceneInterface(sceneId: string): boolean {
     }
 
     // Check buildScene is a function
-    if (typeof scene.buildScene !== "function") {
+    if (typeof scene.buildScene !== 'function') {
       console.error(`Scene ${sceneId} buildScene is not a function`);
       return false;
     }
@@ -135,7 +133,7 @@ export function getSceneMetadata() {
           sceneId: scene.sceneId,
           sceneName: scene.sceneName,
           description: scene.description,
-          hasTourPoints: typeof scene.getTourPoints === "function",
+          hasTourPoints: typeof scene.getTourPoints === 'function',
         };
       } catch (error) {
         console.error(`Error getting metadata for scene ${sceneId}:`, error);
@@ -160,9 +158,9 @@ export function validateAllScenes(): Record<string, boolean> {
 
 // Development mode logging
 if (import.meta.env.DEV) {
-  console.log("🎯 Scene Registry Loaded");
-  console.log("📋 Registered Teams:", getAllSceneIds());
-  console.log("✅ Enabled Teams:", getEnabledSceneIds());
+  console.log('🎯 Scene Registry Loaded');
+  console.log('📋 Registered Teams:', getAllSceneIds());
+  console.log('✅ Enabled Teams:', getEnabledSceneIds());
 
   // Validate all scenes in development
   const validationResults = validateAllScenes();
@@ -171,8 +169,8 @@ if (import.meta.env.DEV) {
     .map(([sceneId]) => sceneId);
 
   if (invalidScenes.length > 0) {
-    console.warn("⚠️  Invalid scenes found:", invalidScenes);
+    console.warn('⚠️  Invalid scenes found:', invalidScenes);
   } else {
-    console.log("✨ All scenes are valid!");
+    console.log('✨ All scenes are valid!');
   }
 }

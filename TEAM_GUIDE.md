@@ -21,7 +21,7 @@ Create a new file `YourSceneClass.ts` that implements the `SceneInterface`:
 Add your scene to the registry in `src/scenes/registry.ts`:
 
 ```typescript
-import { YourSceneClass } from "./your-scene-name/YourSceneClass";
+import { YourSceneClass } from './your-scene-name/YourSceneClass';
 
 export const SCENE_REGISTRY: SceneRegistryEntry[] = [
   // ... existing scenes ...
@@ -109,17 +109,17 @@ Use these predefined colors for consistency:
 
 ```typescript
 // Basic Colors
-COLORS.RED, COLORS.GREEN, COLORS.BLUE, COLORS.YELLOW;
-COLORS.ORANGE, COLORS.PURPLE, COLORS.PINK, COLORS.WHITE;
-COLORS.BLACK, COLORS.GRAY;
+(COLORS.RED, COLORS.GREEN, COLORS.BLUE, COLORS.YELLOW);
+(COLORS.ORANGE, COLORS.PURPLE, COLORS.PINK, COLORS.WHITE);
+(COLORS.BLACK, COLORS.GRAY);
 
 // Material Colors
-COLORS.WOOD, COLORS.STONE, COLORS.METAL, COLORS.GOLD;
-COLORS.SILVER, COLORS.GRASS, COLORS.WATER, COLORS.SAND;
+(COLORS.WOOD, COLORS.STONE, COLORS.METAL, COLORS.GOLD);
+(COLORS.SILVER, COLORS.GRASS, COLORS.WATER, COLORS.SAND);
 
 // Nature Colors
-COLORS.TREE_TRUNK, COLORS.TREE_LEAVES, COLORS.SKY_BLUE;
-COLORS.SUNSET_ORANGE, COLORS.EARTH_BROWN;
+(COLORS.TREE_TRUNK, COLORS.TREE_LEAVES, COLORS.SKY_BLUE);
+(COLORS.SUNSET_ORANGE, COLORS.EARTH_BROWN);
 ```
 
 ## 📐 Positioning & Coordinate System

@@ -1,5 +1,5 @@
-import * as THREE from "three";
-import type { SceneInterface, TourPoint } from "../../types/scene";
+import * as THREE from 'three';
+import type { SceneInterface, TourPoint } from '../../types/scene';
 import {
   createBox,
   createSphere,
@@ -7,7 +7,7 @@ import {
   createCone,
   createGroundPlane,
   COLORS,
-} from "../../utils/primitives";
+} from '../../utils/primitives';
 
 /**
  * Template Scene - Copy this file to create your team's scene!
@@ -20,9 +20,9 @@ import {
  */
 export class TemplateScene implements SceneInterface {
   // TODO: Update these properties for your scene
-  readonly sceneId = "template-scene";
-  readonly sceneName = "Template Scene"; // Your scene's display name
-  readonly description = "A template scene for teams to copy and customize";
+  readonly sceneId = 'template-scene';
+  readonly sceneName = 'Template Scene'; // Your scene's display name
+  readonly description = 'A template scene for teams to copy and customize';
 
   /**
    * Build your 3D scene here!
@@ -106,15 +106,15 @@ export class TemplateScene implements SceneInterface {
   getTourPoints(): TourPoint[] {
     return [
       {
-        name: "Scene Overview",
+        name: 'Scene Overview',
         description: "Welcome to our scene! Here's the general overview.",
         cameraPosition: new THREE.Vector3(10, 8, 10),
         lookAtTarget: new THREE.Vector3(0, 2, 0),
         duration: 3,
       },
       {
-        name: "Main Building",
-        description: "Check out our main structure here.",
+        name: 'Main Building',
+        description: 'Check out our main structure here.',
         cameraPosition: new THREE.Vector3(3, 4, 3),
         lookAtTarget: new THREE.Vector3(0, 2, 0),
         duration: 2,

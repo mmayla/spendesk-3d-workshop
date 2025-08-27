@@ -1,1 +1,1 @@
-export type PrimitiveType = 'box' | 'sphere' | 'cylinder' | 'cone' | 'plane'
+export type PrimitiveType = 'box' | 'sphere' | 'cylinder' | 'cone' | 'plane';
