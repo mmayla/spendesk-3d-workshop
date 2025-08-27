@@ -27,7 +27,9 @@ export default function ScenePreview({ sceneId, onBack }: ScenePreviewProps) {
   const mouseRef = useRef({ isDown: false, lastX: 0, lastY: 0 });
   const cameraStateRef = useRef({ phi: 0, theta: 0, radius: 15 });
 
-  const [sceneInstance, setSceneInstance] = useState<SceneInterface | null>(null);
+  const [sceneInstance, setSceneInstance] = useState<SceneInterface | null>(
+    null
+  );
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [showTour, setShowTour] = useState(false);
@@ -239,7 +241,8 @@ export default function ScenePreview({ sceneId, onBack }: ScenePreviewProps) {
   };
 
   const startTour = () => {
-    if (!sceneInstance || !sceneInstance.getTourPoints || !cameraRef.current) return;
+    if (!sceneInstance || !sceneInstance.getTourPoints || !cameraRef.current)
+      return;
 
     const tourPoints = sceneInstance.getTourPoints();
     if (tourPoints.length === 0) return;
@@ -476,7 +479,7 @@ export default function ScenePreview({ sceneId, onBack }: ScenePreviewProps) {
       <div
         style={{
           position: "absolute",
-          bottom: "20px",
+          bottom: "50px",
           left: "20px",
           display: "flex",
           gap: "10px",
@@ -499,57 +502,58 @@ export default function ScenePreview({ sceneId, onBack }: ScenePreviewProps) {
           </button>
         )}
 
-        {sceneInstance?.getTourPoints && sceneInstance.getTourPoints().length > 0 && (
-          <>
-            <button
-              onClick={showTour ? stopTour : startTour}
-              style={{
-                padding: "10px 20px",
-                backgroundColor: showTour ? "#dc3545" : "#28a745",
-                color: "white",
-                border: "none",
-                borderRadius: "5px",
-                cursor: "pointer",
-                fontSize: "14px",
-              }}
-            >
-              {showTour ? "Stop Tour" : "Start Auto Tour"}
-            </button>
+        {sceneInstance?.getTourPoints &&
+          sceneInstance.getTourPoints().length > 0 && (
+            <>
+              <button
+                onClick={showTour ? stopTour : startTour}
+                style={{
+                  padding: "10px 20px",
+                  backgroundColor: showTour ? "#dc3545" : "#28a745",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "5px",
+                  cursor: "pointer",
+                  fontSize: "14px",
+                }}
+              >
+                {showTour ? "Stop Tour" : "Start Auto Tour"}
+              </button>
 
-            {showTour && (
-              <>
-                <button
-                  onClick={goToPreviousTourPoint}
-                  style={{
-                    padding: "10px 15px",
-                    backgroundColor: "#6c757d",
-                    color: "white",
-                    border: "none",
-                    borderRadius: "5px",
-                    cursor: "pointer",
-                    fontSize: "14px",
-                  }}
-                >
-                  ← Prev
-                </button>
-                <button
-                  onClick={goToNextTourPoint}
-                  style={{
-                    padding: "10px 15px",
-                    backgroundColor: "#6c757d",
-                    color: "white",
-                    border: "none",
-                    borderRadius: "5px",
-                    cursor: "pointer",
-                    fontSize: "14px",
-                  }}
-                >
-                  Next →
-                </button>
-              </>
-            )}
-          </>
-        )}
+              {showTour && (
+                <>
+                  <button
+                    onClick={goToPreviousTourPoint}
+                    style={{
+                      padding: "10px 15px",
+                      backgroundColor: "#6c757d",
+                      color: "white",
+                      border: "none",
+                      borderRadius: "5px",
+                      cursor: "pointer",
+                      fontSize: "14px",
+                    }}
+                  >
+                    ← Prev
+                  </button>
+                  <button
+                    onClick={goToNextTourPoint}
+                    style={{
+                      padding: "10px 15px",
+                      backgroundColor: "#6c757d",
+                      color: "white",
+                      border: "none",
+                      borderRadius: "5px",
+                      cursor: "pointer",
+                      fontSize: "14px",
+                    }}
+                  >
+                    Next →
+                  </button>
+                </>
+              )}
+            </>
+          )}
       </div>
 
       {/* Tour Status */}
