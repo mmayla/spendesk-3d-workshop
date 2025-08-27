@@ -213,7 +213,4 @@ export class SpaceStationScene implements TeamSceneInterface {
     ]
   }
 
-  dispose(): void {
-    console.log(`Disposing ${this.teamName} scene resources`)
-  }
 }

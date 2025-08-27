@@ -366,9 +366,6 @@ export default function ScenePreview({ teamId, onBack }: ScenePreviewProps) {
       if (rendererRef.current) {
         rendererRef.current.dispose();
       }
-      if (teamScene?.dispose) {
-        teamScene.dispose();
-      }
     };
   }, [teamScene]);
 

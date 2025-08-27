@@ -171,9 +171,4 @@ export class VillageScene implements TeamSceneInterface {
     ]
   }
 
-  dispose(): void {
-    // Clean up any resources if needed
-    // For basic primitives, Three.js handles most cleanup
-    console.log(`Disposing ${this.teamName} scene resources`)
-  }
 }

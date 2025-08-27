@@ -112,15 +112,6 @@ export class TemplateScene implements TeamSceneInterface {
     ]
   }
 
-  /**
-   * Optional: Cleanup method called when scene is removed
-   * Remove this method if you don't need cleanup
-   */
-  dispose(): void {
-    // TODO: Clean up any custom resources here if needed
-    // For basic primitives, Three.js handles cleanup automatically
-    console.log(`Disposing ${this.teamName} scene resources`)
-  }
 }
 
 /*

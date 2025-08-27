@@ -57,10 +57,6 @@ export class YourTeamScene implements TeamSceneInterface {
     ]
   }
 
-  // Optional: Cleanup resources
-  dispose?(): void {
-    console.log(`Disposing ${this.teamName} scene resources`)
-  }
 }
 ```
 

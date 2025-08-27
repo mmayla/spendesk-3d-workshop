@@ -130,8 +130,7 @@ export function getSceneMetadata() {
         teamId: scene.teamId,
         teamName: scene.teamName,
         description: scene.description,
-        hasTourPoints: typeof scene.getTourPoints === 'function',
-        hasDispose: typeof scene.dispose === 'function'
+        hasTourPoints: typeof scene.getTourPoints === 'function'
       }
     } catch (error) {
       console.error(`Error getting metadata for scene ${teamId}:`, error)

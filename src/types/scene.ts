@@ -30,11 +30,6 @@ export interface TeamSceneInterface {
    */
   buildScene(scene: THREE.Scene): Promise<void>
 
-  /**
-   * Optional cleanup method called when scene is removed
-   * Use this to dispose of geometries, materials, textures etc.
-   */
-  dispose?(): void
 
   /**
    * Optional method to get tour points of interest in this scene

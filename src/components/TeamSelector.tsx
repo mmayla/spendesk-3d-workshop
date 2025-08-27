@@ -124,18 +124,6 @@ export default function TeamSelector() {
                       {scene.description}
                     </p>
                     
-                    <div style={{
-                      marginBottom: '20px',
-                      fontSize: '14px',
-                      color: '#555',
-                      display: 'flex',
-                      justifyContent: 'flex-end',
-                      alignItems: 'center'
-                    }}>
-                      <div>
-                        {scene.hasTourPoints && '🎬 Has Tour'}
-                      </div>
-                    </div>
                     
                     <button
                       onClick={() => setSelectedTeam(scene.teamId)}
@@ -169,63 +157,29 @@ export default function TeamSelector() {
           )}
         </div>
 
-        {/* Instructions */}
+        {/* Quick Start */}
         <div style={{
           backgroundColor: 'white',
           borderRadius: '12px',
           padding: '25px',
           marginTop: '30px',
-          boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+          boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+          textAlign: 'center'
         }}>
           <h3 style={{ margin: '0 0 15px 0', color: '#333' }}>
-            For Teams: How to Add Your Scene
+            Ready to Build Your Scene?
           </h3>
-          <ol style={{ margin: '0', paddingLeft: '20px', color: '#666', lineHeight: '1.6' }}>
-            <li>Create a new folder under <code>src/scenes/your-team-name/</code></li>
-            <li>Create a scene class that implements <code>TeamSceneInterface</code></li>
-            <li>Add your scene to the registry in <code>src/scenes/registry.ts</code></li>
-            <li>Your scene will automatically appear here for preview!</li>
-          </ol>
-          
+          <p style={{ margin: '0 0 20px 0', color: '#666', fontSize: '16px' }}>
+            Check out the <strong>TEAM_GUIDE.md</strong> file for complete instructions on creating your 3D scene.
+          </p>
           <div style={{
-            marginTop: '15px',
             padding: '15px',
             backgroundColor: '#f8f9fa',
             borderRadius: '6px',
-            fontSize: '14px'
+            fontSize: '14px',
+            color: '#555'
           }}>
-            <strong>💡 Pro tip:</strong> Copy the template scene from <code>src/scenes/team-template/</code> to get started quickly!
-          </div>
-          
-          <div style={{
-            marginTop: '15px',
-            padding: '15px',
-            backgroundColor: '#e8f4fd',
-            borderRadius: '6px',
-            fontSize: '14px'
-          }}>
-            <strong>🧱 Available Primitives:</strong>
-            <div style={{ marginTop: '8px', fontFamily: 'monospace' }}>
-              createBox, createSphere, createCylinder, createCone, createPlane
-            </div>
-            <div style={{ marginTop: '8px', fontFamily: 'monospace' }}>
-              createTree, createHouse (pre-made composites)
-            </div>
-          </div>
-
-          <div style={{
-            marginTop: '15px',
-            padding: '15px',
-            backgroundColor: '#f0f8e8',
-            borderRadius: '6px',
-            fontSize: '14px'
-          }}>
-            <strong>🎨 Available Colors:</strong>
-            <div style={{ marginTop: '8px', fontFamily: 'monospace', fontSize: '12px' }}>
-              RED, GREEN, BLUE, YELLOW, ORANGE, PURPLE, PINK, WHITE, BLACK, GRAY<br/>
-              WOOD, STONE, GRASS, WATER, SAND, METAL, GOLD, SILVER<br/>
-              TREE_TRUNK, TREE_LEAVES, SKY_BLUE, SUNSET_ORANGE, EARTH_BROWN
-            </div>
+            💡 <strong>Quick Start:</strong> Copy the template from <code>src/scenes/team-template/</code> and follow the guide!
           </div>
         </div>
       </div>
