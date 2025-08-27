@@ -74,7 +74,12 @@ export default function ScenePreview({
           return;
         }
 
-        console.log('Initializing scene data for:', sceneId, 'hotReloadKey:', hotReloadKey);
+        console.log(
+          'Initializing scene data for:',
+          sceneId,
+          'hotReloadKey:',
+          hotReloadKey
+        );
         setLoading(true);
         setError(null);
 
@@ -598,7 +603,7 @@ export default function ScenePreview({
         <div
           style={{
             position: 'absolute',
-            bottom: '20px',
+            bottom: '50px',
             right: '20px',
             backgroundColor: 'rgba(0, 0, 0, 0.8)',
             color: 'white',

@@ -94,6 +94,9 @@ export async function getSceneMetadata() {
 
 if (import.meta.env.DEV) {
   console.log('Scene Registry Loaded');
-  console.log('Registered Scenes:', SCENE_REGISTRY.map((e) => e.sceneId));
+  console.log(
+    'Registered Scenes:',
+    SCENE_REGISTRY.map((e) => e.sceneId)
+  );
   console.log('Enabled Scenes:', getEnabledSceneIds());
 }
