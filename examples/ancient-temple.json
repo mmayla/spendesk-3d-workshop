@@ -1,0 +1,182 @@
+[
+  {
+    "id": "temple-base",
+    "type": "box",
+    "name": "Temple Foundation",
+    "position": { "x": 0, "y": 0.5, "z": 0 },
+    "rotation": { "x": 0, "y": 0, "z": 0 },
+    "scale": { "x": 8, "y": 1, "z": 6 },
+    "color": 6908265
+  },
+  {
+    "id": "temple-steps-1",
+    "type": "box",
+    "name": "Temple Steps Lower",
+    "position": { "x": 0, "y": 0.8, "z": 3.5 },
+    "rotation": { "x": 0, "y": 0, "z": 0 },
+    "scale": { "x": 7, "y": 0.6, "z": 1 },
+    "color": 6908265
+  },
+  {
+    "id": "temple-steps-2",
+    "type": "box",
+    "name": "Temple Steps Upper",
+    "position": { "x": 0, "y": 1.1, "z": 3 },
+    "rotation": { "x": 0, "y": 0, "z": 0 },
+    "scale": { "x": 6, "y": 0.6, "z": 0.8 },
+    "color": 6908265
+  },
+  {
+    "id": "pillar-1",
+    "type": "cylinder",
+    "name": "Temple Pillar 1",
+    "position": { "x": -2.5, "y": 2.5, "z": 1 },
+    "rotation": { "x": 0, "y": 0, "z": 0 },
+    "scale": { "x": 0.6, "y": 4, "z": 0.6 },
+    "color": 10066329
+  },
+  {
+    "id": "pillar-2",
+    "type": "cylinder",
+    "name": "Temple Pillar 2",
+    "position": { "x": 0, "y": 2.5, "z": 1 },
+    "rotation": { "x": 0, "y": 0, "z": 0 },
+    "scale": { "x": 0.6, "y": 4, "z": 0.6 },
+    "color": 10066329
+  },
+  {
+    "id": "pillar-3",
+    "type": "cylinder",
+    "name": "Temple Pillar 3",
+    "position": { "x": 2.5, "y": 2.5, "z": 1 },
+    "rotation": { "x": 0, "y": 0, "z": 0 },
+    "scale": { "x": 0.6, "y": 4, "z": 0.6 },
+    "color": 10066329
+  },
+  {
+    "id": "pillar-4",
+    "type": "cylinder",
+    "name": "Temple Pillar 4",
+    "position": { "x": -2.5, "y": 2.5, "z": -1 },
+    "rotation": { "x": 0, "y": 0, "z": 0 },
+    "scale": { "x": 0.6, "y": 4, "z": 0.6 },
+    "color": 10066329
+  },
+  {
+    "id": "pillar-5",
+    "type": "cylinder",
+    "name": "Temple Pillar 5",
+    "position": { "x": 0, "y": 2.5, "z": -1 },
+    "rotation": { "x": 0, "y": 0, "z": 0 },
+    "scale": { "x": 0.6, "y": 4, "z": 0.6 },
+    "color": 10066329
+  },
+  {
+    "id": "pillar-6",
+    "type": "cylinder",
+    "name": "Temple Pillar 6",
+    "position": { "x": 2.5, "y": 2.5, "z": -1 },
+    "rotation": { "x": 0, "y": 0, "z": 0 },
+    "scale": { "x": 0.6, "y": 4, "z": 0.6 },
+    "color": 10066329
+  },
+  {
+    "id": "roof-beam-1",
+    "type": "box",
+    "name": "Roof Beam Long",
+    "position": { "x": 0, "y": 4.8, "z": 0 },
+    "rotation": { "x": 0, "y": 0, "z": 0 },
+    "scale": { "x": 6, "y": 0.6, "z": 0.8 },
+    "color": 9127187
+  },
+  {
+    "id": "roof-beam-2",
+    "type": "box",
+    "name": "Roof Beam Side 1",
+    "position": { "x": -2.5, "y": 4.8, "z": 0 },
+    "rotation": { "x": 0, "y": 1.571, "z": 0 },
+    "scale": { "x": 2.5, "y": 0.6, "z": 0.8 },
+    "color": 9127187
+  },
+  {
+    "id": "roof-beam-3",
+    "type": "box",
+    "name": "Roof Beam Side 2",
+    "position": { "x": 2.5, "y": 4.8, "z": 0 },
+    "rotation": { "x": 0, "y": 1.571, "z": 0 },
+    "scale": { "x": 2.5, "y": 0.6, "z": 0.8 },
+    "color": 9127187
+  },
+  {
+    "id": "altar",
+    "type": "box",
+    "name": "Sacred Altar",
+    "position": { "x": 0, "y": 1.5, "z": -2 },
+    "rotation": { "x": 0, "y": 0, "z": 0 },
+    "scale": { "x": 2, "y": 1.5, "z": 1 },
+    "color": 16766720
+  },
+  {
+    "id": "altar-top",
+    "type": "cylinder",
+    "name": "Altar Top",
+    "position": { "x": 0, "y": 2.4, "z": -2 },
+    "rotation": { "x": 0, "y": 0, "z": 0 },
+    "scale": { "x": 1.2, "y": 0.3, "z": 1.2 },
+    "color": 16766720
+  },
+  {
+    "id": "brazier-1",
+    "type": "cylinder",
+    "name": "Brazier Left",
+    "position": { "x": -3.5, "y": 1.2, "z": 2.5 },
+    "rotation": { "x": 0, "y": 0, "z": 0 },
+    "scale": { "x": 0.5, "y": 1, "z": 0.5 },
+    "color": 8421504
+  },
+  {
+    "id": "flame-1",
+    "type": "cone",
+    "name": "Flame Left",
+    "position": { "x": -3.5, "y": 2, "z": 2.5 },
+    "rotation": { "x": 0, "y": 0, "z": 0 },
+    "scale": { "x": 0.3, "y": 0.8, "z": 0.3 },
+    "color": 16776960
+  },
+  {
+    "id": "brazier-2",
+    "type": "cylinder",
+    "name": "Brazier Right",
+    "position": { "x": 3.5, "y": 1.2, "z": 2.5 },
+    "rotation": { "x": 0, "y": 0, "z": 0 },
+    "scale": { "x": 0.5, "y": 1, "z": 0.5 },
+    "color": 8421504
+  },
+  {
+    "id": "flame-2",
+    "type": "cone",
+    "name": "Flame Right",
+    "position": { "x": 3.5, "y": 2, "z": 2.5 },
+    "rotation": { "x": 0, "y": 0, "z": 0 },
+    "scale": { "x": 0.3, "y": 0.8, "z": 0.3 },
+    "color": 16776960
+  },
+  {
+    "id": "statue-base",
+    "type": "box",
+    "name": "Statue Base",
+    "position": { "x": 0, "y": 3, "z": -2 },
+    "rotation": { "x": 0, "y": 0, "z": 0 },
+    "scale": { "x": 0.8, "y": 1, "z": 0.8 },
+    "color": 10066329
+  },
+  {
+    "id": "statue",
+    "type": "cylinder",
+    "name": "Ancient Statue",
+    "position": { "x": 0, "y": 4, "z": -2 },
+    "rotation": { "x": 0, "y": 0, "z": 0 },
+    "scale": { "x": 0.6, "y": 2, "z": 0.6 },
+    "color": 16766720
+  }
+]

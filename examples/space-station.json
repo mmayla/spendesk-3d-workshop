@@ -1,0 +1,128 @@
+[
+  {
+    "id": "command-module",
+    "type": "box",
+    "name": "Command Module",
+    "position": { "x": 0, "y": 2, "z": 0 },
+    "rotation": { "x": 0, "y": 0.785, "z": 0 },
+    "scale": { "x": 4, "y": 2, "z": 4 },
+    "color": 12632256
+  },
+  {
+    "id": "solar-panel-left",
+    "type": "plane",
+    "name": "Left Solar Panel",
+    "position": { "x": -6, "y": 2, "z": 0 },
+    "rotation": { "x": 0, "y": 1.571, "z": 0 },
+    "scale": { "x": 3, "y": 1.5, "z": 1 },
+    "color": 255
+  },
+  {
+    "id": "solar-panel-right",
+    "type": "plane",
+    "name": "Right Solar Panel",
+    "position": { "x": 6, "y": 2, "z": 0 },
+    "rotation": { "x": 0, "y": 1.571, "z": 0 },
+    "scale": { "x": 3, "y": 1.5, "z": 1 },
+    "color": 255
+  },
+  {
+    "id": "communication-array",
+    "type": "cylinder",
+    "name": "Communication Array",
+    "position": { "x": 0, "y": 4.5, "z": 0 },
+    "rotation": { "x": 0, "y": 0, "z": 0 },
+    "scale": { "x": 0.3, "y": 3, "z": 0.3 },
+    "color": 16766720
+  },
+  {
+    "id": "satellite-dish",
+    "type": "sphere",
+    "name": "Satellite Dish",
+    "position": { "x": 0, "y": 6, "z": 0 },
+    "rotation": { "x": 0, "y": 0, "z": 0 },
+    "scale": { "x": 1, "y": 0.3, "z": 1 },
+    "color": 16766720
+  },
+  {
+    "id": "docking-port-1",
+    "type": "cylinder",
+    "name": "Docking Port North",
+    "position": { "x": 0, "y": 2, "z": 4 },
+    "rotation": { "x": 1.571, "y": 0, "z": 0 },
+    "scale": { "x": 0.8, "y": 1.5, "z": 0.8 },
+    "color": 8421504
+  },
+  {
+    "id": "docking-port-2",
+    "type": "cylinder",
+    "name": "Docking Port South",
+    "position": { "x": 0, "y": 2, "z": -4 },
+    "rotation": { "x": 1.571, "y": 0, "z": 0 },
+    "scale": { "x": 0.8, "y": 1.5, "z": 0.8 },
+    "color": 8421504
+  },
+  {
+    "id": "habitat-module",
+    "type": "cylinder",
+    "name": "Habitat Module",
+    "position": { "x": 0, "y": 0.5, "z": 0 },
+    "rotation": { "x": 0, "y": 0, "z": 0 },
+    "scale": { "x": 2.5, "y": 1, "z": 2.5 },
+    "color": 10066329
+  },
+  {
+    "id": "airlock",
+    "type": "box",
+    "name": "Airlock",
+    "position": { "x": 4, "y": 1.5, "z": 0 },
+    "rotation": { "x": 0, "y": 0, "z": 0 },
+    "scale": { "x": 1.5, "y": 1.5, "z": 1.5 },
+    "color": 6908265
+  },
+  {
+    "id": "thruster-1",
+    "type": "cone",
+    "name": "Thruster Port",
+    "position": { "x": -3, "y": 1, "z": -3 },
+    "rotation": { "x": 0, "y": 0, "z": 0 },
+    "scale": { "x": 0.5, "y": 1, "z": 0.5 },
+    "color": 16711680
+  },
+  {
+    "id": "thruster-2",
+    "type": "cone",
+    "name": "Thruster Starboard",
+    "position": { "x": 3, "y": 1, "z": -3 },
+    "rotation": { "x": 0, "y": 0, "z": 0 },
+    "scale": { "x": 0.5, "y": 1, "z": 0.5 },
+    "color": 16711680
+  },
+  {
+    "id": "navigation-light-1",
+    "type": "sphere",
+    "name": "Nav Light Red",
+    "position": { "x": -2, "y": 3, "z": 2 },
+    "rotation": { "x": 0, "y": 0, "z": 0 },
+    "scale": { "x": 0.2, "y": 0.2, "z": 0.2 },
+    "color": 16711680
+  },
+  {
+    "id": "navigation-light-2",
+    "type": "sphere",
+    "name": "Nav Light Green",
+    "position": { "x": 2, "y": 3, "z": 2 },
+    "rotation": { "x": 0, "y": 0, "z": 0 },
+    "scale": { "x": 0.2, "y": 0.2, "z": 0.2 },
+    "color": 65280
+  },
+  {
+    "id": "cargo-pod",
+    "type": "box",
+    "name": "Cargo Storage",
+    "position": { "x": -4, "y": 1.5, "z": 0 },
+    "rotation": { "x": 0, "y": 0.5, "z": 0 },
+    "scale": { "x": 1.2, "y": 1.2, "z": 2 },
+    "color": 16766720
+  }
+]
