@@ -1,6 +1,5 @@
-import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { getSceneMetadata } from '../scenes/registry';
-import ScenePreview from './ScenePreview';
 
 /**
  * Scene Browser Component
@@ -10,18 +9,8 @@ import ScenePreview from './ScenePreview';
  * - Combined scene view
  */
 export default function SceneSelector() {
-  const [selectedScene, setSelectedScene] = useState<string | null>(null);
-
+  const navigate = useNavigate();
   const sceneMetadata = getSceneMetadata();
-
-  if (selectedScene) {
-    return (
-      <ScenePreview
-        sceneId={selectedScene}
-        onBack={() => setSelectedScene(null)}
-      />
-    );
-  }
 
   return (
     <div
@@ -147,7 +136,7 @@ export default function SceneSelector() {
                     </p>
 
                     <button
-                      onClick={() => setSelectedScene(scene.sceneId)}
+                      onClick={() => navigate(`/${scene.sceneId}`)}
                       style={{
                         width: '100%',
                         padding: '12px',

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import * as THREE from 'three';
 import {
   createSceneInstance,
@@ -7,7 +8,7 @@ import {
 import type { SceneInterface } from '../types/scene';
 
 interface ScenePreviewProps {
-  sceneId: string;
+  sceneId?: string;
   onBack?: () => void;
 }
 
@@ -18,7 +19,10 @@ interface ScenePreviewProps {
  * - Individual scene previews
  * - Combined scene view
  */
-export default function ScenePreview({ sceneId, onBack }: ScenePreviewProps) {
+export default function ScenePreview({ sceneId: propSceneId, onBack }: ScenePreviewProps) {
+  const { sceneId: urlSceneId } = useParams<{ sceneId: string }>();
+  const navigate = useNavigate();
+  const sceneId = propSceneId || urlSceneId;
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const sceneRef = useRef<THREE.Scene | undefined>(undefined);
   const rendererRef = useRef<THREE.WebGLRenderer | undefined>(undefined);
@@ -32,6 +36,14 @@ export default function ScenePreview({ sceneId, onBack }: ScenePreviewProps) {
   );
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  const handleBack = () => {
+    if (onBack) {
+      onBack();
+    } else {
+      navigate('/');
+    }
+  };
   const [showTour, setShowTour] = useState(false);
   const [currentTourPoint, setCurrentTourPoint] = useState(0);
   const tourAnimationRef = useRef<number | undefined>(undefined);
@@ -42,6 +54,12 @@ export default function ScenePreview({ sceneId, onBack }: ScenePreviewProps) {
     // First validate and create scene instance
     const initializeSceneData = async () => {
       try {
+        if (!sceneId) {
+          setError('No scene ID provided');
+          setLoading(false);
+          return;
+        }
+
         setLoading(true);
         setError(null);
 
@@ -418,14 +436,12 @@ export default function ScenePreview({ sceneId, onBack }: ScenePreviewProps) {
           <div style={{ color: 'red', fontSize: '18px' }}>
             Error loading scene: {error}
           </div>
-          {onBack && (
-            <button
-              onClick={onBack}
-              style={{ padding: '10px 20px', fontSize: '16px' }}
-            >
-              Go Back
-            </button>
-          )}
+          <button
+            onClick={handleBack}
+            style={{ padding: '10px 20px', fontSize: '16px' }}
+          >
+            Go Back
+          </button>
         </div>
       )}
 
@@ -485,22 +501,20 @@ export default function ScenePreview({ sceneId, onBack }: ScenePreviewProps) {
           gap: '10px',
         }}
       >
-        {onBack && (
-          <button
-            onClick={onBack}
-            style={{
-              padding: '10px 20px',
-              backgroundColor: '#666',
-              color: 'white',
-              border: 'none',
-              borderRadius: '5px',
-              cursor: 'pointer',
-              fontSize: '14px',
-            }}
-          >
-            ← Back
-          </button>
-        )}
+        <button
+          onClick={handleBack}
+          style={{
+            padding: '10px 20px',
+            backgroundColor: '#666',
+            color: 'white',
+            border: 'none',
+            borderRadius: '5px',
+            cursor: 'pointer',
+            fontSize: '14px',
+          }}
+        >
+          ← Back
+        </button>
 
         {sceneInstance?.getTourPoints &&
           sceneInstance.getTourPoints().length > 0 && (
