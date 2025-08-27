@@ -5,6 +5,7 @@ import {
   createSphere,
   createCylinder,
   createSpaceEnvironment,
+  createBasicLighting,
   COLORS,
 } from '../../utils/primitives';
 
@@ -21,8 +22,11 @@ export class SpaceStationScene implements SceneInterface {
     'A modular orbital space station with command modules and solar arrays';
 
   async buildScene(scene: THREE.Scene): Promise<void> {
-    // Optional: Create space environment with stars and dark background
+    // Create space environment with stars and dark background
     createSpaceEnvironment(scene);
+    
+    // Add better lighting for space station visibility
+    createBasicLighting(scene);
 
     // Central command module (large box)
     const commandModule = createBox({

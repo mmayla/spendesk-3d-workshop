@@ -6,6 +6,7 @@ import {
   createCylinder,
   createCone,
   createGroundPlane,
+  createBasicLighting,
   COLORS,
 } from '../../utils/primitives';
 
@@ -31,6 +32,9 @@ export class TemplateScene implements SceneInterface {
    * @param scene - The Three.js scene to add objects to
    */
   async buildScene(scene: THREE.Scene): Promise<void> {
+    // Add basic lighting - gives your scene good illumination and shadows
+    createBasicLighting(scene);
+
     // Option 1: Add ground plane for traditional earth-based scenes
     const ground = createGroundPlane({
       size: 30,
@@ -94,6 +98,10 @@ export class TemplateScene implements SceneInterface {
     // - createSphere({ radius, position, color })
     // - createCylinder({ radiusTop, radiusBottom, height, position, color })
     // - createCone({ radius, height, position, color })
+    //
+    // Available lighting helpers:
+    // - createBasicLighting(scene) - good general lighting with shadows
+    // - createSpaceEnvironment(scene) - for space scenes
     //
     // Available colors: COLORS.RED, COLORS.BLUE, COLORS.GREEN, COLORS.WOOD, etc.
     // See TEAM_GUIDE.md for full color list

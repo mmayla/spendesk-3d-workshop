@@ -343,3 +343,30 @@ export const createSpaceEnvironment = (scene: THREE.Scene): void => {
   const ambientLight = new THREE.AmbientLight(0x404040, 0.3);
   scene.add(ambientLight);
 };
+
+/**
+ * Creates basic lighting setup for general 3D scenes
+ * Provides a good starting point for most scenes with ambient and directional lighting
+ */
+export const createBasicLighting = (scene: THREE.Scene): void => {
+  // Ambient light for general illumination - brighter for better visibility
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+  scene.add(ambientLight);
+
+  // Main directional light (like sun) - positioned higher and further for better coverage
+  const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+  directionalLight.position.set(50, 50, 25);
+  directionalLight.castShadow = true;
+  
+  // Shadow settings for better quality - larger shadow camera for bigger scenes
+  directionalLight.shadow.mapSize.width = 2048;
+  directionalLight.shadow.mapSize.height = 2048;
+  directionalLight.shadow.camera.near = 0.5;
+  directionalLight.shadow.camera.far = 100;
+  directionalLight.shadow.camera.left = -50;
+  directionalLight.shadow.camera.right = 50;
+  directionalLight.shadow.camera.top = 50;
+  directionalLight.shadow.camera.bottom = -50;
+  
+  scene.add(directionalLight);
+};

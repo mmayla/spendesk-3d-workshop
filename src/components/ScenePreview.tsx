@@ -140,33 +140,14 @@ export default function ScenePreview({
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         rendererRef.current = renderer;
 
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
-        scene.add(ambientLight);
-
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-        directionalLight.position.set(50, 50, 25);
-        directionalLight.castShadow = true;
-        directionalLight.shadow.mapSize.width = 2048;
-        directionalLight.shadow.mapSize.height = 2048;
-        directionalLight.shadow.camera.near = 0.5;
-        directionalLight.shadow.camera.far = 100;
-        directionalLight.shadow.camera.left = -50;
-        directionalLight.shadow.camera.right = 50;
-        directionalLight.shadow.camera.top = 50;
-        directionalLight.shadow.camera.bottom = -50;
-        scene.add(directionalLight);
-
         const gridHelper = new THREE.GridHelper(50, 50, 0x888888, 0x888888);
         gridHelper.material.opacity = 0.3;
         gridHelper.material.transparent = true;
         scene.add(gridHelper);
 
-        // Clear existing scene objects for hot reload
+        // Clear existing scene objects for hot reload (scenes handle their own lighting)
         const childrenToRemove = scene.children.filter(
-          (child) =>
-            child.type !== 'AmbientLight' &&
-            child.type !== 'DirectionalLight' &&
-            child.type !== 'GridHelper'
+          (child) => child.type !== 'GridHelper'
         );
         childrenToRemove.forEach((child) => {
           scene.remove(child);

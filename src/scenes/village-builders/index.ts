@@ -6,6 +6,7 @@ import {
   createCylinder,
   createCone,
   createGroundPlane,
+  createBasicLighting,
   COLORS,
 } from '../../utils/primitives';
 
@@ -17,6 +18,8 @@ export class VillageScene implements SceneInterface {
     'A peaceful medieval village with houses, trees, and a well';
 
   async buildScene(scene: THREE.Scene): Promise<void> {
+    createBasicLighting(scene);
+
     const ground = createGroundPlane({
       size: 30,
       color: COLORS.GRASS,
