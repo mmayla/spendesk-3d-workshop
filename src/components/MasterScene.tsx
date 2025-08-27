@@ -8,10 +8,10 @@ interface MasterSceneProps {
 }
 
 /**
- * Master Scene Component
+ * Combined Scene Component
  * 
- * Loads all enabled team scenes and arranges them as districts in a unified world
- * Provides the "big reveal" experience where individual scenes become part of a larger world
+ * Loads all enabled scenes and arranges them as districts in a unified world
+ * Shows how individual scenes combine together in a shared space
  */
 export default function MasterScene({ onBack }: MasterSceneProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)

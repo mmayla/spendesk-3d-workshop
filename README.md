@@ -116,7 +116,7 @@ createTree({
 - Validate scene implementations
 - Access master scene directly
 
-### Master Scene (The Big Reveal!)
+### Combined Scene View
 **Combined world where all scenes become districts:**
 - All team scenes automatically loaded and arranged
 - Grand tour visits all team's tour points  
@@ -261,7 +261,7 @@ This is a workshop template. Feel free to:
 - **Encourage scene validation** - use the validation panel to check implementations
 - **Promote tour points** - these make the grand reveal much more engaging
 - **Help with positioning** - remind teams to use the `pos()` helper function
-- **Take screenshots** of individual scene previews before the big reveal
+- **Take screenshots** of individual scene previews
 
 ## 🎉 Have Fun!
 

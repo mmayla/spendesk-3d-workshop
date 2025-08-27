@@ -3,11 +3,11 @@ import { getSceneMetadata } from '../scenes/registry'
 import ScenePreview from './ScenePreview'
 
 /**
- * Team Selector Component
+ * Scene Browser Component
  * 
- * Shows all available team scenes and allows switching between:
+ * Shows all available scenes and allows switching between:
  * - Individual scene previews
- * - Master scene view (the big reveal)
+ * - Combined scene view
  */
 export default function TeamSelector({ onShowMasterScene }: { 
   onShowMasterScene: () => void 
@@ -57,7 +57,7 @@ export default function TeamSelector({ onShowMasterScene }: {
             fontSize: '18px',
             lineHeight: '1.5'
           }}>
-            Teams build individual 3D scenes using Three.js primitives. Preview your scene in isolation or see how they all combine in the master scene.
+            Teams build individual 3D scenes using Three.js primitives. Preview your scene in isolation or see how they all combine together.
           </p>
           
           <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
@@ -74,20 +74,19 @@ export default function TeamSelector({ onShowMasterScene }: {
                 fontWeight: '500'
               }}
             >
-              🌍 View Master Scene
+              🌍 View All Scenes
             </button>
           </div>
         </div>
 
-
-        {/* Team Scenes Grid */}
+        {/* Scenes Grid */}
         <div>
           <h2 style={{ 
             margin: '0 0 20px 0', 
             color: '#333',
             fontSize: '24px' 
           }}>
-            Team Scenes
+            Scenes
           </h2>
           
           {sceneMetadata.length === 0 ? (
@@ -145,64 +144,37 @@ export default function TeamSelector({ onShowMasterScene }: {
                     </p>
                     
                     <div style={{
-                      display: 'grid',
-                      gridTemplateColumns: 'repeat(2, 1fr)',
-                      gap: '10px',
                       marginBottom: '20px',
                       fontSize: '14px',
-                      color: '#555'
+                      color: '#555',
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center'
                     }}>
                       <div>
-                        <strong>Dimensions:</strong><br/>
-                        {scene.bounds.width}×{scene.bounds.height}×{scene.bounds.depth}
+                        <strong>Size:</strong> {scene.bounds.width}×{scene.bounds.height} units
                       </div>
                       <div>
-                        <strong>Features:</strong><br/>
-                        {scene.hasTourPoints && '🎬 Tour Points'}<br/>
-                        {scene.hasDispose && '🧹 Cleanup'}
+                        {scene.hasTourPoints && '🎬'}
                       </div>
                     </div>
                     
-                    <div style={{
-                      display: 'flex',
-                      gap: '10px'
-                    }}>
-                      <button
-                        onClick={() => setSelectedTeam(scene.teamId)}
-                        style={{
-                          flex: 1,
-                          padding: '12px',
-                          backgroundColor: '#007bff',
-                          color: 'white',
-                          border: 'none',
-                          borderRadius: '8px',
-                          cursor: 'pointer',
-                          fontSize: '14px',
-                          fontWeight: '500'
-                        }}
-                      >
-                        👁️ Preview Scene
-                      </button>
-                      
-                      <button
-                        onClick={() => {
-                          navigator.clipboard.writeText(scene.teamId)
-                          alert('Team ID copied to clipboard!')
-                        }}
-                        style={{
-                          padding: '12px 16px',
-                          backgroundColor: '#6c757d',
-                          color: 'white',
-                          border: 'none',
-                          borderRadius: '8px',
-                          cursor: 'pointer',
-                          fontSize: '14px'
-                        }}
-                        title="Copy team ID"
-                      >
-                        📋
-                      </button>
-                    </div>
+                    <button
+                      onClick={() => setSelectedTeam(scene.teamId)}
+                      style={{
+                        width: '100%',
+                        padding: '12px',
+                        backgroundColor: '#007bff',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '8px',
+                        cursor: 'pointer',
+                        fontSize: '14px',
+                        fontWeight: '500'
+                      }}
+                    >
+                      👁️ Preview Scene
+                    </button>
                     
                     <div style={{
                       marginTop: '10px',
@@ -245,6 +217,37 @@ export default function TeamSelector({ onShowMasterScene }: {
             fontSize: '14px'
           }}>
             <strong>💡 Pro tip:</strong> Copy the template scene from <code>src/scenes/team-template/</code> to get started quickly!
+          </div>
+          
+          <div style={{
+            marginTop: '15px',
+            padding: '15px',
+            backgroundColor: '#e8f4fd',
+            borderRadius: '6px',
+            fontSize: '14px'
+          }}>
+            <strong>🧱 Available Primitives:</strong>
+            <div style={{ marginTop: '8px', fontFamily: 'monospace' }}>
+              createBox, createSphere, createCylinder, createCone, createPlane
+            </div>
+            <div style={{ marginTop: '8px', fontFamily: 'monospace' }}>
+              createTree, createHouse (pre-made composites)
+            </div>
+          </div>
+
+          <div style={{
+            marginTop: '15px',
+            padding: '15px',
+            backgroundColor: '#f0f8e8',
+            borderRadius: '6px',
+            fontSize: '14px'
+          }}>
+            <strong>🎨 Available Colors:</strong>
+            <div style={{ marginTop: '8px', fontFamily: 'monospace', fontSize: '12px' }}>
+              RED, GREEN, BLUE, YELLOW, ORANGE, PURPLE, PINK, WHITE, BLACK, GRAY<br/>
+              WOOD, STONE, GRASS, WATER, SAND, METAL, GOLD, SILVER<br/>
+              TREE_TRUNK, TREE_LEAVES, SKY_BLUE, SUNSET_ORANGE, EARTH_BROWN
+            </div>
           </div>
         </div>
       </div>

@@ -313,7 +313,7 @@ readonly bounds = {
 - Refine positioning and colors
 - Add final details
 - Test tour points
-- Prepare for the big reveal!
+- See how your scene fits with others!
 
 ## 🚀 Ready for the Magic?
 
