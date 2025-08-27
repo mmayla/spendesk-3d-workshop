@@ -4,7 +4,7 @@ import type { SceneInterface } from '../types/scene';
 const SCENE_CONFIGS = {
   'village-builders': './village-builders/index.js',
   'space-station': './space-station/index.js',
-  'template-scene': './team-template/index.js',
+  'template-scene': './template-scene/index.js',
   // 'your-scene-id': './your-folder/index.js',
 } as const;
 
