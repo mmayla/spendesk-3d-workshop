@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import { getSceneMetadata } from '../scenes/registry';
 
 /**
@@ -10,7 +11,28 @@ import { getSceneMetadata } from '../scenes/registry';
  */
 export default function SceneSelector() {
   const navigate = useNavigate();
-  const sceneMetadata = getSceneMetadata();
+  const [sceneMetadata, setSceneMetadata] = useState<Array<{
+    sceneId: string;
+    sceneName: string;
+    description: string;
+    hasTourPoints: boolean;
+  }>>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadSceneMetadata = async () => {
+      try {
+        const metadata = await getSceneMetadata();
+        setSceneMetadata(metadata);
+      } catch (error) {
+        console.error('Error loading scene metadata:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadSceneMetadata();
+  }, []);
 
   return (
     <div
@@ -71,7 +93,20 @@ export default function SceneSelector() {
             Scenes
           </h2>
 
-          {sceneMetadata.length === 0 ? (
+          {loading ? (
+            <div
+              style={{
+                backgroundColor: 'white',
+                borderRadius: '12px',
+                padding: '40px',
+                textAlign: 'center',
+                color: '#666',
+              }}
+            >
+              <div style={{ fontSize: '48px', marginBottom: '15px' }}>🔄</div>
+              <h3 style={{ margin: '0 0 10px 0' }}>Loading scenes...</h3>
+            </div>
+          ) : sceneMetadata.length === 0 ? (
             <div
               style={{
                 backgroundColor: 'white',

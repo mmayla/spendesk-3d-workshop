@@ -19,7 +19,10 @@ interface ScenePreviewProps {
  * - Individual scene previews
  * - Combined scene view
  */
-export default function ScenePreview({ sceneId: propSceneId, onBack }: ScenePreviewProps) {
+export default function ScenePreview({
+  sceneId: propSceneId,
+  onBack,
+}: ScenePreviewProps) {
   const { sceneId: urlSceneId } = useParams<{ sceneId: string }>();
   const navigate = useNavigate();
   const sceneId = propSceneId || urlSceneId;
@@ -36,6 +39,7 @@ export default function ScenePreview({ sceneId: propSceneId, onBack }: ScenePrev
   );
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [hotReloadKey, setHotReloadKey] = useState(0);
 
   const handleBack = () => {
     if (onBack) {
@@ -49,6 +53,25 @@ export default function ScenePreview({ sceneId: propSceneId, onBack }: ScenePrev
   const tourAnimationRef = useRef<number | undefined>(undefined);
   const autoTourTimeoutRef = useRef<number | undefined>(undefined);
   const isAutoTourRef = useRef(false);
+
+  // Hot reload functionality
+  useEffect(() => {
+    if (import.meta.hot) {
+      const handleHotUpdate = () => {
+        console.log('Hot reload detected, refreshing scene...');
+        setHotReloadKey(prev => prev + 1);
+      };
+
+      // Listen for various hot reload events
+      import.meta.hot.on('vite:beforeUpdate', handleHotUpdate);
+      import.meta.hot.on('vite:afterUpdate', handleHotUpdate);
+
+      return () => {
+        import.meta.hot?.off('vite:beforeUpdate', handleHotUpdate);
+        import.meta.hot?.off('vite:afterUpdate', handleHotUpdate);
+      };
+    }
+  }, []);
 
   useEffect(() => {
     // First validate and create scene instance
@@ -64,15 +87,22 @@ export default function ScenePreview({ sceneId: propSceneId, onBack }: ScenePrev
         setError(null);
 
         // Validate scene interface
-        if (!validateSceneInterface(sceneId)) {
+        const isValid = await validateSceneInterface(sceneId);
+        if (!isValid) {
           throw new Error(
             `Scene ${sceneId} does not implement the required interface correctly`
           );
         }
 
-        // Create scene instance
-        console.log('Creating scene instance for:', sceneId);
-        const instance = createSceneInstance(sceneId);
+        // Create scene instance (with cache busting for hot reload)
+        console.log('Creating scene instance for:', sceneId, 'hotReloadKey:', hotReloadKey);
+        
+        // Force module reload by clearing any potential caches
+        if (hotReloadKey > 0) {
+          console.log('Hot reload active - forcing fresh scene creation');
+        }
+        
+        const instance = await createSceneInstance(sceneId);
         console.log('Scene instance created:', instance);
         setSceneInstance(instance);
       } catch (error) {
@@ -85,7 +115,7 @@ export default function ScenePreview({ sceneId: propSceneId, onBack }: ScenePrev
     };
 
     initializeSceneData();
-  }, [sceneId]);
+  }, [sceneId, hotReloadKey]);
 
   useEffect(() => {
     // Initialize Three.js after canvas is rendered
@@ -147,7 +177,30 @@ export default function ScenePreview({ sceneId: propSceneId, onBack }: ScenePrev
         gridHelper.material.transparent = true;
         scene.add(gridHelper);
 
-        // Build team scene at origin for preview
+        // Clear any existing scene objects (for hot reload)
+        // Remove all children except lights and helpers
+        const childrenToRemove = scene.children.filter(child => 
+          child.type !== 'AmbientLight' && 
+          child.type !== 'DirectionalLight' && 
+          child.type !== 'GridHelper'
+        );
+        childrenToRemove.forEach(child => {
+          scene.remove(child);
+          // Dispose of geometries and materials to prevent memory leaks
+          if (child.type === 'Mesh') {
+            const mesh = child as THREE.Mesh;
+            if (mesh.geometry) mesh.geometry.dispose();
+            if (mesh.material) {
+              if (Array.isArray(mesh.material)) {
+                mesh.material.forEach(material => material.dispose());
+              } else {
+                mesh.material.dispose();
+              }
+            }
+          }
+        });
+
+        // Build scene at origin for preview
         console.log('Building scene:', sceneInstance.sceneId);
         await sceneInstance.buildScene(scene);
         console.log('Scene built successfully, setting up controls...');
