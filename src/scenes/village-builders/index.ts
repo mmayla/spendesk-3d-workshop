@@ -178,7 +178,7 @@ export class VillageScene implements SceneInterface {
     if (this.cloud) {
       // Move cloud slowly across the sky
       this.cloud.position.x += deltaTime * 2; // 2 units per second
-      
+
       // Reset cloud position when it goes too far
       if (this.cloud.position.x > 15) {
         this.cloud.position.x = -15;
