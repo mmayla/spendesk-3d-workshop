@@ -123,7 +123,7 @@ export default function ScenePreview({ teamId, onBack }: ScenePreviewProps) {
 
         // Build team scene at origin for preview
         console.log('Building scene for team:', teamScene.teamId)
-        await teamScene.buildScene(scene, new THREE.Vector3(0, 0, 0))
+        await teamScene.buildScene(scene)
         console.log('Scene built successfully, setting up controls...')
 
         // Add event listeners
@@ -410,7 +410,7 @@ export default function ScenePreview({ teamId, onBack }: ScenePreviewProps) {
         <h3 style={{ margin: '0 0 10px 0' }}>{teamScene?.teamName}</h3>
         <p style={{ margin: '0 0 10px 0' }}>{teamScene?.description}</p>
         <div style={{ fontSize: '12px', opacity: 0.8 }}>
-          <div>Size: {teamScene?.bounds.width}×{teamScene?.bounds.height} units</div>
+          <div>Scene: {teamScene?.teamName}</div>
           <div>Team ID: {teamScene?.teamId}</div>
         </div>
       </div>

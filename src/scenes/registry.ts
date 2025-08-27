@@ -8,12 +8,12 @@ import { CarnivalScene } from './carnival/CarnivalScene'
  * Central registry for all team scenes
  * 
  * Teams should add their scene classes here to make them available
- * in the master scene and preview system.
+ * in the preview system.
  * 
  * To add a new team scene:
  * 1. Import your scene class at the top
  * 2. Add an entry to SCENE_REGISTRY with your scene class and enabled: true
- * 3. Your scene will automatically appear in the preview system and master scene
+ * 3. Your scene will automatically appear in the scene selector
  */
 export const SCENE_REGISTRY: Record<string, SceneRegistryEntry> = {
   'village-builders': {
@@ -28,12 +28,12 @@ export const SCENE_REGISTRY: Record<string, SceneRegistryEntry> = {
   
   'ancient-temple': {
     sceneClass: TempleScene,
-    enabled: true
+    enabled: false
   },
   
   'carnival': {
     sceneClass: CarnivalScene,
-    enabled: true
+    enabled: false
   }
   
   // Teams: Add your scene here!
@@ -98,19 +98,12 @@ export function validateSceneInterface(teamId: string): boolean {
     const scene = createSceneInstance(teamId)
     
     // Check required properties
-    const requiredProps = ['teamId', 'teamName', 'description', 'bounds', 'buildScene']
+    const requiredProps = ['teamId', 'teamName', 'description', 'buildScene']
     for (const prop of requiredProps) {
       if (!(prop in scene)) {
         console.error(`Scene ${teamId} missing required property: ${prop}`)
         return false
       }
-    }
-    
-    // Check bounds structure
-    const bounds = scene.bounds
-    if (!bounds || typeof bounds.width !== 'number' || typeof bounds.height !== 'number' || typeof bounds.depth !== 'number') {
-      console.error(`Scene ${teamId} has invalid bounds structure`)
-      return false
     }
     
     // Check buildScene is a function
@@ -137,7 +130,6 @@ export function getSceneMetadata() {
         teamId: scene.teamId,
         teamName: scene.teamName,
         description: scene.description,
-        bounds: scene.bounds,
         hasTourPoints: typeof scene.getTourPoints === 'function',
         hasDispose: typeof scene.dispose === 'function'
       }

@@ -1,6 +1,6 @@
 # 🎯 3D Scene Building Workshop - Code First Edition
 
-Welcome to the **3D Scene Building Challenge** for senior software engineers! Teams create amazing 3D scenes by writing **code** using Three.js primitives, then all scenes get combined into one massive virtual world.
+Welcome to the **3D Scene Building Challenge** for senior software engineers! Teams create amazing 3D scenes by writing **code** using Three.js primitives with complete creative freedom.
 
 ## 🚀 Quick Start
 
@@ -32,8 +32,8 @@ Teams build 3D scenes by **writing TypeScript code** using primitive shapes:
 - **Cylinders** (trees, pillars, towers)
 - **Cones** (roofs, mountains, decorations)
 
-### The Magic Reveal
-Teams work on individual scenes in code → **All get combined into districts of a massive virtual world!**
+### The Creative Challenge
+Teams work independently to create unique 3D worlds using only primitive shapes and code.
 
 ## 🛠️ How to Build Your Scene (Code First!)
 
@@ -48,13 +48,12 @@ export class YourTeamScene implements TeamSceneInterface {
   readonly teamId = 'your-team-name'
   readonly teamName = 'Your Team Name' 
   readonly description = 'Your amazing scene description'
-  readonly bounds = { width: 20, height: 10, depth: 15 }
 
-  async buildScene(scene: THREE.Scene, position: THREE.Vector3) {
+  async buildScene(scene: THREE.Scene) {
     // Build your 3D world with code!
     const house = createBox({
       width: 3, height: 3, depth: 2,
-      position: { x: position.x, y: position.y + 1.5, z: position.z },
+      position: { x: 0, y: 1.5, z: 0 },
       color: COLORS.WOOD
     })
     scene.add(house)
@@ -116,11 +115,11 @@ createTree({
 - Validate scene implementations
 - Access master scene directly
 
-### Combined Scene View
-**Combined world where all scenes become districts:**
-- All team scenes automatically loaded and arranged
-- Grand tour visits all team's tour points  
-- Explores the massive virtual world created collectively
+### Individual Scene Focus
+**Each team creates their unique world:**
+- Teams build completely independent scenes
+- Preview and tour your own creation
+- Complete creative freedom in design and environment
 
 ### Legacy Modes (For Demos)
 - **UI Builder**: Original drag-and-drop interface (kept for demonstrations)
@@ -171,10 +170,10 @@ createTree({
   - Test in isolation with scene preview
 - Scene refinement and tour points (15 min)
 
-### Phase 3: The Grand Integration (10 minutes)
-- All scenes automatically appear in master scene
-- **Grand Tour** showcasing all team districts
-- Virtual world exploration and celebration!
+### Phase 3: Showcase & Celebration (10 minutes)
+- Teams showcase their individual creations
+- Tour each team's unique 3D world
+- Celebrate the creativity and diversity!
 
 ## 🔧 Technical Details
 
@@ -215,24 +214,24 @@ Available colors include:
 ### Custom Orbit Controls
 Custom-built camera controls optimized for the workshop experience.
 
-### Scene Combination Algorithm
-Automatically positions team scenes in a grid layout with:
-- Configurable spacing between districts
-- Team labels and boundaries
-- Optimized lighting for large scenes
+### Individual Scene System
+Each team creates their own independent scene with:
+- Complete environment control
+- Optional ground planes or space environments  
+- Custom lighting and styling choices
 
 ### Export Capabilities
 - Individual scene JSON files
-- Combined world exports
-- Metadata preservation
+- Scene metadata and properties
+- Tour point configurations
 
 ## 🤝 Contributing
 
 This is a workshop template. Feel free to:
 - Add new primitive shapes
 - Enhance the UI/UX
-- Add new scene combination modes
-- Improve the export formats
+- Add new environment helpers
+- Improve the scene preview system
 
 ## 📝 Workshop Instructions for Instructors - Code First Edition
 
@@ -251,21 +250,21 @@ This is a workshop template. Feel free to:
    - Teams work independently implementing their scene classes
    - Help with TypeScript interface questions
    - Encourage use of scene preview for testing
-3. **Grand Reveal** (10 min):
-   - Open Master Scene to show all teams' work combined
-   - Run the Grand Tour to visit each district
-   - Celebrate the collective virtual world!
+3. **Showcase** (10 min):
+   - Teams present their individual scenes
+   - Demo each team's unique creation
+   - Celebrate the creative diversity!
 
 ### Tips for Code-First Workshop
-- **Emphasize the interface contract** - scenes must implement `TeamSceneInterface`
-- **Encourage scene validation** - use the validation panel to check implementations
-- **Promote tour points** - these make the grand reveal much more engaging
-- **Help with positioning** - remind teams to use the `pos()` helper function
+- **Emphasize creative freedom** - teams can create any environment they want
+- **Encourage scene preview** - use the preview system to test and debug
+- **Promote tour points** - these make showcasing much more engaging
+- **Help with positioning** - remind teams about coordinate system (x, y, z)
 - **Take screenshots** of individual scene previews
 
 ## 🎉 Have Fun!
 
-The magic moment when individual scenes become districts in a shared virtual world never gets old. Enjoy building, creating, and exploring!
+Watch teams' creativity come to life as they build amazing 3D worlds from simple primitives. Enjoy the building, creating, and exploring!
 
 ---
 

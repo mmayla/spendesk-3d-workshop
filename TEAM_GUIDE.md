@@ -1,6 +1,6 @@
 # 🎯 Team Guide: Building Your 3D Scene
 
-Welcome to the **3D Scene Building Workshop**! Your mission is to create an awesome 3D scene using only primitive shapes that will be combined with other teams' scenes into one massive virtual world.
+Welcome to the **3D Scene Building Workshop**! Your mission is to create an awesome 3D scene using only primitive shapes with complete creative freedom.
 
 ## 🚀 Quick Start
 
@@ -24,24 +24,18 @@ export class YourTeamScene implements TeamSceneInterface {
   readonly teamName = 'Your Team Name'          // Display name
   readonly description = 'Brief description of your scene'
   
-  readonly bounds = {
-    width: 20,   // How wide your scene is (X axis)
-    height: 10,  // How tall your scene is (Y axis) 
-    depth: 15    // How deep your scene is (Z axis)
-  }
-
-  async buildScene(scene: THREE.Scene, position: THREE.Vector3 = new THREE.Vector3(0, 0, 0)): Promise<void> {
-    // Helper function to position objects relative to your scene's origin
-    const pos = (x: number, y: number, z: number) => ({
-      x: position.x + x,
-      y: position.y + y, 
-      z: position.z + z
-    })
+  async buildScene(scene: THREE.Scene): Promise<void> {
+    // Optional: Add a ground plane for traditional earth-based scenes
+    const ground = createGroundPlane({ size: 30, color: COLORS.GRASS })
+    scene.add(ground)
+    
+    // Or for space scenes:
+    // createSpaceEnvironment(scene)
 
     // Build your scene here!
     const house = createBox({
       width: 2, height: 3, depth: 1.5,
-      position: pos(0, 1.5, 0),
+      position: { x: 0, y: 1.5, z: 0 },
       color: COLORS.WOOD
     })
     scene.add(house)
@@ -59,7 +53,7 @@ export class YourTeamScene implements TeamSceneInterface {
         lookAtTarget: new THREE.Vector3(0, 2, 0),
         duration: 3
       }
-      // Add more tour points...
+      // Add more tour points to showcase your creation...
     ]
   }
 
@@ -174,14 +168,10 @@ COLORS.SUNSET_ORANGE, COLORS.EARTH_BROWN
 - **X-axis** points right (positive X = to the right)
 - **Z-axis** points toward the camera (positive Z = toward viewer)
 
-Always use the `pos()` helper function to ensure your objects work correctly in the master scene:
+Position objects using direct coordinate objects:
 
 ```typescript
-const pos = (x: number, y: number, z: number) => ({
-  x: position.x + x,
-  y: position.y + y, 
-  z: position.z + z
-})
+position: { x: 0, y: 1.5, z: 0 }  // x: right/left, y: up/down, z: forward/back
 ```
 
 ## 🎬 Tour Points (Optional but Recommended!)
@@ -249,20 +239,20 @@ getTourPoints(): TourPoint[] {
 
 ## ✅ Best Practices
 
-### 1. Scene Bounds
-Set realistic bounds that encompass your entire scene:
+### 1. Environment Setup
+Choose your environment - add a ground plane for traditional scenes or create space environments:
 ```typescript
-readonly bounds = {
-  width: 20,   // Your scene shouldn't extend beyond ±10 on X
-  height: 8,   // Tallest object should be around 8 units
-  depth: 15    // Your scene shouldn't extend beyond ±7.5 on Z
-}
+// Traditional ground-based scene
+const ground = createGroundPlane({ size: 30, color: COLORS.GRASS })
+
+// Or space environment
+createSpaceEnvironment(scene)
 ```
 
-### 2. Ground Level
+### 2. Object Positioning
 - Place objects on the ground (Y = 0) or above
-- Use `position: pos(x, height/2, z)` to place objects on the ground
-- The master scene provides a ground plane at Y = 0
+- Use `position: { x: 0, y: height/2, z: 0 }` to place objects on the ground
+- Create your own environment with complete freedom
 
 ### 3. Performance
 - Don't create too many objects (< 100 recommended)
@@ -283,7 +273,7 @@ readonly bounds = {
 
 ### Objects Not Visible
 1. Check Y positions (objects at Y=0 might be underground)
-2. Verify your bounds are large enough
+2. Make sure objects are within reasonable range of origin
 3. Use the scene preview to debug positioning
 
 ### Tour Not Working
@@ -294,7 +284,7 @@ readonly bounds = {
 ### Invalid Scene Error
 1. Make sure all required interface properties are implemented
 2. Check that `buildScene` is an async function
-3. Verify `bounds` has `width`, `height`, and `depth` properties
+3. Verify your scene class implements `TeamSceneInterface`
 
 ## 🎯 Workshop Timeline
 
@@ -315,11 +305,9 @@ readonly bounds = {
 - Test tour points
 - See how your scene fits with others!
 
-## 🚀 Ready for the Magic?
+## 🚀 Ready to Create?
 
-When all teams are done, we'll combine every scene into one massive virtual world where you can explore all the districts created by different teams. Your scene becomes a neighborhood in a larger city!
-
-The grand tour will take everyone through all the scenes, showcasing the amazing diversity and creativity of all the teams.
+Build amazing 3D worlds with complete creative freedom! Your scene is your canvas - create anything from medieval villages to space stations to underwater worlds.
 
 ---
 

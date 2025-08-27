@@ -1,35 +1,26 @@
 import * as THREE from 'three'
 import type { TeamSceneInterface, TourPoint } from '../../types/scene'
-import { createBox, createSphere, createCylinder, COLORS } from '../../utils/primitives'
+import { createBox, createSphere, createCylinder, createSpaceEnvironment, COLORS } from '../../utils/primitives'
 
 /**
  * Example team scene: Space Station Builders
  * 
- * This demonstrates a futuristic space station with modules, corridors, and arrays
- * Using metallic colors and geometric shapes to create a sci-fi aesthetic
+ * Demonstrates a space environment with no ground plane
+ * Shows how teams can create any environment they want
  */
 export class SpaceStationScene implements TeamSceneInterface {
   readonly teamId = 'space-station'
   readonly teamName = 'Space Station Builders'
   readonly description = 'A modular orbital space station with command modules and solar arrays'
-  
-  readonly bounds = {
-    width: 25,   // Station spans 25 units
-    height: 12,  // Tallest arrays reach 12 units
-    depth: 18    // Station depth is 18 units
-  }
 
-  async buildScene(scene: THREE.Scene, position: THREE.Vector3 = new THREE.Vector3(0, 0, 0)): Promise<void> {
-    const pos = (x: number, y: number, z: number) => ({
-      x: position.x + x,
-      y: position.y + y, 
-      z: position.z + z
-    })
+  async buildScene(scene: THREE.Scene): Promise<void> {
+    // Optional: Create space environment with stars and dark background
+    createSpaceEnvironment(scene)
 
     // Central command module (large box)
     const commandModule = createBox({
       width: 6, height: 4, depth: 3,
-      position: pos(0, 2, 0),
+      position: { x: 0, y: 2, z: 0 },
       color: COLORS.SILVER
     })
     scene.add(commandModule)
@@ -37,7 +28,7 @@ export class SpaceStationScene implements TeamSceneInterface {
     // Command module antenna
     const antenna = createSphere({
       radius: 0.3,
-      position: pos(0, 4.5, 0),
+      position: { x: 0, y: 4.5, z: 0 },
       color: COLORS.RED
     })
     scene.add(antenna)
@@ -45,7 +36,7 @@ export class SpaceStationScene implements TeamSceneInterface {
     // Left habitat module
     const habitatLeft = createCylinder({
       radiusTop: 1.5, radiusBottom: 1.5, height: 8,
-      position: pos(-8, 2, 0),
+      position: { x: -8, y: 2, z: 0 },
       color: COLORS.METAL,
       rotation: { x: 0, y: 0, z: Math.PI / 2 }
     })
@@ -54,7 +45,7 @@ export class SpaceStationScene implements TeamSceneInterface {
     // Right habitat module
     const habitatRight = createCylinder({
       radiusTop: 1.5, radiusBottom: 1.5, height: 8,
-      position: pos(8, 2, 0),
+      position: { x: 8, y: 2, z: 0 },
       color: COLORS.METAL,
       rotation: { x: 0, y: 0, z: Math.PI / 2 }
     })
@@ -63,14 +54,14 @@ export class SpaceStationScene implements TeamSceneInterface {
     // Connecting corridors
     const corridorLeft = createBox({
       width: 4, height: 0.8, depth: 0.8,
-      position: pos(-4, 2, 0),
+      position: { x: -4, y: 2, z: 0 },
       color: COLORS.GRAY
     })
     scene.add(corridorLeft)
 
     const corridorRight = createBox({
       width: 4, height: 0.8, depth: 0.8,
-      position: pos(4, 2, 0),
+      position: { x: 4, y: 2, z: 0 },
       color: COLORS.GRAY
     })
     scene.add(corridorRight)
@@ -78,14 +69,14 @@ export class SpaceStationScene implements TeamSceneInterface {
     // Solar panel arrays (top)
     const solarPanelTop1 = createBox({
       width: 12, height: 0.2, depth: 6,
-      position: pos(0, 8, -6),
+      position: { x: 0, y: 8, z: -6 },
       color: COLORS.BLUE
     })
     scene.add(solarPanelTop1)
 
     const solarPanelTop2 = createBox({
       width: 12, height: 0.2, depth: 6,
-      position: pos(0, 8, 6),
+      position: { x: 0, y: 8, z: 6 },
       color: COLORS.BLUE
     })
     scene.add(solarPanelTop2)
@@ -93,28 +84,28 @@ export class SpaceStationScene implements TeamSceneInterface {
     // Solar panel support struts
     const strutTop1 = createBox({
       width: 0.3, height: 6, depth: 0.3,
-      position: pos(-5, 5, -6),
+      position: { x: -5, y: 5, z: -6 },
       color: COLORS.METAL
     })
     scene.add(strutTop1)
 
     const strutTop2 = createBox({
       width: 0.3, height: 6, depth: 0.3,
-      position: pos(5, 5, -6),
+      position: { x: 5, y: 5, z: -6 },
       color: COLORS.METAL
     })
     scene.add(strutTop2)
 
     const strutTop3 = createBox({
       width: 0.3, height: 6, depth: 0.3,
-      position: pos(-5, 5, 6),
+      position: { x: -5, y: 5, z: 6 },
       color: COLORS.METAL
     })
     scene.add(strutTop3)
 
     const strutTop4 = createBox({
       width: 0.3, height: 6, depth: 0.3,
-      position: pos(5, 5, 6),
+      position: { x: 5, y: 5, z: 6 },
       color: COLORS.METAL
     })
     scene.add(strutTop4)
@@ -122,7 +113,7 @@ export class SpaceStationScene implements TeamSceneInterface {
     // Docking bay
     const dockingBay = createBox({
       width: 2, height: 2, depth: 4,
-      position: pos(0, 1, -5),
+      position: { x: 0, y: 1, z: -5 },
       color: COLORS.YELLOW
     })
     scene.add(dockingBay)
@@ -130,7 +121,7 @@ export class SpaceStationScene implements TeamSceneInterface {
     // Communication dishes
     const dish1 = createSphere({
       radius: 1,
-      position: pos(-10, 4, 3),
+      position: { x: -10, y: 4, z: 3 },
       color: COLORS.WHITE,
       scale: { x: 2, y: 0.3, z: 2 }
     })
@@ -138,7 +129,7 @@ export class SpaceStationScene implements TeamSceneInterface {
 
     const dish2 = createSphere({
       radius: 1,
-      position: pos(10, 4, -3),
+      position: { x: 10, y: 4, z: -3 },
       color: COLORS.WHITE,
       scale: { x: 2, y: 0.3, z: 2 }
     })
@@ -147,21 +138,21 @@ export class SpaceStationScene implements TeamSceneInterface {
     // Engine thrusters (small cylinders)
     const thruster1 = createCylinder({
       radiusTop: 0.3, radiusBottom: 0.5, height: 1.5,
-      position: pos(-2, 0.75, 2),
+      position: { x: -2, y: 0.75, z: 2 },
       color: COLORS.ORANGE
     })
     scene.add(thruster1)
 
     const thruster2 = createCylinder({
       radiusTop: 0.3, radiusBottom: 0.5, height: 1.5,
-      position: pos(0, 0.75, 2),
+      position: { x: 0, y: 0.75, z: 2 },
       color: COLORS.ORANGE
     })
     scene.add(thruster2)
 
     const thruster3 = createCylinder({
       radiusTop: 0.3, radiusBottom: 0.5, height: 1.5,
-      position: pos(2, 0.75, 2),
+      position: { x: 2, y: 0.75, z: 2 },
       color: COLORS.ORANGE
     })
     scene.add(thruster3)
@@ -169,14 +160,14 @@ export class SpaceStationScene implements TeamSceneInterface {
     // External storage pods
     const storagePod1 = createSphere({
       radius: 0.8,
-      position: pos(-3, 4.5, -1),
+      position: { x: -3, y: 4.5, z: -1 },
       color: COLORS.METAL
     })
     scene.add(storagePod1)
 
     const storagePod2 = createSphere({
       radius: 0.8,
-      position: pos(3, 4.5, -1),
+      position: { x: 3, y: 4.5, z: -1 },
       color: COLORS.METAL
     })
     scene.add(storagePod2)

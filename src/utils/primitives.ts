@@ -255,3 +255,56 @@ export const createPrimitive = (type: PrimitiveType, options: PrimitiveOptions =
       return createBox(options as BoxOptions)
   }
 }
+
+// Environment Helpers - Optional utilities for different scene types
+
+/**
+ * Creates a large ground plane for traditional earth-based scenes
+ * Optional helper - teams can choose to use this or create their own environment
+ */
+export const createGroundPlane = (options: {
+  size?: number
+  color?: number
+  position?: { x: number; y: number; z: number }
+} = {}): THREE.Mesh => {
+  const groundSize = options.size ?? 50
+  const ground = createPlane({
+    width: groundSize,
+    height: groundSize,
+    color: options.color ?? COLORS.GRASS,
+    position: options.position ?? { x: 0, y: 0, z: 0 },
+    rotation: { x: -Math.PI / 2, y: 0, z: 0 } // Rotate to be horizontal
+  })
+  ground.receiveShadow = true
+  ground.castShadow = false
+  return ground
+}
+
+/**
+ * Creates a space environment setup with dark background and lighting
+ * Optional helper for space-themed scenes
+ */
+export const createSpaceEnvironment = (scene: THREE.Scene): void => {
+  // Set space-like background
+  scene.background = new THREE.Color(0x000011)
+  
+  // Add some distant stars as small white points
+  const starsGeometry = new THREE.BufferGeometry()
+  const starsMaterial = new THREE.PointsMaterial({ color: 0xFFFFFF, size: 2 })
+  
+  const starsVertices = []
+  for (let i = 0; i < 1000; i++) {
+    const x = (Math.random() - 0.5) * 200
+    const y = (Math.random() - 0.5) * 200 
+    const z = (Math.random() - 0.5) * 200
+    starsVertices.push(x, y, z)
+  }
+  
+  starsGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starsVertices, 3))
+  const stars = new THREE.Points(starsGeometry, starsMaterial)
+  scene.add(stars)
+  
+  // Add ambient light for space visibility
+  const ambientLight = new THREE.AmbientLight(0x404040, 0.3)
+  scene.add(ambientLight)
+}

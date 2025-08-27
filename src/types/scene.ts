@@ -1,8 +1,8 @@
 import * as THREE from 'three'
 
 /**
- * Strict interface that all team scenes must implement
- * This ensures compatibility with the master scene system
+ * Interface that all team scenes must implement
+ * Teams have complete creative freedom within this simple structure
  */
 export interface TeamSceneInterface {
   /**
@@ -12,7 +12,7 @@ export interface TeamSceneInterface {
   readonly teamId: string
 
   /**
-   * Display name for the team (shown in master scene labels)
+   * Display name for the team
    */
   readonly teamName: string
 
@@ -22,24 +22,13 @@ export interface TeamSceneInterface {
   readonly description: string
 
   /**
-   * Estimated bounding box dimensions for scene positioning
-   * Used by master scene to arrange districts properly
-   */
-  readonly bounds: {
-    width: number   // X-axis extent
-    height: number  // Y-axis extent  
-    depth: number   // Z-axis extent
-  }
-
-  /**
    * Build and populate the team's scene
-   * This method will be called by both individual preview and master scene
+   * Create your 3D world with complete creative freedom!
    * 
    * @param scene - THREE.Scene to add objects to
-   * @param position - World position offset (provided by master scene)
    * @returns Promise that resolves when scene building is complete
    */
-  buildScene(scene: THREE.Scene, position?: THREE.Vector3): Promise<void>
+  buildScene(scene: THREE.Scene): Promise<void>
 
   /**
    * Optional cleanup method called when scene is removed
@@ -49,13 +38,13 @@ export interface TeamSceneInterface {
 
   /**
    * Optional method to get tour points of interest in this scene
-   * Used by master scene for the guided tour feature
+   * Create cinematic camera positions to showcase your work!
    */
   getTourPoints?(): TourPoint[]
 }
 
 /**
- * Tour point definition for guided tours in master scene
+ * Tour point definition for guided tours
  */
 export interface TourPoint {
   /**
@@ -70,13 +59,11 @@ export interface TourPoint {
 
   /**
    * Camera position for viewing this point
-   * Relative to the scene's origin position
    */
   cameraPosition: THREE.Vector3
 
   /**
    * Camera look-at target
-   * Relative to the scene's origin position
    */
   lookAtTarget: THREE.Vector3
 
@@ -87,34 +74,9 @@ export interface TourPoint {
 }
 
 /**
- * Scene registry entry used by master scene
+ * Scene registry entry
  */
 export interface SceneRegistryEntry {
   sceneClass: new () => TeamSceneInterface
   enabled: boolean
-}
-
-/**
- * Master scene configuration
- */
-export interface MasterSceneConfig {
-  /**
-   * Spacing between team districts
-   */
-  districtSpacing: number
-
-  /**
-   * Maximum teams per row in the grid layout
-   */
-  maxTeamsPerRow: number
-
-  /**
-   * Whether to show team labels in the master scene
-   */
-  showTeamLabels: boolean
-
-  /**
-   * Whether to automatically start the tour
-   */
-  autoStartTour: boolean
 }

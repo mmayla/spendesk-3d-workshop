@@ -9,9 +9,7 @@ import ScenePreview from './ScenePreview'
  * - Individual scene previews
  * - Combined scene view
  */
-export default function TeamSelector({ onShowMasterScene }: { 
-  onShowMasterScene: () => void 
-}) {
+export default function TeamSelector() {
   const [selectedTeam, setSelectedTeam] = useState<string | null>(null)
 
   const sceneMetadata = getSceneMetadata()
@@ -57,26 +55,9 @@ export default function TeamSelector({ onShowMasterScene }: {
             fontSize: '18px',
             lineHeight: '1.5'
           }}>
-            Teams build individual 3D scenes using Three.js primitives. Preview your scene in isolation or see how they all combine together.
+            Teams build individual 3D scenes using Three.js primitives. Create your unique 3D world with complete creative freedom.
           </p>
           
-          <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
-            <button
-              onClick={onShowMasterScene}
-              style={{
-                padding: '12px 24px',
-                backgroundColor: '#28a745',
-                color: 'white',
-                border: 'none',
-                borderRadius: '8px',
-                cursor: 'pointer',
-                fontSize: '16px',
-                fontWeight: '500'
-              }}
-            >
-              🌍 View All Scenes
-            </button>
-          </div>
         </div>
 
         {/* Scenes Grid */}
@@ -148,14 +129,11 @@ export default function TeamSelector({ onShowMasterScene }: {
                       fontSize: '14px',
                       color: '#555',
                       display: 'flex',
-                      justifyContent: 'space-between',
+                      justifyContent: 'flex-end',
                       alignItems: 'center'
                     }}>
                       <div>
-                        <strong>Size:</strong> {scene.bounds.width}×{scene.bounds.height} units
-                      </div>
-                      <div>
-                        {scene.hasTourPoints && '🎬'}
+                        {scene.hasTourPoints && '🎬 Has Tour'}
                       </div>
                     </div>
                     

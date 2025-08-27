@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import type { TeamSceneInterface, TourPoint } from '../../types/scene'
-import { createBox, createSphere, createCylinder, createCone, COLORS } from '../../utils/primitives'
+import { createBox, createSphere, createCylinder, createCone, createGroundPlane, COLORS } from '../../utils/primitives'
 
 /**
  * Template Scene - Copy this file to create your team's scene!
@@ -16,34 +16,31 @@ export class TemplateScene implements TeamSceneInterface {
   readonly teamId = 'team-template'        // MUST match your folder name
   readonly teamName = 'Template Team'      // Your team's display name
   readonly description = 'A template scene for teams to copy and customize'
-  
-  // TODO: Set realistic bounds for your scene
-  readonly bounds = {
-    width: 20,   // How wide your scene is (X axis)
-    height: 10,  // How tall your scene is (Y axis) 
-    depth: 15    // How deep your scene is (Z axis)
-  }
 
   /**
    * Build your 3D scene here!
+   * Create your unique 3D world with complete creative freedom!
    * 
    * @param scene - The Three.js scene to add objects to
-   * @param position - World position offset (automatically provided)
    */
-  async buildScene(scene: THREE.Scene, position: THREE.Vector3 = new THREE.Vector3(0, 0, 0)): Promise<void> {
-    // Helper function to position objects relative to your scene's origin
-    const pos = (x: number, y: number, z: number) => ({
-      x: position.x + x,
-      y: position.y + y, 
-      z: position.z + z
+  async buildScene(scene: THREE.Scene): Promise<void> {
+    // Option 1: Add ground plane for traditional earth-based scenes
+    const ground = createGroundPlane({
+      size: 30,
+      color: COLORS.GRASS
     })
-
+    scene.add(ground)
+    
+    // Option 2: For space scenes, uncomment this instead:
+    // import { createSpaceEnvironment } from '../../utils/primitives'
+    // createSpaceEnvironment(scene)
+    
     // TODO: Replace this example with your scene!
     
     // Example: Simple house
     const house = createBox({
       width: 3, height: 3, depth: 2,
-      position: pos(0, 1.5, 0),
+      position: { x: 0, y: 1.5, z: 0 },
       color: COLORS.WOOD
     })
     scene.add(house)
@@ -51,7 +48,7 @@ export class TemplateScene implements TeamSceneInterface {
     // Example: House roof
     const roof = createCone({
       radius: 2.2, height: 1.8,
-      position: pos(0, 3.9, 0),
+      position: { x: 0, y: 3.9, z: 0 },
       color: COLORS.RED
     })
     scene.add(roof)
@@ -59,14 +56,14 @@ export class TemplateScene implements TeamSceneInterface {
     // Example: Tree
     const trunk = createCylinder({
       radiusTop: 0.3, radiusBottom: 0.3, height: 2,
-      position: pos(-5, 1, 0),
+      position: { x: -5, y: 1, z: 0 },
       color: COLORS.TREE_TRUNK
     })
     scene.add(trunk)
 
     const leaves = createSphere({
       radius: 1.5,
-      position: pos(-5, 3, 0),
+      position: { x: -5, y: 3, z: 0 },
       color: COLORS.TREE_LEAVES
     })
     scene.add(leaves)
@@ -74,7 +71,7 @@ export class TemplateScene implements TeamSceneInterface {
     // Example: Ground decoration
     const flower = createSphere({
       radius: 0.3,
-      position: pos(2, 0.3, 2),
+      position: { x: 2, y: 0.3, z: 2 },
       color: COLORS.PINK
     })
     scene.add(flower)

@@ -1,36 +1,30 @@
 import * as THREE from 'three'
 import type { TeamSceneInterface, TourPoint } from '../../types/scene'
-import { createBox, createSphere, createCylinder, createCone, COLORS } from '../../utils/primitives'
+import { createBox, createSphere, createCylinder, createCone, createGroundPlane, COLORS } from '../../utils/primitives'
 
 /**
  * Example team scene: Village Builders
  * 
  * This demonstrates how teams should implement their scenes
- * Following the TeamSceneInterface contract
+ * Shows complete creative freedom with optional ground plane
  */
 export class VillageScene implements TeamSceneInterface {
   readonly teamId = 'village-builders'
   readonly teamName = 'Village Builders'
   readonly description = 'A peaceful medieval village with houses, trees, and a well'
-  
-  readonly bounds = {
-    width: 20,   // Village spans 20 units in X
-    height: 8,   // Tallest building is ~8 units
-    depth: 15    // Village spans 15 units in Z
-  }
 
-  async buildScene(scene: THREE.Scene, position: THREE.Vector3 = new THREE.Vector3(0, 0, 0)): Promise<void> {
-    // All positions are relative to the provided position offset
-    const pos = (x: number, y: number, z: number) => ({
-      x: position.x + x,
-      y: position.y + y, 
-      z: position.z + z
+  async buildScene(scene: THREE.Scene): Promise<void> {
+    // Optional: Add a ground plane (teams can choose to use this or not)
+    const ground = createGroundPlane({
+      size: 30,
+      color: COLORS.GRASS
     })
+    scene.add(ground)
 
     // Main house with chimney
     const house = createBox({
       width: 3, height: 3, depth: 2,
-      position: pos(0, 1.5, 0),
+      position: { x: 0, y: 1.5, z: 0 },
       color: COLORS.WOOD
     })
     scene.add(house)
@@ -38,7 +32,7 @@ export class VillageScene implements TeamSceneInterface {
     // House roof
     const roof = createCone({
       radius: 2.2, height: 1.8,
-      position: pos(0, 3.9, 0),
+      position: { x: 0, y: 3.9, z: 0 },
       color: COLORS.RED
     })
     scene.add(roof)
@@ -46,7 +40,7 @@ export class VillageScene implements TeamSceneInterface {
     // Chimney
     const chimney = createBox({
       width: 0.6, height: 1.5, depth: 0.6,
-      position: pos(-1, 4.2, -0.5),
+      position: { x: -1, y: 4.2, z: -0.5 },
       color: COLORS.STONE
     })
     scene.add(chimney)
@@ -54,14 +48,14 @@ export class VillageScene implements TeamSceneInterface {
     // Oak tree
     const trunk1 = createCylinder({
       radiusTop: 0.3, radiusBottom: 0.3, height: 2,
-      position: pos(-6, 1, 0),
+      position: { x: -6, y: 1, z: 0 },
       color: COLORS.TREE_TRUNK
     })
     scene.add(trunk1)
 
     const leaves1 = createSphere({
       radius: 1.8,
-      position: pos(-6, 3, 0),
+      position: { x: -6, y: 3, z: 0 },
       color: COLORS.TREE_LEAVES
     })
     scene.add(leaves1)
@@ -69,14 +63,14 @@ export class VillageScene implements TeamSceneInterface {
     // Pine tree
     const trunk2 = createCylinder({
       radiusTop: 0.2, radiusBottom: 0.2, height: 2.5,
-      position: pos(4, 1.25, -3),
+      position: { x: 4, y: 1.25, z: -3 },
       color: COLORS.TREE_TRUNK
     })
     scene.add(trunk2)
 
     const pine = createCone({
       radius: 1.2, height: 2,
-      position: pos(4, 3.5, -3),
+      position: { x: 4, y: 3.5, z: -3 },
       color: COLORS.TREE_LEAVES
     })
     scene.add(pine)
@@ -84,14 +78,14 @@ export class VillageScene implements TeamSceneInterface {
     // Village well
     const wellBase = createCylinder({
       radiusTop: 1.5, radiusBottom: 1.5, height: 1.6,
-      position: pos(-2, 0.8, 4),
+      position: { x: -2, y: 0.8, z: 4 },
       color: COLORS.STONE
     })
     scene.add(wellBase)
 
     const wellRoof = createCone({
       radius: 1.8, height: 1.2,
-      position: pos(-2, 2.5, 4),
+      position: { x: -2, y: 2.5, z: 4 },
       color: COLORS.WOOD
     })
     scene.add(wellRoof)
@@ -100,7 +94,7 @@ export class VillageScene implements TeamSceneInterface {
     for (let i = 0; i < 3; i++) {
       const fencePost = createBox({
         width: 0.3, height: 1.6, depth: 0.3,
-        position: pos(2 + i, 0.8, 2),
+        position: { x: 2 + i, y: 0.8, z: 2 },
         color: COLORS.WOOD
       })
       scene.add(fencePost)
@@ -108,7 +102,7 @@ export class VillageScene implements TeamSceneInterface {
 
     const fenceRail = createBox({
       width: 2.4, height: 0.2, depth: 0.2,
-      position: pos(2.5, 1.2, 2),
+      position: { x: 2.5, y: 1.2, z: 2 },
       color: COLORS.WOOD
     })
     scene.add(fenceRail)
@@ -116,14 +110,14 @@ export class VillageScene implements TeamSceneInterface {
     // Flower decorations
     const flower1 = createSphere({
       radius: 0.3,
-      position: pos(1, 0.3, 1),
+      position: { x: 1, y: 0.3, z: 1 },
       color: COLORS.RED
     })
     scene.add(flower1)
 
     const flower2 = createSphere({
       radius: 0.3,
-      position: pos(1.5, 0.3, 0.5),
+      position: { x: 1.5, y: 0.3, z: 0.5 },
       color: COLORS.YELLOW
     })
     scene.add(flower2)
@@ -131,14 +125,14 @@ export class VillageScene implements TeamSceneInterface {
     // Small storage shed
     const shed = createBox({
       width: 1.5, height: 1.5, depth: 1,
-      position: pos(6, 0.75, 2),
+      position: { x: 6, y: 0.75, z: 2 },
       color: COLORS.WOOD
     })
     scene.add(shed)
 
     const shedRoof = createBox({
       width: 1.8, height: 0.3, depth: 1.3,
-      position: pos(6, 1.65, 2),
+      position: { x: 6, y: 1.65, z: 2 },
       color: COLORS.STONE
     })
     scene.add(shedRoof)
