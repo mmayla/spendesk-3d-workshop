@@ -374,8 +374,19 @@ export default function ScenePreview({
     rendererRef.current.setSize(window.innerWidth, window.innerHeight);
   };
 
+  const lastTimeRef = useRef<number>(performance.now());
+
   const animate = () => {
     if (!rendererRef.current || !sceneRef.current || !cameraRef.current) return;
+
+    const currentTime = performance.now();
+    const deltaTime = (currentTime - lastTimeRef.current) / 1000; // Convert to seconds
+    lastTimeRef.current = currentTime;
+
+    // Call scene animation if available
+    if (sceneInstance?.animate) {
+      sceneInstance.animate(deltaTime);
+    }
 
     rendererRef.current.render(sceneRef.current, cameraRef.current);
     animationIdRef.current = requestAnimationFrame(animate);

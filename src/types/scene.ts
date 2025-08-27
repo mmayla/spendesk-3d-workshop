@@ -35,6 +35,14 @@ export interface SceneInterface {
    * Create cinematic camera positions to showcase your work!
    */
   getTourPoints?(): TourPoint[];
+
+  /**
+   * Optional method called each frame for animations
+   * Use this to animate objects in your scene!
+   *
+   * @param deltaTime - Time in seconds since last frame
+   */
+  animate?(deltaTime: number): void;
 }
 
 /**

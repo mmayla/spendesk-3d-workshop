@@ -17,6 +17,8 @@ export class VillageScene implements SceneInterface {
   readonly description =
     'A peaceful medieval village with houses, trees, and a well';
 
+  private cloud?: THREE.Mesh;
+
   async buildScene(scene: THREE.Scene): Promise<void> {
     createBasicLighting(scene);
 
@@ -161,6 +163,27 @@ export class VillageScene implements SceneInterface {
       color: COLORS.STONE,
     });
     scene.add(shedRoof);
+
+    // Animated cloud in the sky
+    this.cloud = createSphere({
+      radius: 1.2,
+      position: { x: -10, y: 8, z: 3 },
+      color: COLORS.WHITE,
+      scale: { x: 2, y: 1, z: 1.5 },
+    });
+    scene.add(this.cloud);
+  }
+
+  animate(deltaTime: number): void {
+    if (this.cloud) {
+      // Move cloud slowly across the sky
+      this.cloud.position.x += deltaTime * 2; // 2 units per second
+      
+      // Reset cloud position when it goes too far
+      if (this.cloud.position.x > 15) {
+        this.cloud.position.x = -15;
+      }
+    }
   }
 
   getTourPoints(): TourPoint[] {
@@ -195,6 +218,14 @@ export class VillageScene implements SceneInterface {
         cameraPosition: new THREE.Vector3(-9, 5, 3),
         lookAtTarget: new THREE.Vector3(-6, 3, 0),
         duration: 2,
+      },
+      {
+        name: 'Sky View',
+        description:
+          'Look up to see the peaceful clouds drifting across the village sky.',
+        cameraPosition: new THREE.Vector3(0, 5, 10),
+        lookAtTarget: new THREE.Vector3(0, 8, 0),
+        duration: 3,
       },
     ];
   }
