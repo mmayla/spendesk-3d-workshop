@@ -285,13 +285,4 @@ createSpaceEnvironment(scene);
 
 Build amazing 3D worlds with complete creative freedom! Your scene is your canvas - create anything from medieval villages to space stations to underwater worlds.
 
----
-
-**Need help?** Ask your instructors or check the example scenes in:
-
-- `src/scenes/village-builders/VillageScene.ts`
-- `src/scenes/space-station/SpaceStationScene.ts`
-- `src/scenes/ancient-temple/TempleScene.ts`
-- `src/scenes/carnival/CarnivalScene.ts`
-
 **Happy building! 🎉**

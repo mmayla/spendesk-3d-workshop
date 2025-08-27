@@ -42,8 +42,7 @@ src/
 ├── types/               # TypeScript type definitions
 │   └── scene.ts            # Scene interface definitions
 ├── utils/               # Three.js utilities
-│   ├── primitives.ts       # Shape creation functions
-│   └── sceneCombiner.ts    # Scene management utilities
+│   └── primitives.ts       # Shape creation functions
 └── hooks/               # Custom React hooks
 ```
 
