@@ -24,7 +24,7 @@ export class SpaceStationScene implements SceneInterface {
   async buildScene(scene: THREE.Scene): Promise<void> {
     // Create space environment with stars and dark background
     createSpaceEnvironment(scene);
-    
+
     // Add better lighting for space station visibility
     createBasicLighting(scene);
 

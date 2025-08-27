@@ -357,7 +357,7 @@ export const createBasicLighting = (scene: THREE.Scene): void => {
   const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
   directionalLight.position.set(50, 50, 25);
   directionalLight.castShadow = true;
-  
+
   // Shadow settings for better quality - larger shadow camera for bigger scenes
   directionalLight.shadow.mapSize.width = 2048;
   directionalLight.shadow.mapSize.height = 2048;
@@ -367,6 +367,6 @@ export const createBasicLighting = (scene: THREE.Scene): void => {
   directionalLight.shadow.camera.right = 50;
   directionalLight.shadow.camera.top = 50;
   directionalLight.shadow.camera.bottom = -50;
-  
+
   scene.add(directionalLight);
 };
