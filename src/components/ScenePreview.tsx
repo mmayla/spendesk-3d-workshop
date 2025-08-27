@@ -83,6 +83,7 @@ export default function ScenePreview({
           return;
         }
 
+        console.log('🔄 Initializing scene data for:', sceneId, 'hotReloadKey:', hotReloadKey);
         setLoading(true);
         setError(null);
 
@@ -94,19 +95,16 @@ export default function ScenePreview({
           );
         }
 
-        // Create scene instance (with cache busting for hot reload)
-        console.log('Creating scene instance for:', sceneId, 'hotReloadKey:', hotReloadKey);
-        
-        // Force module reload by clearing any potential caches
-        if (hotReloadKey > 0) {
-          console.log('Hot reload active - forcing fresh scene creation');
-        }
-        
+        // Create scene instance
         const instance = await createSceneInstance(sceneId);
-        console.log('Scene instance created:', instance);
+        console.log('✅ Scene instance created:', instance.constructor.name, {
+          sceneId: instance.sceneId,
+          sceneName: instance.sceneName,
+          description: instance.description
+        });
         setSceneInstance(instance);
       } catch (error) {
-        console.error('Error creating scene:', error);
+        console.error('❌ Error creating scene:', error);
         setError(
           error instanceof Error ? error.message : 'Failed to create scene'
         );
