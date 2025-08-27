@@ -1,4 +1,4 @@
-# 🎯 3D Scene Building Workshop
+# 🎯 Spendesk 3D Scene Building Workshop
 
 A Three.js workshop platform for building 3D scenes using TypeScript and primitive shapes.
 

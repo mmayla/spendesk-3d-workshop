@@ -61,7 +61,7 @@ export default function SceneSelector() {
               fontWeight: 'bold',
             }}
           >
-            🎯 3D Scene Workshop
+            🎯 Spendesk 3D Scene Workshop
           </h1>
           <p
             style={{
@@ -179,7 +179,7 @@ export default function SceneSelector() {
                         fontWeight: '500',
                       }}
                     >
-                      👁️ Preview Scene
+                      Open Scene
                     </button>
 
                     <div

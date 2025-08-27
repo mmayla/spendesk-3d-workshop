@@ -1,6 +1,6 @@
 # 🎯 Scene Building Guide
 
-Welcome to the **3D Scene Building Workshop**! Your mission is to create an awesome 3D scene using only primitive shapes with complete creative freedom.
+Welcome to the **Spendesk 3D Scene Building Workshop**! Your mission is to create an awesome 3D scene using only primitive shapes with complete creative freedom.
 
 ## 🚀 Quick Start
 
