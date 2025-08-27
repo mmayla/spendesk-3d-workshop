@@ -31,14 +31,18 @@ export default function ScenePreview({ teamId, onBack }: ScenePreviewProps) {
   const tourAnimationRef = useRef<number | undefined>(undefined)
 
   useEffect(() => {
-    initializeScene()
-    
-    return () => {
-      cleanup()
-    }
+    // First validate and create scene instance
+    initializeSceneData()
   }, [teamId])
 
-  const initializeScene = async () => {
+  useEffect(() => {
+    // Initialize Three.js after canvas is rendered
+    if (canvasRef.current && teamScene && !error) {
+      initializeThreeJS()
+    }
+  }, [teamScene, canvasRef.current])
+
+  const initializeSceneData = async () => {
     try {
       setLoading(true)
       setError(null)
@@ -49,10 +53,26 @@ export default function ScenePreview({ teamId, onBack }: ScenePreviewProps) {
       }
 
       // Create scene instance
+      console.log('Creating scene instance for:', teamId)
       const sceneInstance = createSceneInstance(teamId)
+      console.log('Scene instance created:', sceneInstance)
       setTeamScene(sceneInstance)
 
-      if (!canvasRef.current) return
+    } catch (error) {
+      console.error('Error creating scene:', error)
+      setError(error instanceof Error ? error.message : 'Failed to create scene')
+      setLoading(false)
+    }
+  }
+
+  const initializeThreeJS = async () => {
+    try {
+      if (!canvasRef.current || !teamScene) {
+        console.error('Canvas or team scene not available')
+        return
+      }
+
+      console.log('Canvas found, initializing Three.js...')
 
       // Initialize Three.js
       const scene = new THREE.Scene()
@@ -103,19 +123,22 @@ export default function ScenePreview({ teamId, onBack }: ScenePreviewProps) {
       gridHelper.material.transparent = true
       scene.add(gridHelper)
 
-      // Build team scene
-      await sceneInstance.buildScene(scene)
+      // Build team scene at origin for preview
+      console.log('Building scene for team:', teamScene.teamId)
+      await teamScene.buildScene(scene, new THREE.Vector3(0, 0, 0))
+      console.log('Scene built successfully, setting up controls...')
 
       // Add event listeners
       setupEventListeners()
 
       // Start render loop
       animate()
+      console.log('Animation started, preview ready!')
 
       setLoading(false)
     } catch (error) {
-      console.error('Error initializing scene:', error)
-      setError(error instanceof Error ? error.message : 'Failed to load scene')
+      console.error('Error initializing Three.js:', error)
+      setError(error instanceof Error ? error.message : 'Failed to initialize 3D scene')
       setLoading(false)
     }
   }
@@ -279,40 +302,49 @@ export default function ScenePreview({ teamId, onBack }: ScenePreviewProps) {
     }
   }
 
-  if (loading) {
-    return (
-      <div style={{ 
-        display: 'flex', 
-        justifyContent: 'center', 
-        alignItems: 'center', 
-        height: '100vh',
-        backgroundColor: '#f0f0f0'
-      }}>
-        <div>Loading scene...</div>
-      </div>
-    )
-  }
-
-  if (error) {
-    return (
-      <div style={{ 
-        display: 'flex', 
-        flexDirection: 'column',
-        justifyContent: 'center', 
-        alignItems: 'center', 
-        height: '100vh',
-        backgroundColor: '#f0f0f0',
-        gap: '20px'
-      }}>
-        <div style={{ color: 'red', fontSize: '18px' }}>Error loading scene: {error}</div>
-        {onBack && <button onClick={onBack} style={{ padding: '10px 20px', fontSize: '16px' }}>Go Back</button>}
-      </div>
-    )
-  }
-
   return (
     <div style={{ position: 'relative', width: '100%', height: '100vh' }}>
       <canvas ref={canvasRef} style={{ display: 'block' }} />
+      
+      {/* Loading Overlay */}
+      {loading && (
+        <div style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          backgroundColor: 'rgba(240, 240, 240, 0.9)',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          fontSize: '18px',
+          zIndex: 1000
+        }}>
+          Loading scene...
+        </div>
+      )}
+      
+      {/* Error Overlay */}
+      {error && (
+        <div style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          backgroundColor: 'rgba(240, 240, 240, 0.9)',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: '20px',
+          zIndex: 1000
+        }}>
+          <div style={{ color: 'red', fontSize: '18px' }}>Error loading scene: {error}</div>
+          {onBack && <button onClick={onBack} style={{ padding: '10px 20px', fontSize: '16px' }}>Go Back</button>}
+        </div>
+      )}
       
       {/* Scene Info Panel */}
       <div style={{
