@@ -9,16 +9,16 @@ import ScenePreview from './ScenePreview'
  * - Individual scene previews
  * - Combined scene view
  */
-export default function TeamSelector() {
-  const [selectedTeam, setSelectedTeam] = useState<string | null>(null)
+export default function SceneSelector() {
+  const [selectedScene, setSelectedScene] = useState<string | null>(null)
 
   const sceneMetadata = getSceneMetadata()
 
-  if (selectedTeam) {
+  if (selectedScene) {
     return (
       <ScenePreview
-        teamId={selectedTeam}
-        onBack={() => setSelectedTeam(null)}
+        sceneId={selectedScene}
+        onBack={() => setSelectedScene(null)}
       />
     )
   }
@@ -55,7 +55,7 @@ export default function TeamSelector() {
             fontSize: '18px',
             lineHeight: '1.5'
           }}>
-            Teams build individual 3D scenes using Three.js primitives. Create your unique 3D world with complete creative freedom.
+            Build individual 3D scenes using Three.js primitives. Create your unique 3D world with complete creative freedom.
           </p>
           
         </div>
@@ -81,7 +81,7 @@ export default function TeamSelector() {
               <div style={{ fontSize: '48px', marginBottom: '15px' }}>🏗️</div>
               <h3 style={{ margin: '0 0 10px 0' }}>No scenes found</h3>
               <p style={{ margin: '0' }}>
-                Teams need to add their scenes to the registry.
+                Add your scenes to the registry to see them here.
               </p>
             </div>
           ) : (
@@ -95,7 +95,7 @@ export default function TeamSelector() {
                 
                 return (
                   <div
-                    key={scene.teamId}
+                    key={scene.sceneId}
                     style={{
                       backgroundColor: 'white',
                       borderRadius: '12px',
@@ -112,7 +112,7 @@ export default function TeamSelector() {
                         fontSize: '20px',
                         color: '#333'
                       }}>
-                        {scene.teamName}
+                        {scene.sceneName}
                       </h3>
                     </div>
                     
@@ -126,7 +126,7 @@ export default function TeamSelector() {
                     
                     
                     <button
-                      onClick={() => setSelectedTeam(scene.teamId)}
+                      onClick={() => setSelectedScene(scene.sceneId)}
                       style={{
                         width: '100%',
                         padding: '12px',
@@ -148,7 +148,7 @@ export default function TeamSelector() {
                       color: '#888',
                       fontFamily: 'monospace'
                     }}>
-                      ID: {scene.teamId}
+                      ID: {scene.sceneId}
                     </div>
                   </div>
                 )

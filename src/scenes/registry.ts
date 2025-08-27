@@ -1,80 +1,94 @@
 import type { SceneRegistryEntry } from "../types/scene";
 import { VillageScene } from "./village-builders/VillageScene";
 import { SpaceStationScene } from "./space-station/SpaceStationScene";
+import { TemplateScene } from "./team-template/TemplateScene";
 
 /**
- * Central registry for all team scenes
+ * Central registry for all scenes
  *
- * Teams should add their scene classes here to make them available
- * in the preview system.
+ * Add your scene classes here to make them available in the preview system.
  *
- * To add a new team scene:
+ * To add a new scene:
  * 1. Import your scene class at the top
  * 2. Add an entry to SCENE_REGISTRY with your scene class and enabled: true
  * 3. Your scene will automatically appear in the scene selector
  */
-export const SCENE_REGISTRY: Record<string, SceneRegistryEntry> = {
-  "village-builders": {
+export const SCENE_REGISTRY: SceneRegistryEntry[] = [
+  {
     sceneClass: VillageScene,
     enabled: true,
   },
-
-  "space-station": {
+  {
     sceneClass: SpaceStationScene,
     enabled: true,
   },
+  {
+    sceneClass: TemplateScene,
+    enabled: true,
+  },
 
-  // Teams: Add your scene here!
+  // Add your scene here!
   // Example:
-  // 'your-team-name': {
+  // {
   //   sceneClass: YourSceneClass,
   //   enabled: true
   // }
-};
+];
 
 /**
  * Get all enabled scenes from the registry
  */
 export function getEnabledScenes(): SceneRegistryEntry[] {
-  return Object.values(SCENE_REGISTRY).filter((entry) => entry.enabled);
+  return SCENE_REGISTRY.filter((entry) => entry.enabled);
 }
 
 /**
- * Get a specific scene by team ID
+ * Get a specific scene by scene ID
  */
-export function getSceneByTeamId(
-  teamId: string
+export function getSceneBySceneId(
+  sceneId: string
 ): SceneRegistryEntry | undefined {
-  return SCENE_REGISTRY[teamId];
+  return SCENE_REGISTRY.find((entry) => {
+    if (!entry.enabled) return false;
+    const instance = new entry.sceneClass();
+    return instance.sceneId === sceneId;
+  });
 }
 
 /**
- * Get all registered team IDs
+ * Get all registered scene IDs
  */
-export function getAllTeamIds(): string[] {
-  return Object.keys(SCENE_REGISTRY);
+export function getAllSceneIds(): string[] {
+  return SCENE_REGISTRY.map((entry) => {
+    const instance = new entry.sceneClass();
+    return instance.sceneId;
+  });
 }
 
 /**
- * Get all enabled team IDs
+ * Get all enabled scene IDs
  */
-export function getEnabledTeamIds(): string[] {
-  return Object.entries(SCENE_REGISTRY)
-    .filter(([, entry]) => entry.enabled)
-    .map(([teamId]) => teamId);
+export function getEnabledSceneIds(): string[] {
+  return SCENE_REGISTRY
+    .filter((entry) => entry.enabled)
+    .map((entry) => {
+      const instance = new entry.sceneClass();
+      return instance.sceneId;
+    });
 }
 
 /**
- * Create an instance of a team scene
+ * Create an instance of a scene
  */
-export function createSceneInstance(teamId: string) {
-  const entry = SCENE_REGISTRY[teamId];
+export function createSceneInstance(sceneId: string) {
+  const entry = SCENE_REGISTRY.find((entry) => {
+    if (!entry.enabled) return false;
+    const instance = new entry.sceneClass();
+    return instance.sceneId === sceneId;
+  });
+  
   if (!entry) {
-    throw new Error(`Scene not found for team ID: ${teamId}`);
-  }
-
-  if (!entry.enabled) {
-    throw new Error(`Scene is disabled for team ID: ${teamId}`);
+    throw new Error(`Scene not found for scene ID: ${sceneId}`);
   }
 
   return new entry.sceneClass();
@@ -83,28 +97,28 @@ export function createSceneInstance(teamId: string) {
 /**
  * Validate that a team scene implements the required interface
  */
-export function validateSceneInterface(teamId: string): boolean {
+export function validateSceneInterface(sceneId: string): boolean {
   try {
-    const scene = createSceneInstance(teamId);
+    const scene = createSceneInstance(sceneId);
 
     // Check required properties
-    const requiredProps = ["teamId", "teamName", "description", "buildScene"];
+    const requiredProps = ["sceneId", "sceneName", "description", "buildScene"];
     for (const prop of requiredProps) {
       if (!(prop in scene)) {
-        console.error(`Scene ${teamId} missing required property: ${prop}`);
+        console.error(`Scene ${sceneId} missing required property: ${prop}`);
         return false;
       }
     }
 
     // Check buildScene is a function
     if (typeof scene.buildScene !== "function") {
-      console.error(`Scene ${teamId} buildScene is not a function`);
+      console.error(`Scene ${sceneId} buildScene is not a function`);
       return false;
     }
 
     return true;
   } catch (error) {
-    console.error(`Error validating scene ${teamId}:`, error);
+    console.error(`Error validating scene ${sceneId}:`, error);
     return false;
   }
 }
@@ -113,18 +127,18 @@ export function validateSceneInterface(teamId: string): boolean {
  * Get scene metadata for all enabled scenes
  */
 export function getSceneMetadata() {
-  return getEnabledTeamIds()
-    .map((teamId) => {
+  return getEnabledSceneIds()
+    .map((sceneId) => {
       try {
-        const scene = createSceneInstance(teamId);
+        const scene = createSceneInstance(sceneId);
         return {
-          teamId: scene.teamId,
-          teamName: scene.teamName,
+          sceneId: scene.sceneId,
+          sceneName: scene.sceneName,
           description: scene.description,
           hasTourPoints: typeof scene.getTourPoints === "function",
         };
       } catch (error) {
-        console.error(`Error getting metadata for scene ${teamId}:`, error);
+        console.error(`Error getting metadata for scene ${sceneId}:`, error);
         return null;
       }
     })
@@ -137,8 +151,8 @@ export function getSceneMetadata() {
 export function validateAllScenes(): Record<string, boolean> {
   const results: Record<string, boolean> = {};
 
-  for (const teamId of getAllTeamIds()) {
-    results[teamId] = validateSceneInterface(teamId);
+  for (const sceneId of getAllSceneIds()) {
+    results[sceneId] = validateSceneInterface(sceneId);
   }
 
   return results;
@@ -147,14 +161,14 @@ export function validateAllScenes(): Record<string, boolean> {
 // Development mode logging
 if (import.meta.env.DEV) {
   console.log("🎯 Scene Registry Loaded");
-  console.log("📋 Registered Teams:", getAllTeamIds());
-  console.log("✅ Enabled Teams:", getEnabledTeamIds());
+  console.log("📋 Registered Teams:", getAllSceneIds());
+  console.log("✅ Enabled Teams:", getEnabledSceneIds());
 
   // Validate all scenes in development
   const validationResults = validateAllScenes();
   const invalidScenes = Object.entries(validationResults)
     .filter(([, isValid]) => !isValid)
-    .map(([teamId]) => teamId);
+    .map(([sceneId]) => sceneId);
 
   if (invalidScenes.length > 0) {
     console.warn("⚠️  Invalid scenes found:", invalidScenes);

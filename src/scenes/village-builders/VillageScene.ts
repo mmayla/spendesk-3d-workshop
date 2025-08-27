@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import type { TeamSceneInterface, TourPoint } from '../../types/scene'
+import type { SceneInterface, TourPoint } from '../../types/scene'
 import { createBox, createSphere, createCylinder, createCone, createGroundPlane, COLORS } from '../../utils/primitives'
 
 /**
@@ -8,9 +8,9 @@ import { createBox, createSphere, createCylinder, createCone, createGroundPlane,
  * This demonstrates how teams should implement their scenes
  * Shows complete creative freedom with optional ground plane
  */
-export class VillageScene implements TeamSceneInterface {
-  readonly teamId = 'village-builders'
-  readonly teamName = 'Village Builders'
+export class VillageScene implements SceneInterface {
+  readonly sceneId = 'village-builders'
+  readonly sceneName = 'Village Builders'
   readonly description = 'A peaceful medieval village with houses, trees, and a well'
 
   async buildScene(scene: THREE.Scene): Promise<void> {

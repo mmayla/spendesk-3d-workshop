@@ -1,20 +1,20 @@
 import * as THREE from 'three'
 
 /**
- * Interface that all team scenes must implement
- * Teams have complete creative freedom within this simple structure
+ * Interface that all scenes must implement
+ * Create your unique 3D world with complete creative freedom
  */
-export interface TeamSceneInterface {
+export interface SceneInterface {
   /**
-   * Unique identifier for the team/scene
+   * Unique identifier for the scene
    * Must be URL-safe and match the folder name
    */
-  readonly teamId: string
+  readonly sceneId: string
 
   /**
-   * Display name for the team
+   * Display name for the scene
    */
-  readonly teamName: string
+  readonly sceneName: string
 
   /**
    * Brief description of the scene concept
@@ -22,14 +22,13 @@ export interface TeamSceneInterface {
   readonly description: string
 
   /**
-   * Build and populate the team's scene
+   * Build and populate your scene
    * Create your 3D world with complete creative freedom!
    * 
    * @param scene - THREE.Scene to add objects to
    * @returns Promise that resolves when scene building is complete
    */
   buildScene(scene: THREE.Scene): Promise<void>
-
 
   /**
    * Optional method to get tour points of interest in this scene
@@ -72,6 +71,6 @@ export interface TourPoint {
  * Scene registry entry
  */
 export interface SceneRegistryEntry {
-  sceneClass: new () => TeamSceneInterface
+  sceneClass: new () => SceneInterface
   enabled: boolean
 }

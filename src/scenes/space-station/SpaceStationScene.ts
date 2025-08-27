@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import type { TeamSceneInterface, TourPoint } from '../../types/scene'
+import type { SceneInterface, TourPoint } from '../../types/scene'
 import { createBox, createSphere, createCylinder, createSpaceEnvironment, COLORS } from '../../utils/primitives'
 
 /**
@@ -8,9 +8,9 @@ import { createBox, createSphere, createCylinder, createSpaceEnvironment, COLORS
  * Demonstrates a space environment with no ground plane
  * Shows how teams can create any environment they want
  */
-export class SpaceStationScene implements TeamSceneInterface {
-  readonly teamId = 'space-station'
-  readonly teamName = 'Space Station Builders'
+export class SpaceStationScene implements SceneInterface {
+  readonly sceneId = 'space-station'
+  readonly sceneName = 'Space Station Builders'
   readonly description = 'A modular orbital space station with command modules and solar arrays'
 
   async buildScene(scene: THREE.Scene): Promise<void> {

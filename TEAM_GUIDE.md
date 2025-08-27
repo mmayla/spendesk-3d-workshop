@@ -1,27 +1,27 @@
-# 🎯 Team Guide: Building Your 3D Scene
+# 🎯 Scene Building Guide
 
 Welcome to the **3D Scene Building Workshop**! Your mission is to create an awesome 3D scene using only primitive shapes with complete creative freedom.
 
 ## 🚀 Quick Start
 
-### 1. Create Your Team Folder
+### 1. Create Your Scene Folder
 ```bash
-# Create your team's scene folder
-mkdir src/scenes/your-team-name
-cd src/scenes/your-team-name
+# Create your scene folder
+mkdir src/scenes/your-scene-name
+cd src/scenes/your-scene-name
 ```
 
 ### 2. Create Your Scene Class
-Create a new file `YourTeamScene.ts` that implements the `TeamSceneInterface`:
+Create a new file `YourSceneClass.ts` that implements the `SceneInterface`:
 
 ```typescript
 import * as THREE from 'three'
-import { TeamSceneInterface, TourPoint } from '../../types/scene'
+import { SceneInterface, TourPoint } from '../../types/scene'
 import { createBox, createSphere, createCylinder, createCone, COLORS } from '../../utils/primitives'
 
-export class YourTeamScene implements TeamSceneInterface {
-  readonly teamId = 'your-team-name'           // Must match folder name
-  readonly teamName = 'Your Team Name'          // Display name
+export class YourSceneClass implements SceneInterface {
+  readonly sceneId = 'your-scene-name'         // Must match folder name
+  readonly sceneName = 'Your Scene Name'       // Display name
   readonly description = 'Brief description of your scene'
   
   async buildScene(scene: THREE.Scene): Promise<void> {
@@ -64,23 +64,22 @@ export class YourTeamScene implements TeamSceneInterface {
 Add your scene to the registry in `src/scenes/registry.ts`:
 
 ```typescript
-import { YourTeamScene } from './your-team-name/YourTeamScene'
+import { YourSceneClass } from './your-scene-name/YourSceneClass'
 
-export const SCENE_REGISTRY: Record<string, SceneRegistryEntry> = {
+export const SCENE_REGISTRY: SceneRegistryEntry[] = [
   // ... existing scenes ...
-  
-  'your-team-name': {
-    sceneClass: YourTeamScene,
+  {
+    sceneClass: YourSceneClass,
     enabled: true
   }
-}
+];
 ```
 
 ### 4. Test Your Scene
 ```bash
 npm run dev
 ```
-- Navigate to the Team Selector
+- Navigate to the Scene Selector
 - Find your scene in the list
 - Click "Preview Scene" to test it in isolation
 

@@ -4,10 +4,10 @@ import {
   createSceneInstance,
   validateSceneInterface,
 } from "../scenes/registry";
-import type { TeamSceneInterface } from "../types/scene";
+import type { SceneInterface } from "../types/scene";
 
 interface ScenePreviewProps {
-  teamId: string;
+  sceneId: string;
   onBack?: () => void;
 }
 
@@ -18,7 +18,7 @@ interface ScenePreviewProps {
  * - Individual scene previews
  * - Combined scene view
  */
-export default function ScenePreview({ teamId, onBack }: ScenePreviewProps) {
+export default function ScenePreview({ sceneId, onBack }: ScenePreviewProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const sceneRef = useRef<THREE.Scene | undefined>(undefined);
   const rendererRef = useRef<THREE.WebGLRenderer | undefined>(undefined);
@@ -27,7 +27,7 @@ export default function ScenePreview({ teamId, onBack }: ScenePreviewProps) {
   const mouseRef = useRef({ isDown: false, lastX: 0, lastY: 0 });
   const cameraStateRef = useRef({ phi: 0, theta: 0, radius: 15 });
 
-  const [teamScene, setTeamScene] = useState<TeamSceneInterface | null>(null);
+  const [sceneInstance, setSceneInstance] = useState<SceneInterface | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [showTour, setShowTour] = useState(false);
@@ -44,17 +44,17 @@ export default function ScenePreview({ teamId, onBack }: ScenePreviewProps) {
         setError(null);
 
         // Validate scene interface
-        if (!validateSceneInterface(teamId)) {
+        if (!validateSceneInterface(sceneId)) {
           throw new Error(
-            `Scene ${teamId} does not implement the required interface correctly`
+            `Scene ${sceneId} does not implement the required interface correctly`
           );
         }
 
         // Create scene instance
-        console.log("Creating scene instance for:", teamId);
-        const sceneInstance = createSceneInstance(teamId);
-        console.log("Scene instance created:", sceneInstance);
-        setTeamScene(sceneInstance);
+        console.log("Creating scene instance for:", sceneId);
+        const instance = createSceneInstance(sceneId);
+        console.log("Scene instance created:", instance);
+        setSceneInstance(instance);
       } catch (error) {
         console.error("Error creating scene:", error);
         setError(
@@ -65,14 +65,14 @@ export default function ScenePreview({ teamId, onBack }: ScenePreviewProps) {
     };
 
     initializeSceneData();
-  }, [teamId]);
+  }, [sceneId]);
 
   useEffect(() => {
     // Initialize Three.js after canvas is rendered
     const initThreeJS = async () => {
       try {
-        if (!canvasRef.current || !teamScene) {
-          console.error("Canvas or team scene not available");
+        if (!canvasRef.current || !sceneInstance) {
+          console.error("Canvas or scene instance not available");
           return;
         }
 
@@ -128,8 +128,8 @@ export default function ScenePreview({ teamId, onBack }: ScenePreviewProps) {
         scene.add(gridHelper);
 
         // Build team scene at origin for preview
-        console.log("Building scene for team:", teamScene.teamId);
-        await teamScene.buildScene(scene);
+        console.log("Building scene:", sceneInstance.sceneId);
+        await sceneInstance.buildScene(scene);
         console.log("Scene built successfully, setting up controls...");
 
         // Add event listeners
@@ -151,11 +151,11 @@ export default function ScenePreview({ teamId, onBack }: ScenePreviewProps) {
       }
     };
 
-    if (canvasRef.current && teamScene && !error) {
+    if (canvasRef.current && sceneInstance && !error) {
       initThreeJS();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [teamScene, error]);
+  }, [sceneInstance, error]);
 
   const setupEventListeners = () => {
     if (!canvasRef.current) return;
@@ -239,9 +239,9 @@ export default function ScenePreview({ teamId, onBack }: ScenePreviewProps) {
   };
 
   const startTour = () => {
-    if (!teamScene || !teamScene.getTourPoints || !cameraRef.current) return;
+    if (!sceneInstance || !sceneInstance.getTourPoints || !cameraRef.current) return;
 
-    const tourPoints = teamScene.getTourPoints();
+    const tourPoints = sceneInstance.getTourPoints();
     if (tourPoints.length === 0) return;
 
     setShowTour(true);
@@ -286,9 +286,9 @@ export default function ScenePreview({ teamId, onBack }: ScenePreviewProps) {
         if (autoAdvance && isAutoTourRef.current) {
           autoTourTimeoutRef.current = window.setTimeout(() => {
             // Double-check tour is still active
-            if (!isAutoTourRef.current || !teamScene?.getTourPoints) return;
+            if (!isAutoTourRef.current || !sceneInstance?.getTourPoints) return;
 
-            const tourPoints = teamScene.getTourPoints();
+            const tourPoints = sceneInstance.getTourPoints();
             if (tourPoints.length === 0) return;
 
             // Get current point from state and advance
@@ -332,18 +332,18 @@ export default function ScenePreview({ teamId, onBack }: ScenePreviewProps) {
   };
 
   const goToNextTourPoint = () => {
-    if (!teamScene?.getTourPoints) return;
+    if (!sceneInstance?.getTourPoints) return;
     isAutoTourRef.current = false; // Stop auto tour
-    const tourPoints = teamScene.getTourPoints();
+    const tourPoints = sceneInstance.getTourPoints();
     const nextIndex = (currentTourPoint + 1) % tourPoints.length;
     setCurrentTourPoint(nextIndex);
     animateToTourPoint(tourPoints[nextIndex], false);
   };
 
   const goToPreviousTourPoint = () => {
-    if (!teamScene?.getTourPoints) return;
+    if (!sceneInstance?.getTourPoints) return;
     isAutoTourRef.current = false; // Stop auto tour
-    const tourPoints = teamScene.getTourPoints();
+    const tourPoints = sceneInstance.getTourPoints();
     const prevIndex =
       currentTourPoint === 0 ? tourPoints.length - 1 : currentTourPoint - 1;
     setCurrentTourPoint(prevIndex);
@@ -367,7 +367,7 @@ export default function ScenePreview({ teamId, onBack }: ScenePreviewProps) {
         rendererRef.current.dispose();
       }
     };
-  }, [teamScene]);
+  }, [sceneInstance]);
 
   return (
     <div style={{ position: "relative", width: "100%", height: "100vh" }}>
@@ -440,11 +440,11 @@ export default function ScenePreview({ teamId, onBack }: ScenePreviewProps) {
           maxWidth: "300px",
         }}
       >
-        <h3 style={{ margin: "0 0 10px 0" }}>{teamScene?.teamName}</h3>
-        <p style={{ margin: "0 0 10px 0" }}>{teamScene?.description}</p>
+        <h3 style={{ margin: "0 0 10px 0" }}>{sceneInstance?.sceneName}</h3>
+        <p style={{ margin: "0 0 10px 0" }}>{sceneInstance?.description}</p>
         <div style={{ fontSize: "12px", opacity: 0.8 }}>
-          <div>Scene: {teamScene?.teamName}</div>
-          <div>Team ID: {teamScene?.teamId}</div>
+          <div>Scene: {sceneInstance?.sceneName}</div>
+          <div>Scene ID: {sceneInstance?.sceneId}</div>
         </div>
       </div>
 
@@ -499,7 +499,7 @@ export default function ScenePreview({ teamId, onBack }: ScenePreviewProps) {
           </button>
         )}
 
-        {teamScene?.getTourPoints && teamScene.getTourPoints().length > 0 && (
+        {sceneInstance?.getTourPoints && sceneInstance.getTourPoints().length > 0 && (
           <>
             <button
               onClick={showTour ? stopTour : startTour}
@@ -553,7 +553,7 @@ export default function ScenePreview({ teamId, onBack }: ScenePreviewProps) {
       </div>
 
       {/* Tour Status */}
-      {showTour && teamScene?.getTourPoints && (
+      {showTour && sceneInstance?.getTourPoints && (
         <div
           style={{
             position: "absolute",
@@ -569,13 +569,13 @@ export default function ScenePreview({ teamId, onBack }: ScenePreviewProps) {
         >
           <div style={{ fontWeight: "bold", marginBottom: "5px" }}>
             Tour Point: {currentTourPoint + 1} /{" "}
-            {teamScene.getTourPoints().length}
+            {sceneInstance.getTourPoints().length}
           </div>
           <div style={{ marginBottom: "5px" }}>
-            {teamScene.getTourPoints()[currentTourPoint]?.name}
+            {sceneInstance.getTourPoints()[currentTourPoint]?.name}
           </div>
           <div style={{ fontSize: "12px", opacity: 0.8 }}>
-            {teamScene.getTourPoints()[currentTourPoint]?.description}
+            {sceneInstance.getTourPoints()[currentTourPoint]?.description}
           </div>
         </div>
       )}
