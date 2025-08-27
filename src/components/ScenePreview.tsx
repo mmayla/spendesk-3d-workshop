@@ -23,8 +23,13 @@ export default function ScenePreview({
   const rendererRef = useRef<THREE.WebGLRenderer | undefined>(undefined);
   const cameraRef = useRef<THREE.PerspectiveCamera | undefined>(undefined);
   const animationIdRef = useRef<number | undefined>(undefined);
-  const mouseRef = useRef({ isDown: false, lastX: 0, lastY: 0 });
-  const cameraStateRef = useRef({ phi: 0, theta: 0, radius: 15 });
+  const mouseRef = useRef({ isDown: false, lastX: 0, lastY: 0, button: 0 });
+  const cameraStateRef = useRef({
+    phi: 0,
+    theta: 0,
+    radius: 15,
+    lookAtTarget: new THREE.Vector3(0, 2, 0),
+  });
 
   const [sceneInstance, setSceneInstance] = useState<SceneInterface | null>(
     null
@@ -128,8 +133,22 @@ export default function ScenePreview({
           1000
         );
         camera.position.set(15, 10, 15);
-        camera.lookAt(0, 0, 0);
+        camera.lookAt(0, 2, 0);
         cameraRef.current = camera;
+
+        const initialPos = camera.position;
+        const lookAt = new THREE.Vector3(0, 2, 0);
+        const direction = initialPos.clone().sub(lookAt);
+        const radius = direction.length();
+        const theta = Math.acos(direction.y / radius);
+        const phi = Math.atan2(direction.z, direction.x);
+
+        cameraStateRef.current = {
+          phi,
+          theta,
+          radius,
+          lookAtTarget: lookAt.clone(),
+        };
 
         const renderer = new THREE.WebGLRenderer({
           canvas: canvasRef.current,
@@ -197,6 +216,10 @@ export default function ScenePreview({
     canvas.addEventListener('mouseup', onMouseUp);
     canvas.addEventListener('wheel', onWheel);
 
+    // Keyboard controls
+    window.addEventListener('keydown', onKeyDown);
+    window.addEventListener('keyup', onKeyUp);
+
     // Window resize
     window.addEventListener('resize', onWindowResize);
   };
@@ -205,6 +228,7 @@ export default function ScenePreview({
     mouseRef.current.isDown = true;
     mouseRef.current.lastX = event.clientX;
     mouseRef.current.lastY = event.clientY;
+    mouseRef.current.button = event.button;
   };
 
   const onMouseMove = (event: MouseEvent) => {
@@ -213,12 +237,39 @@ export default function ScenePreview({
     const deltaX = event.clientX - mouseRef.current.lastX;
     const deltaY = event.clientY - mouseRef.current.lastY;
 
-    // Update camera rotation
-    cameraStateRef.current.phi -= deltaX * 0.01;
-    cameraStateRef.current.theta = Math.max(
-      0.1,
-      Math.min(Math.PI - 0.1, cameraStateRef.current.theta + deltaY * 0.01)
-    );
+    if (mouseRef.current.button === 0) {
+      // Left mouse button: orbit camera
+      cameraStateRef.current.phi -= deltaX * 0.01;
+      cameraStateRef.current.theta = Math.max(
+        0.1,
+        Math.min(Math.PI - 0.1, cameraStateRef.current.theta + deltaY * 0.01)
+      );
+    } else if (
+      mouseRef.current.button === 1 ||
+      (mouseRef.current.button === 0 && event.shiftKey)
+    ) {
+      // Middle mouse button or Shift+Left: pan the focus target
+      const panSpeed = 0.01;
+      const camera = cameraRef.current;
+
+      // Get camera's right and up vectors for panning
+      const right = new THREE.Vector3();
+      const up = new THREE.Vector3();
+
+      camera.getWorldDirection(new THREE.Vector3()); // This updates the camera's matrix
+      right.setFromMatrixColumn(camera.matrixWorld, 0).normalize();
+      up.setFromMatrixColumn(camera.matrixWorld, 1).normalize();
+
+      // Pan the lookAt target
+      const panX = right.multiplyScalar(
+        (-deltaX * panSpeed * cameraStateRef.current.radius) / 10
+      );
+      const panY = up.multiplyScalar(
+        (deltaY * panSpeed * cameraStateRef.current.radius) / 10
+      );
+
+      cameraStateRef.current.lookAtTarget.add(panX).add(panY);
+    }
 
     updateCameraPosition();
 
@@ -242,15 +293,78 @@ export default function ScenePreview({
   const updateCameraPosition = () => {
     if (!cameraRef.current) return;
 
-    const { phi, theta, radius } = cameraStateRef.current;
+    const { phi, theta, radius, lookAtTarget } = cameraStateRef.current;
 
-    const x = radius * Math.sin(theta) * Math.cos(phi);
-    const y = radius * Math.cos(theta);
-    const z = radius * Math.sin(theta) * Math.sin(phi);
+    const x = radius * Math.sin(theta) * Math.cos(phi) + lookAtTarget.x;
+    const y = radius * Math.cos(theta) + lookAtTarget.y;
+    const z = radius * Math.sin(theta) * Math.sin(phi) + lookAtTarget.z;
 
     cameraRef.current.position.set(x, y, z);
-    cameraRef.current.lookAt(0, 2, 0);
+    cameraRef.current.lookAt(lookAtTarget);
   };
+
+  const keysPressed = useRef(new Set<string>());
+
+  const onKeyDown = (event: KeyboardEvent) => {
+    keysPressed.current.add(event.code);
+  };
+
+  const onKeyUp = (event: KeyboardEvent) => {
+    keysPressed.current.delete(event.code);
+  };
+
+  useEffect(() => {
+    const handleKeyboardMovement = () => {
+      if (!cameraRef.current) return;
+
+      const moveSpeed = 0.5;
+      const camera = cameraRef.current;
+
+      // Get camera's forward, right, and up vectors
+      const forward = new THREE.Vector3();
+      const right = new THREE.Vector3();
+      const up = new THREE.Vector3(0, 1, 0);
+
+      camera.getWorldDirection(forward);
+      right.crossVectors(forward, up).normalize();
+      forward.normalize();
+
+      let moved = false;
+
+      // WASD movement
+      if (keysPressed.current.has('KeyW')) {
+        cameraStateRef.current.lookAtTarget.add(
+          forward.multiplyScalar(moveSpeed)
+        );
+        moved = true;
+      }
+      if (keysPressed.current.has('KeyS')) {
+        cameraStateRef.current.lookAtTarget.add(
+          forward.multiplyScalar(-moveSpeed)
+        );
+        moved = true;
+      }
+      if (keysPressed.current.has('KeyA')) {
+        cameraStateRef.current.lookAtTarget.add(
+          right.multiplyScalar(-moveSpeed)
+        );
+        moved = true;
+      }
+      if (keysPressed.current.has('KeyD')) {
+        cameraStateRef.current.lookAtTarget.add(
+          right.multiplyScalar(moveSpeed)
+        );
+        moved = true;
+      }
+
+      if (moved) {
+        updateCameraPosition();
+      }
+    };
+
+    const intervalId = setInterval(handleKeyboardMovement, 16); // ~60fps
+    return () => clearInterval(intervalId);
+  }, []);
 
   const onWindowResize = () => {
     if (!cameraRef.current || !rendererRef.current) return;
@@ -495,8 +609,10 @@ export default function ScenePreview({
         <div style={{ fontSize: '12px', lineHeight: '1.4' }}>
           • Left click + drag: Orbit camera
           <br />
-          • Mouse wheel: Zoom in/out
-          <br />• Scene automatically centers at origin
+          • Middle click + drag or Shift + drag: Pan focus
+          <br />
+          • WASD keys: Move focus point
+          <br />• Mouse wheel: Zoom in/out
         </div>
       </div>
 
