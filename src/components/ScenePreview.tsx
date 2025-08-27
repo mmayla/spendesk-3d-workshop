@@ -569,52 +569,56 @@ export default function ScenePreview({
       )}
 
       {/* Scene Info Panel */}
-      <div
-        style={{
-          position: 'absolute',
-          top: '20px',
-          left: '20px',
-          backgroundColor: 'rgba(0, 0, 0, 0.8)',
-          color: 'white',
-          padding: '15px',
-          borderRadius: '8px',
-          fontSize: '14px',
-          maxWidth: '300px',
-        }}
-      >
-        <h3 style={{ margin: '0 0 10px 0' }}>{sceneInstance?.sceneName}</h3>
-        <p style={{ margin: '0 0 10px 0' }}>{sceneInstance?.description}</p>
-        <div style={{ fontSize: '12px', opacity: 0.8 }}>
-          <div>Scene: {sceneInstance?.sceneName}</div>
-          <div>Scene ID: {sceneInstance?.sceneId}</div>
+      {!showTour && (
+        <div
+          style={{
+            position: 'absolute',
+            top: '20px',
+            left: '20px',
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            color: 'white',
+            padding: '15px',
+            borderRadius: '8px',
+            fontSize: '14px',
+            maxWidth: '300px',
+          }}
+        >
+          <h3 style={{ margin: '0 0 10px 0' }}>{sceneInstance?.sceneName}</h3>
+          <p style={{ margin: '0 0 10px 0' }}>{sceneInstance?.description}</p>
+          <div style={{ fontSize: '12px', opacity: 0.8 }}>
+            <div>Scene: {sceneInstance?.sceneName}</div>
+            <div>Scene ID: {sceneInstance?.sceneId}</div>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Controls Panel */}
-      <div
-        style={{
-          position: 'absolute',
-          top: '20px',
-          right: '20px',
-          backgroundColor: 'rgba(0, 0, 0, 0.8)',
-          color: 'white',
-          padding: '15px',
-          borderRadius: '8px',
-          fontSize: '14px',
-        }}
-      >
-        <div style={{ marginBottom: '10px', fontWeight: 'bold' }}>
-          Controls:
+      {!showTour && (
+        <div
+          style={{
+            position: 'absolute',
+            top: '20px',
+            right: '20px',
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            color: 'white',
+            padding: '15px',
+            borderRadius: '8px',
+            fontSize: '14px',
+          }}
+        >
+          <div style={{ marginBottom: '10px', fontWeight: 'bold' }}>
+            Controls:
+          </div>
+          <div style={{ fontSize: '12px', lineHeight: '1.4' }}>
+            • Left click + drag: Orbit camera
+            <br />
+            • Middle click + drag or Shift + drag: Pan focus
+            <br />
+            • WASD keys: Move focus point
+            <br />• Mouse wheel: Zoom in/out
+          </div>
         </div>
-        <div style={{ fontSize: '12px', lineHeight: '1.4' }}>
-          • Left click + drag: Orbit camera
-          <br />
-          • Middle click + drag or Shift + drag: Pan focus
-          <br />
-          • WASD keys: Move focus point
-          <br />• Mouse wheel: Zoom in/out
-        </div>
-      </div>
+      )}
 
       {/* Action Buttons */}
       <div
