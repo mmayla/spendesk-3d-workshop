@@ -9,12 +9,7 @@ import {
   COLORS,
 } from '../../utils/primitives';
 
-/**
- * Example team scene: Village Builders
- *
- * This demonstrates how teams should implement their scenes
- * Shows complete creative freedom with optional ground plane
- */
+// Example scene demonstrating how to implement SceneInterface
 export class VillageScene implements SceneInterface {
   readonly sceneId = 'village-builders';
   readonly sceneName = 'Village Builders';
@@ -22,7 +17,6 @@ export class VillageScene implements SceneInterface {
     'A peaceful medieval village with houses, trees, and a well';
 
   async buildScene(scene: THREE.Scene): Promise<void> {
-    // Optional: Add a ground plane (teams can choose to use this or not)
     const ground = createGroundPlane({
       size: 30,
       color: COLORS.GRASS,
@@ -39,7 +33,6 @@ export class VillageScene implements SceneInterface {
     });
     scene.add(house);
 
-    // House roof
     const roof = createCone({
       radius: 2.2,
       height: 1.8,

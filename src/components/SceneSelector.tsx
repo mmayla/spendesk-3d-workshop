@@ -2,21 +2,16 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getSceneMetadata } from '../scenes/registry';
 
-/**
- * Scene Browser Component
- *
- * Shows all available scenes and allows switching between:
- * - Individual scene previews
- * - Combined scene view
- */
 export default function SceneSelector() {
   const navigate = useNavigate();
-  const [sceneMetadata, setSceneMetadata] = useState<Array<{
-    sceneId: string;
-    sceneName: string;
-    description: string;
-    hasTourPoints: boolean;
-  }>>([]);
+  const [sceneMetadata, setSceneMetadata] = useState<
+    Array<{
+      sceneId: string;
+      sceneName: string;
+      description: string;
+      hasTourPoints: boolean;
+    }>
+  >([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

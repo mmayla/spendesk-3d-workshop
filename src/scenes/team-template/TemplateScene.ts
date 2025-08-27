@@ -9,14 +9,14 @@ import {
   COLORS,
 } from '../../utils/primitives';
 
-/**
- * Template Scene - Copy this file to create your team's scene!
+/*
+ * Template Scene - Copy this file to create your scene
  *
  * Instructions:
- * 1. Copy this entire folder to src/scenes/your-team-name/
- * 2. Rename this file to match your team (e.g., YourTeamScene.ts)
- * 3. Update the class name and all the properties below
- * 4. Add your scene to src/scenes/registry.ts
+ * 1. Copy this folder to src/scenes/your-scene-name/
+ * 2. Rename this file (e.g., YourScene.ts)
+ * 3. Update the class name and properties below
+ * 4. Add your scene to SCENE_CONFIGS in src/scenes/registry.ts
  */
 export class TemplateScene implements SceneInterface {
   // TODO: Update these properties for your scene

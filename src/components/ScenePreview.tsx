@@ -11,14 +11,6 @@ interface ScenePreviewProps {
   sceneId?: string;
   onBack?: () => void;
 }
-
-/**
- * Scene Browser Component
- *
- * Shows all available scenes and allows switching between:
- * - Individual scene previews
- * - Combined scene view
- */
 export default function ScenePreview({
   sceneId: propSceneId,
   onBack,
@@ -59,7 +51,7 @@ export default function ScenePreview({
     if (import.meta.hot) {
       const handleHotUpdate = () => {
         console.log('Hot reload detected, refreshing scene...');
-        setHotReloadKey(prev => prev + 1);
+        setHotReloadKey((prev) => prev + 1);
       };
 
       // Listen for various hot reload events
@@ -74,7 +66,6 @@ export default function ScenePreview({
   }, []);
 
   useEffect(() => {
-    // First validate and create scene instance
     const initializeSceneData = async () => {
       try {
         if (!sceneId) {
@@ -83,11 +74,10 @@ export default function ScenePreview({
           return;
         }
 
-        console.log('🔄 Initializing scene data for:', sceneId, 'hotReloadKey:', hotReloadKey);
+        console.log('Initializing scene data for:', sceneId, 'hotReloadKey:', hotReloadKey);
         setLoading(true);
         setError(null);
 
-        // Validate scene interface
         const isValid = await validateSceneInterface(sceneId);
         if (!isValid) {
           throw new Error(
@@ -95,16 +85,15 @@ export default function ScenePreview({
           );
         }
 
-        // Create scene instance
         const instance = await createSceneInstance(sceneId);
-        console.log('✅ Scene instance created:', instance.constructor.name, {
+        console.log('Scene instance created:', instance.constructor.name, {
           sceneId: instance.sceneId,
           sceneName: instance.sceneName,
-          description: instance.description
+          description: instance.description,
         });
         setSceneInstance(instance);
       } catch (error) {
-        console.error('❌ Error creating scene:', error);
+        console.error('Error creating scene:', error);
         setError(
           error instanceof Error ? error.message : 'Failed to create scene'
         );
@@ -116,7 +105,6 @@ export default function ScenePreview({
   }, [sceneId, hotReloadKey]);
 
   useEffect(() => {
-    // Initialize Three.js after canvas is rendered
     const initThreeJS = async () => {
       try {
         if (!canvasRef.current || !sceneInstance) {
@@ -124,14 +112,10 @@ export default function ScenePreview({
           return;
         }
 
-        console.log('Canvas found, initializing Three.js...');
-
-        // Initialize Three.js
         const scene = new THREE.Scene();
-        scene.background = new THREE.Color(0x87ceeb); // Sky blue
+        scene.background = new THREE.Color(0x87ceeb);
         sceneRef.current = scene;
 
-        // Camera
         const camera = new THREE.PerspectiveCamera(
           75,
           window.innerWidth / window.innerHeight,
@@ -142,7 +126,6 @@ export default function ScenePreview({
         camera.lookAt(0, 0, 0);
         cameraRef.current = camera;
 
-        // Renderer
         const renderer = new THREE.WebGLRenderer({
           canvas: canvasRef.current,
           antialias: true,
@@ -152,7 +135,6 @@ export default function ScenePreview({
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         rendererRef.current = renderer;
 
-        // Lighting
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
         scene.add(ambientLight);
 
@@ -169,28 +151,26 @@ export default function ScenePreview({
         directionalLight.shadow.camera.bottom = -50;
         scene.add(directionalLight);
 
-        // Grid helper
         const gridHelper = new THREE.GridHelper(50, 50, 0x888888, 0x888888);
         gridHelper.material.opacity = 0.3;
         gridHelper.material.transparent = true;
         scene.add(gridHelper);
 
-        // Clear any existing scene objects (for hot reload)
-        // Remove all children except lights and helpers
-        const childrenToRemove = scene.children.filter(child => 
-          child.type !== 'AmbientLight' && 
-          child.type !== 'DirectionalLight' && 
-          child.type !== 'GridHelper'
+        // Clear existing scene objects for hot reload
+        const childrenToRemove = scene.children.filter(
+          (child) =>
+            child.type !== 'AmbientLight' &&
+            child.type !== 'DirectionalLight' &&
+            child.type !== 'GridHelper'
         );
-        childrenToRemove.forEach(child => {
+        childrenToRemove.forEach((child) => {
           scene.remove(child);
-          // Dispose of geometries and materials to prevent memory leaks
           if (child.type === 'Mesh') {
             const mesh = child as THREE.Mesh;
             if (mesh.geometry) mesh.geometry.dispose();
             if (mesh.material) {
               if (Array.isArray(mesh.material)) {
-                mesh.material.forEach(material => material.dispose());
+                mesh.material.forEach((material) => material.dispose());
               } else {
                 mesh.material.dispose();
               }
@@ -198,17 +178,9 @@ export default function ScenePreview({
           }
         });
 
-        // Build scene at origin for preview
-        console.log('Building scene:', sceneInstance.sceneId);
         await sceneInstance.buildScene(scene);
-        console.log('Scene built successfully, setting up controls...');
-
-        // Add event listeners
         setupEventListeners();
-
-        // Start render loop
         animate();
-        console.log('Animation started, preview ready!');
 
         setLoading(false);
       } catch (error) {

@@ -1,13 +1,10 @@
 import type { SceneInterface } from '../types/scene';
 
-/**
- * Scene configuration - just add your scene here!
- */
+// Add your scene here with sceneId and module path
 const SCENE_CONFIGS = {
   'village-builders': './village-builders/VillageScene.js',
   'space-station': './space-station/SpaceStationScene.js',
   'template-scene': './team-template/TemplateScene.js',
-  // Add your scene here - just one line!
   // 'your-scene-id': './your-folder/YourScene.js',
 } as const;
 
@@ -19,18 +16,12 @@ export const SCENE_REGISTRY = Object.entries(SCENE_CONFIGS).map(
   })
 );
 
-/**
- * Get all enabled scene IDs
- */
 export function getEnabledSceneIds(): string[] {
   return SCENE_REGISTRY.filter((entry) => entry.enabled).map(
     (entry) => entry.sceneId
   );
 }
 
-/**
- * Create an instance of a scene
- */
 export async function createSceneInstance(sceneId: string) {
   const entry = SCENE_REGISTRY.find(
     (entry) => entry.enabled && entry.sceneId === sceneId
@@ -40,12 +31,8 @@ export async function createSceneInstance(sceneId: string) {
     throw new Error(`Scene not found for scene ID: ${sceneId}`);
   }
 
-  console.log('Loading scene module:', entry.modulePath);
-
-  // Use direct dynamic import - let Vite handle HMR
   const module = await import(/* @vite-ignore */ entry.modulePath);
 
-  // Find the scene class in the module
   const SceneClass =
     module.default ||
     module[Object.keys(module).find((key) => key.includes('Scene')) || ''] ||
@@ -55,20 +42,15 @@ export async function createSceneInstance(sceneId: string) {
     throw new Error(`No valid scene class found in module for: ${sceneId}`);
   }
 
-  console.log('Scene class found:', SceneClass.name);
   return new (SceneClass as new () => SceneInterface)();
 }
 
-/**
- * Validate that a scene implements the required interface
- */
 export async function validateSceneInterface(
   sceneId: string
 ): Promise<boolean> {
   try {
     const scene = await createSceneInstance(sceneId);
 
-    // Check required properties
     const requiredProps = ['sceneId', 'sceneName', 'description', 'buildScene'];
     for (const prop of requiredProps) {
       if (!(prop in scene)) {
@@ -77,7 +59,6 @@ export async function validateSceneInterface(
       }
     }
 
-    // Check buildScene is a function
     if (typeof scene.buildScene !== 'function') {
       console.error(`Scene ${sceneId} buildScene is not a function`);
       return false;
@@ -90,9 +71,6 @@ export async function validateSceneInterface(
   }
 }
 
-/**
- * Get scene metadata for all enabled scenes
- */
 export async function getSceneMetadata() {
   const sceneIds = getEnabledSceneIds();
   const results = [];
@@ -114,12 +92,8 @@ export async function getSceneMetadata() {
   return results;
 }
 
-// Development mode logging
 if (import.meta.env.DEV) {
-  console.log('🎯 Scene Registry Loaded');
-  console.log(
-    '📋 Registered Scenes:',
-    SCENE_REGISTRY.map((e) => e.sceneId)
-  );
-  console.log('✅ Enabled Scenes:', getEnabledSceneIds());
+  console.log('Scene Registry Loaded');
+  console.log('Registered Scenes:', SCENE_REGISTRY.map((e) => e.sceneId));
+  console.log('Enabled Scenes:', getEnabledSceneIds());
 }
