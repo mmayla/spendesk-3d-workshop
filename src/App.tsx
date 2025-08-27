@@ -1,6 +1,5 @@
 import SceneSelector from './components/SceneSelector';
 import './App.css';
-// Test change for pre-commit hook
 
 function App() {
   return (
