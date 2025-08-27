@@ -1,5 +1,5 @@
 import React from 'react'
-import { PrimitiveType } from '../utils/primitives'
+import type { PrimitiveType } from '../types'
 
 interface PrimitiveToolbarProps {
   selectedPrimitive: PrimitiveType

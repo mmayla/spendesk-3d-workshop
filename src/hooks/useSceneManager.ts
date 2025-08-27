@@ -1,6 +1,7 @@
 import { useCallback, useRef, useState } from 'react'
 import * as THREE from 'three'
-import { PrimitiveType, createPrimitive, COLORS } from '../utils/primitives'
+import { createPrimitive, COLORS } from '../utils/primitives'
+import type { PrimitiveType } from '../types'
 
 export interface SceneObject {
   id: string

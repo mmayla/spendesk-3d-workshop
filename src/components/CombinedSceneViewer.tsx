@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
-import { SceneCombiner, TeamScene } from '../utils/sceneCombiner'
+import { SceneCombiner } from '../utils/sceneCombiner'
+import type { TeamScene } from '../utils/sceneCombiner'
 
 interface CombinedSceneViewerProps {
   teamScenes: TeamScene[]
@@ -12,10 +13,10 @@ const CombinedSceneViewer: React.FC<CombinedSceneViewerProps> = ({
   onClose
 }) => {
   const mountRef = useRef<HTMLDivElement>(null)
-  const sceneRef = useRef<THREE.Scene>()
-  const rendererRef = useRef<THREE.WebGLRenderer>()
-  const cameraRef = useRef<THREE.PerspectiveCamera>()
-  const combinerRef = useRef<SceneCombiner>()
+  const sceneRef = useRef<THREE.Scene>(null)
+  const rendererRef = useRef<THREE.WebGLRenderer>(null)
+  const cameraRef = useRef<THREE.PerspectiveCamera>(null)
+  const combinerRef = useRef<SceneCombiner>(null)
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
@@ -91,7 +92,7 @@ const CombinedSceneViewer: React.FC<CombinedSceneViewerProps> = ({
     let mouseDown = false
     let mouseX = 0
     let mouseY = 0
-    const cameraDistance = 200
+    // const cameraDistance = 200 // Not used currently
 
     const handleMouseDown = (event: MouseEvent) => {
       mouseDown = true

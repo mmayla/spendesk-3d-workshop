@@ -7,7 +7,7 @@ interface SceneManagerProps {
 }
 
 const SceneManager: React.FC<SceneManagerProps> = ({
-  onSaveScene,
+  onSaveScene: _onSaveScene,
   onLoadScene,
   onExportScene
 }) => {

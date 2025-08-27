@@ -2,7 +2,7 @@ import { useState } from 'react'
 import ThreeScene from './ThreeScene'
 import CombinedSceneViewer from './components/CombinedSceneViewer'
 import WorkshopMode from './components/WorkshopMode'
-import { TeamScene } from './utils/sceneCombiner'
+import type { TeamScene } from './utils/sceneCombiner'
 import './App.css'
 
 type AppMode = 'build' | 'workshop' | 'combined'

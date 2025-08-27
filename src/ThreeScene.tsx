@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
-import { createHouse, createTree, createBox, COLORS, PrimitiveType } from './utils/primitives'
+import { createHouse, createTree, createBox, COLORS } from './utils/primitives'
+import type { PrimitiveType } from './types'
 import PrimitiveToolbar from './components/PrimitiveToolbar'
 import ObjectProperties from './components/ObjectProperties'
 import SceneManager from './components/SceneManager'
@@ -9,13 +10,13 @@ import { OrbitControls } from './utils/cameraControls'
 
 const ThreeScene: React.FC = () => {
   const mountRef = useRef<HTMLDivElement>(null)
-  const sceneRef = useRef<THREE.Scene>()
-  const rendererRef = useRef<THREE.WebGLRenderer>()
-  const cameraRef = useRef<THREE.PerspectiveCamera>()
-  const controlsRef = useRef<OrbitControls>()
+  const sceneRef = useRef<THREE.Scene>(null)
+  const rendererRef = useRef<THREE.WebGLRenderer>(null)
+  const cameraRef = useRef<THREE.PerspectiveCamera>(null)
+  const controlsRef = useRef<OrbitControls>(null)
   const [selectedPrimitive, setSelectedPrimitive] = useState<PrimitiveType>('box')
   
-  const sceneManager = useSceneManager(sceneRef.current)
+  const sceneManager = useSceneManager(sceneRef.current || undefined)
 
   const handleAddPrimitive = () => {
     // Add primitive at a random position for now

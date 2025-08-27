@@ -1,5 +1,5 @@
 import React from 'react'
-import { SceneObject } from '../hooks/useSceneManager'
+import type { SceneObject } from '../hooks/useSceneManager'
 import { COLORS } from '../utils/primitives'
 
 interface ObjectPropertiesProps {

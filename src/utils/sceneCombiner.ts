@@ -1,5 +1,6 @@
 import * as THREE from 'three'
-import { PrimitiveType, createPrimitive } from './primitives'
+import { createPrimitive } from './primitives'
+import type { PrimitiveType } from '../types'
 
 export interface SceneData {
   id: string
@@ -87,7 +88,7 @@ export class SceneCombiner {
     return teamGroup
   }
 
-  private addTeamLabel(teamGroup: THREE.Group, teamName: string, position: { x: number; z: number }): void {
+  private addTeamLabel(teamGroup: THREE.Group, teamName: string, _position: { x: number; z: number }): void {
     // Create a simple text representation using basic geometry
     // In a real implementation, you might want to use TextGeometry or Canvas texture
     const labelGeometry = new THREE.PlaneGeometry(20, 4)

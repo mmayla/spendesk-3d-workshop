@@ -145,9 +145,9 @@ export class OrbitControls {
     document.removeEventListener('mouseup', this.onMouseUp)
   }
 
-  private getAutoRotationAngle(): number {
-    return 2 * Math.PI / 60 / 60 * 1000
-  }
+  // private getAutoRotationAngle(): number {
+  //   return 2 * Math.PI / 60 / 60 * 1000
+  // }
 
   private getZoomScale(): number {
     return Math.pow(0.95, this.zoomSpeed)
@@ -334,16 +334,16 @@ export class OrbitControls {
     this.handleMouseWheel(event)
   }
 
-  private onTouchStart(event: TouchEvent): void {
+  private onTouchStart(_event: TouchEvent): void {
     // Touch controls implementation would go here
     // Simplified for this demo
   }
 
-  private onTouchEnd(event: TouchEvent): void {
+  private onTouchEnd(_event: TouchEvent): void {
     // Touch controls implementation would go here
   }
 
-  private onTouchMove(event: TouchEvent): void {
+  private onTouchMove(_event: TouchEvent): void {
     // Touch controls implementation would go here
   }
 

@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { SceneCombiner, TeamScene } from '../utils/sceneCombiner'
+import { SceneCombiner } from '../utils/sceneCombiner'
+import type { TeamScene } from '../utils/sceneCombiner'
 
 interface WorkshopModeProps {
   onShowCombined: (teamScenes: TeamScene[]) => void

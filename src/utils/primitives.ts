@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import type { PrimitiveType } from '../types'
 
 export interface PrimitiveOptions {
   color?: number
@@ -237,8 +238,6 @@ export const createHouse = (options: {
   
   return group
 }
-
-export type PrimitiveType = 'box' | 'sphere' | 'cylinder' | 'cone' | 'plane'
 
 export const createPrimitive = (type: PrimitiveType, options: PrimitiveOptions = {}): THREE.Mesh => {
   switch (type) {
