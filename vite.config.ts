@@ -7,4 +7,5 @@ export default defineConfig({
   server: {
     allowedHosts: true,
   },
+  base: 'https://mmayla.github.io/spendesk-3d-workshop/',
 });
