@@ -23,7 +23,8 @@ export class BoatBarbecueScene implements SceneInterface {
   // TODO: Update these properties for your scene
   readonly sceneId = 'boat-barbecue-scene';
   readonly sceneName = 'Boat Barbecue'; // Your scene's display name
-  readonly description = 'A fun scene featuring a boat barbecue party';
+  readonly description =
+    'A fun scene featuring a boat barbecue party by Yannis and Nico';
 
   /**
    * Build your 3D scene here!
