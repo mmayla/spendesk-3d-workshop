@@ -2,9 +2,7 @@ import * as THREE from 'three';
 import type { SceneInterface, TourPoint } from '../../types/scene';
 import {
   createBox,
-  createSphere,
   createCylinder,
-  createCone,
   createGroundPlane,
   createBasicLighting,
   COLORS,
@@ -159,8 +157,6 @@ export class CoffeeShop implements SceneInterface {
     // Add basic lighting - gives your scene good illumination and shadows
     createBasicLighting(scene);
 
-    const axesHelper = new THREE.AxesHelper(5);
-    scene.add(axesHelper);
     // Option 1: Add ground plane for traditional earth-based scenes
     const ground = createGroundPlane({
       size: 30,
@@ -197,7 +193,7 @@ export class CoffeeShop implements SceneInterface {
       position: { x: 0, y: 5, z: 15 },
       color: COLORS.WHITE,
     });
-    //scene.add(wall1);
+    scene.add(wall1);
     const wall2 = createBox({
       width: 30,
       height: 10,
@@ -205,7 +201,7 @@ export class CoffeeShop implements SceneInterface {
       position: { x: 0, y: 5, z: -15 },
       color: COLORS.WHITE,
     });
-    //scene.add(wall2);
+    scene.add(wall2);
     const wall3 = createBox({
       width: 1,
       height: 10,
@@ -213,7 +209,7 @@ export class CoffeeShop implements SceneInterface {
       position: { x: 15, y: 5, z: 0 },
       color: COLORS.WHITE,
     });
-    //scene.add(wall3);
+    scene.add(wall3);
 
     // Example: House roof
     const height = 3;
