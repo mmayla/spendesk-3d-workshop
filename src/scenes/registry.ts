@@ -5,6 +5,7 @@ const SCENE_CONFIGS = {
   'village-builders': './village-builders/index.js',
   'space-station': './space-station/index.js',
   'template-scene': './template-scene/index.js',
+  'coffee-shop': './coffee-shop/index.js',
   'boat-barbecue-scene': './boat-barbecue/index.js',
 } as const;
 
