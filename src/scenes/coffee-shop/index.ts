@@ -18,6 +18,7 @@ const makeChair = (
   rotation: number
 ) => {
   const groupChair = new THREE.Group();
+  groupChair.position.set(0, 0,0);
   const backHeight = 1.5;
   const back = createBox({
     width: 1,
@@ -80,6 +81,64 @@ const makeChair = (
   scene.add(groupChair);
 };
 
+const makeTable = (
+  x: number,
+  y: number,
+  z: number,
+  scene: THREE.Scene,
+) => {
+  const groupTable = new THREE.Group();
+
+  const seat = createCylinder({
+    radiusTop: 1.5,
+    radiusBottom: 1.5,
+    height: 0.2,
+    segments: 32,
+    position: { x, y, z },
+    color: COLORS.WOOD,
+  });
+  groupTable.add(seat);
+
+  const legHeight = 1.5;
+  const leg1 = createBox({
+    width: 0.2,
+    height: legHeight,
+    depth: 0.2,
+    position: { x: x - 0.5, y: y - legHeight / 2, z: z - 0.5 },
+    color: COLORS.WOOD,
+  });
+  groupTable.add(leg1);
+
+  const leg2 = createBox({
+    width: 0.2,
+    height: legHeight,
+    depth: 0.2,
+    position: { x: x + 0.5, y: y - legHeight / 2, z: z + 0.5 },
+    color: COLORS.WOOD,
+  });
+  groupTable.add(leg2);
+
+  const leg3 = createBox({
+    width: 0.2,
+    height: legHeight,
+    depth: 0.2,
+    position: { x: x - 0.5, y: y - legHeight / 2, z: z + 0.5 },
+    color: COLORS.WOOD,
+  });
+  groupTable.add(leg3);
+
+  const leg4 = createBox({
+    width: 0.2,
+    height: legHeight,
+    depth: 0.2,
+    position: { x: x + 0.5, y: y - legHeight / 2, z: z - 0.5 },
+    color: COLORS.WOOD,
+  });
+  groupTable.add(leg4);
+
+  scene.add(groupTable);
+};
+
 /*
  * Template Scene - Copy this file to create your scene
  *
@@ -104,6 +163,8 @@ export class CoffeeShop implements SceneInterface {
     // Add basic lighting - gives your scene good illumination and shadows
     createBasicLighting(scene);
 
+    const axesHelper = new THREE.AxesHelper(5);
+    scene.add(axesHelper);
     // Option 1: Add ground plane for traditional earth-based scenes
     const ground = createGroundPlane({
       size: 30,
@@ -174,11 +235,9 @@ export class CoffeeShop implements SceneInterface {
     scene.add(light);
 
     makeChair(5, 1.5, 5, scene, 1);
-    makeChair(7, 1.5, 5, scene, 2);
-    makeChair(10, 1.5, 10, scene, 0);
-    makeChair(9, 1.5, 10, scene, 0);
-    makeChair(1, 1.5, 10, scene, 0);
-    makeChair(3, 1.5, 10, scene, 0);
+    makeTable(5, 1.5, 5, scene);
+    makeChair(3, 1.5, 5, scene, 2);
+
 
     // TODO: Add more objects to build your amazing scene!
     // Available shapes:
