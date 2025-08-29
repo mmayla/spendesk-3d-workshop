@@ -1,24 +1,21 @@
 import type { SceneInterface } from '../types/scene';
 
-// Add your scene here with sceneId and module path
-const SCENE_CONFIGS = {
-  // Demo scenes
-  // 'village-builders': './village-builders/index.js',
-  // 'space-station': './space-station/index.js',
-  // 'template-scene': './template-scene/index.js',
+// Static imports for all scene modules
+import { BoatBarbecueScene } from './boat-barbecue/index';
+import { CaptainMorganScene } from './captain-morgan-two/index';
+import { CoffeeShop } from './coffee-shop/index';
 
-  // Teams scenes
-  'captain-morgan-two': './captain-morgan-two/index.js',
-  'coffee-shop': './coffee-shop/index.js',
-  'boat-barbecue-scene': './boat-barbecue/index.js',
-
-  // 'your-scene-id': './your-folder/index.js',
+// Scene registry with static references
+const SCENE_CLASSES = {
+  'boat-barbecue-scene': BoatBarbecueScene,
+  'captain-morgan-two': CaptainMorganScene,
+  'coffee-shop': CoffeeShop,
 } as const;
 
-export const SCENE_REGISTRY = Object.entries(SCENE_CONFIGS).map(
-  ([sceneId, modulePath]) => ({
+export const SCENE_REGISTRY = Object.entries(SCENE_CLASSES).map(
+  ([sceneId, SceneClass]) => ({
     sceneId,
-    modulePath,
+    SceneClass,
     enabled: true,
   })
 );
@@ -38,15 +35,10 @@ export async function createSceneInstance(sceneId: string) {
     throw new Error(`Scene not found for scene ID: ${sceneId}`);
   }
 
-  const module = await import(/* @vite-ignore */ entry.modulePath);
-
-  const SceneClass =
-    module.default ||
-    module[Object.keys(module).find((key) => key.includes('Scene')) || ''] ||
-    Object.values(module)[0];
+  const SceneClass = entry.SceneClass;
 
   if (!SceneClass) {
-    throw new Error(`No valid scene class found in module for: ${sceneId}`);
+    throw new Error(`No valid scene class found for: ${sceneId}`);
   }
 
   return new (SceneClass as new () => SceneInterface)();
