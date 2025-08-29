@@ -19,7 +19,7 @@ const makeChair = (
   rotation: number
 ) => {
   const groupChair = new THREE.Group();
-  groupChair.position.set(0, 0,0);
+  groupChair.position.set(0, 0, 0);
   const backHeight = 1.5;
   const back = createBox({
     width: 1,
@@ -82,12 +82,7 @@ const makeChair = (
   scene.add(groupChair);
 };
 
-const makeTable = (
-  x: number,
-  y: number,
-  z: number,
-  scene: THREE.Scene,
-) => {
+const makeTable = (x: number, y: number, z: number, scene: THREE.Scene) => {
   const groupTable = new THREE.Group();
 
   const seat = createCylinder({
@@ -248,12 +243,14 @@ export class CoffeeShop implements SceneInterface {
     makeChair(-7, 1.5, 7, scene, 0.0);
     makeTable(-7, 1.5, 9, scene);
 
-    const geometry = new TeapotGeometry( 0.2);
-    const teapot = new THREE.Mesh( geometry, new THREE.MeshStandardMaterial( { color: COLORS.WHITE } ) );
-    teapot.position.set(7,3.2,-5)
+    const geometry = new TeapotGeometry(0.2);
+    const teapot = new THREE.Mesh(
+      geometry,
+      new THREE.MeshStandardMaterial({ color: COLORS.WHITE })
+    );
+    teapot.position.set(7, 3.2, -5);
 
-    scene.add( teapot );
-
+    scene.add(teapot);
 
     // TODO: Add more objects to build your amazing scene!
     // Available shapes:
