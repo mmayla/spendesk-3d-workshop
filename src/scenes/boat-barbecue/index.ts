@@ -128,7 +128,6 @@ export class BoatBarbecueScene implements SceneInterface {
       depth: poleSize,
       position: { x: 2.5, y: 3, z: -7 },
       color: COLORS.METAL,
-
     });
     scene.add(cabinPoleMiddleRightRear);
 
@@ -176,7 +175,7 @@ export class BoatBarbecueScene implements SceneInterface {
       color: COLORS.METAL,
     });
     scene.add(cabinTopFrontBar);
-    
+
     const cabinTopRearBar = createBox({
       width: boatBaseWidth - 1,
       height: poleSize,
@@ -224,7 +223,6 @@ export class BoatBarbecueScene implements SceneInterface {
     });
     scene.add(smallRearRightPole);
 
-
     const cabinRoof = createBox({
       width: boatBaseWidth - 0.5 - 2 * poleSize,
       height: poleSize,
@@ -254,12 +252,11 @@ export class BoatBarbecueScene implements SceneInterface {
     });
     scene.add(barbecue);
 
-
     // Mohamed body
 
     const mohamedHead = createSphere({
-      radius: .75,
-      position: { x: 12, y: 1.5 , z: .5 },
+      radius: 0.75,
+      position: { x: 12, y: 1.5, z: 0.5 },
       color: COLORS.PINK,
     });
     scene.add(mohamedHead);
@@ -268,17 +265,17 @@ export class BoatBarbecueScene implements SceneInterface {
       width: 2,
       height: 1.5,
       depth: 2.5,
-      position: { x: 12, y: 0 , z: .5 },
+      position: { x: 12, y: 0, z: 0.5 },
       color: COLORS.PINK,
     });
     scene.add(mohamedBody);
 
-    const mohamedArmRadius = .75
+    const mohamedArmRadius = 0.75;
     const mohamedLeftArm = createCylinder({
       radiusTop: mohamedArmRadius,
       radiusBottom: mohamedArmRadius,
       height: 1.5,
-      position: { x: 12, y: 0 , z: -1 },
+      position: { x: 12, y: 0, z: -1 },
       color: COLORS.PINK,
     });
     scene.add(mohamedLeftArm);
@@ -287,17 +284,16 @@ export class BoatBarbecueScene implements SceneInterface {
       radiusTop: mohamedArmRadius,
       radiusBottom: mohamedArmRadius,
       height: 1.5,
-      position: { x: 12, y: 0 , z: 2 },
+      position: { x: 12, y: 0, z: 2 },
       color: COLORS.PINK,
     });
     scene.add(mohamedRightArm);
 
-
     // Luiz body
 
     const luizHead = createSphere({
-      radius: .5,
-      position: { x: 15, y: 1.5 , z: .5 },
+      radius: 0.5,
+      position: { x: 15, y: 1.5, z: 0.5 },
       color: COLORS.PINK,
     });
     scene.add(luizHead);
@@ -306,17 +302,17 @@ export class BoatBarbecueScene implements SceneInterface {
       width: 1,
       height: 1.5,
       depth: 1.5,
-      position: { x: 15, y: 0 , z: .5 },
+      position: { x: 15, y: 0, z: 0.5 },
       color: COLORS.PINK,
     });
     scene.add(luizBody);
 
-    const luizArmRadius = .25
+    const luizArmRadius = 0.25;
     const luizLeftArm = createCylinder({
       radiusTop: luizArmRadius,
       radiusBottom: luizArmRadius,
       height: 1.5,
-      position: { x: 15, y: 0 , z: -.5 },
+      position: { x: 15, y: 0, z: -0.5 },
       color: COLORS.PINK,
     });
     scene.add(luizLeftArm);
@@ -325,11 +321,10 @@ export class BoatBarbecueScene implements SceneInterface {
       radiusTop: luizArmRadius,
       radiusBottom: luizArmRadius,
       height: 1.5,
-      position: { x: 15, y: 0 , z: 1.5 },
+      position: { x: 15, y: 0, z: 1.5 },
       color: COLORS.PINK,
     });
     scene.add(luizRightArm);
-
 
     const couch = createBox({
       width: 3,
@@ -370,47 +365,52 @@ export class BoatBarbecueScene implements SceneInterface {
     scene.add(wheel);
 
     const cabinSideRight = createBox({
-      width: .25,
+      width: 0.25,
       height: 15,
       depth: 7,
       position: { x: 5.5, y: 3, z: -3.5 },
       color: COLORS.SKY_BLUE,
-      opacity: 0.5
+      opacity: 0.5,
     });
     scene.add(cabinSideRight);
 
     const cabinSideLeft = createBox({
-      width: .25,
+      width: 0.25,
       height: 15,
       depth: 7,
       position: { x: -5.5, y: 3, z: -3.5 },
       color: COLORS.SKY_BLUE,
-      opacity: 0.5
+      opacity: 0.5,
     });
     scene.add(cabinSideLeft);
 
     // Add some distant rain as small white points
-  const rainGeometry = new THREE.BufferGeometry();
-  const rainMaterial = new THREE.PointsMaterial({ color: COLORS.BLUE, size: 0.15, opacity: 0.35, transparent: true });
+    const rainGeometry = new THREE.BufferGeometry();
+    const rainMaterial = new THREE.PointsMaterial({
+      color: COLORS.BLUE,
+      size: 0.15,
+      opacity: 0.35,
+      transparent: true,
+    });
 
-  const rainVertices = [];
-  for (let i = 0; i < 10000; i++) {
-    const x = (Math.random() - 0.5) * 100;
-    const y = (Math.random() - 0.5) * 100;
-    const z = (Math.random() - 0.5) * 100;
-    rainVertices.push(x, y, z);
-  }
+    const rainVertices = [];
+    for (let i = 0; i < 10000; i++) {
+      const x = (Math.random() - 0.5) * 100;
+      const y = (Math.random() - 0.5) * 100;
+      const z = (Math.random() - 0.5) * 100;
+      rainVertices.push(x, y, z);
+    }
 
-  rainGeometry.setAttribute(
-    'position',
-    new THREE.Float32BufferAttribute(rainVertices, 3)
-  );
-  const rain = new THREE.Points(rainGeometry, rainMaterial);
-  scene.add(rain);
+    rainGeometry.setAttribute(
+      'position',
+      new THREE.Float32BufferAttribute(rainVertices, 3)
+    );
+    const rain = new THREE.Points(rainGeometry, rainMaterial);
+    scene.add(rain);
 
-  // Add ambient light for space visibility
-  const ambientLight = new THREE.AmbientLight(0x404040, 0.3);
-  scene.add(ambientLight);
+    // Add ambient light for space visibility
+    const ambientLight = new THREE.AmbientLight(0x404040, 0.3);
+    scene.add(ambientLight);
 
     // Example: House roof
     // const roof = createCone({
@@ -508,7 +508,7 @@ export class BoatBarbecueScene implements SceneInterface {
         cameraPosition: new THREE.Vector3(-15, 10, 20),
         lookAtTarget: new THREE.Vector3(10, 10, 0),
         duration: 2,
-      }
+      },
       // TODO: Add more tour points to showcase your scene!
       // Each point should highlight something interesting
     ];

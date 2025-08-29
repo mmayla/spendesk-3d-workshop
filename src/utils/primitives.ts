@@ -74,15 +74,17 @@ export const createBox = (options: BoxOptions = {}): THREE.Mesh => {
   const geometry = new THREE.BoxGeometry(
     options.width ?? 1,
     options.height ?? 1,
-    options.depth ?? 1,
+    options.depth ?? 1
   );
 
   const material = new THREE.MeshLambertMaterial({
     color: options.color ?? 0x8b4513,
-    ...options.opacity ? {
-      transparent: true,
-      opacity: options.opacity,
-    } : {},
+    ...(options.opacity
+      ? {
+          transparent: true,
+          opacity: options.opacity,
+        }
+      : {}),
   });
 
   const mesh = new THREE.Mesh(geometry, material);
