@@ -2,13 +2,17 @@ import type { SceneInterface } from '../types/scene';
 
 // Add your scene here with sceneId and module path
 const SCENE_CONFIGS = {
-  'village-builders': './village-builders/index.js',
-  'space-station': './space-station/index.js',
-  'template-scene': './template-scene/index.js',
+  // Demo scenes
+  // 'village-builders': './village-builders/index.js',
+  // 'space-station': './space-station/index.js',
+  // 'template-scene': './template-scene/index.js',
+
+  // Teams scenes
   'captain-morgan-two': './captain-morgan-two/index.js',
-  // 'your-scene-id': './your-folder/index.js',
   'coffee-shop': './coffee-shop/index.js',
   'boat-barbecue-scene': './boat-barbecue/index.js',
+
+  // 'your-scene-id': './your-folder/index.js',
 } as const;
 
 export const SCENE_REGISTRY = Object.entries(SCENE_CONFIGS).map(
