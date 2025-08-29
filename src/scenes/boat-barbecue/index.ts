@@ -4,7 +4,6 @@ import {
   createBox,
   createSphere,
   createCylinder,
-  createCone,
   createGroundPlane,
   createBasicLighting,
   COLORS,
