@@ -9,6 +9,7 @@ import {
   createBasicLighting,
   COLORS,
 } from '../../utils/primitives';
+import { TeapotGeometry } from 'three/addons/geometries/TeapotGeometry.js';
 
 const makeChair = (
   x: number,
@@ -234,9 +235,24 @@ export class CoffeeShop implements SceneInterface {
     light.position.set(0, 10, 0);
     scene.add(light);
 
-    makeChair(5, 1.5, 5, scene, 1);
-    makeTable(5, 1.5, 5, scene);
-    makeChair(3, 1.5, 5, scene, 2);
+    makeChair(2, 1.5, 5, scene, 0.5);
+    makeTable(4, 1.5, 7, scene);
+    makeChair(-2, 1.5, 5, scene, 0.5);
+
+    makeChair(10, 1.5, 7, scene, 0.0);
+    makeTable(10, 1.5, 10, scene);
+
+    makeChair(-5, 1.5, -2, scene, 0.0);
+    makeTable(-5, 1.5, 0, scene);
+
+    makeChair(-7, 1.5, 7, scene, 0.0);
+    makeTable(-7, 1.5, 9, scene);
+
+    const geometry = new TeapotGeometry( 0.2);
+    const teapot = new THREE.Mesh( geometry, new THREE.MeshStandardMaterial( { color: COLORS.WHITE } ) );
+    teapot.position.set(7,3.2,-5)
+
+    scene.add( teapot );
 
 
     // TODO: Add more objects to build your amazing scene!
@@ -261,18 +277,18 @@ export class CoffeeShop implements SceneInterface {
   getTourPoints(): TourPoint[] {
     return [
       {
-        name: 'Scene Overview',
+        name: 'Bar with teapot',
         description: "Welcome to our scene! Here's the general overview.",
-        cameraPosition: new THREE.Vector3(10, 8, 10),
-        lookAtTarget: new THREE.Vector3(0, 2, 0),
-        duration: 3,
+        cameraPosition: new THREE.Vector3(7, 5, 0),
+        lookAtTarget: new THREE.Vector3(7, 3, -5),
+        duration: 10,
       },
       {
-        name: 'Main Building',
-        description: 'Check out our main structure here.',
-        cameraPosition: new THREE.Vector3(3, 4, 3),
-        lookAtTarget: new THREE.Vector3(0, 2, 0),
-        duration: 2,
+        name: 'Table',
+        description: "Welcome to our scene! Here's the general overview.",
+        cameraPosition: new THREE.Vector3(4, 5, 10),
+        lookAtTarget: new THREE.Vector3(4, 3, 2),
+        duration: 10,
       },
       // TODO: Add more tour points to showcase your scene!
       // Each point should highlight something interesting
