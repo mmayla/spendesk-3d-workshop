@@ -84,6 +84,23 @@ export const createBox = (options: BoxOptions = {}): THREE.Mesh => {
   return applyCommonProperties(mesh, options);
 };
 
+export const createTransparentBox = (options: BoxOptions = {}): THREE.Mesh => {
+  const geometry = new THREE.BoxGeometry(
+    options.width ?? 1,
+    options.height ?? 1,
+    options.depth ?? 1
+  );
+
+  const material = new THREE.MeshLambertMaterial({
+    color: options.color ?? 0x8b4513,
+    transparent: true,
+    opacity: 0.5,
+  });
+
+  const mesh = new THREE.Mesh(geometry, material);
+  return applyCommonProperties(mesh, options);
+};
+
 export const createSphere = (options: SphereOptions = {}): THREE.Mesh => {
   const geometry = new THREE.SphereGeometry(
     options.radius ?? 1,
