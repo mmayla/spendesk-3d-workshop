@@ -10,14 +10,20 @@ import {
   COLORS,
 } from '../../utils/primitives';
 
-const makeChair = (x: number, y: number, z: number, scene: THREE.Scene, rotation: number) => {
+const makeChair = (
+  x: number,
+  y: number,
+  z: number,
+  scene: THREE.Scene,
+  rotation: number
+) => {
   const groupChair = new THREE.Group();
   const backHeight = 1.5;
   const back = createBox({
     width: 1,
     height: backHeight,
     depth: 0.3,
-    position: { x, y: y+backHeight/2, z },
+    position: { x, y: y + backHeight / 2, z },
     color: COLORS.WOOD,
   });
   groupChair.add(back);
@@ -28,7 +34,7 @@ const makeChair = (x: number, y: number, z: number, scene: THREE.Scene, rotation
     width: 1,
     height: seatHeight,
     depth: seatDepth,
-    position: { x, y, z: z+seatDepth/2 - seatHeight/2 },
+    position: { x, y, z: z + seatDepth / 2 - seatHeight / 2 },
     color: COLORS.WOOD,
   });
   groupChair.add(seat);
@@ -38,7 +44,7 @@ const makeChair = (x: number, y: number, z: number, scene: THREE.Scene, rotation
     width: 0.2,
     height: legHeight,
     depth: 0.2,
-    position: { x: x - 0.4, y: y - legHeight/2, z: z - 0.05 },
+    position: { x: x - 0.4, y: y - legHeight / 2, z: z - 0.05 },
     color: COLORS.WOOD,
   });
   groupChair.add(leg1);
@@ -47,7 +53,7 @@ const makeChair = (x: number, y: number, z: number, scene: THREE.Scene, rotation
     width: 0.2,
     height: legHeight,
     depth: 0.2,
-    position: { x: x + 0.4, y: y - legHeight/2, z: z - 0.05 },
+    position: { x: x + 0.4, y: y - legHeight / 2, z: z - 0.05 },
     color: COLORS.WOOD,
   });
   groupChair.add(leg2);
@@ -56,7 +62,7 @@ const makeChair = (x: number, y: number, z: number, scene: THREE.Scene, rotation
     width: 0.2,
     height: legHeight,
     depth: 0.2,
-    position: { x: x + 0.4, y: y - legHeight/2, z: z + 1 - 0.3 + 0.05 },
+    position: { x: x + 0.4, y: y - legHeight / 2, z: z + 1 - 0.3 + 0.05 },
     color: COLORS.WOOD,
   });
   groupChair.add(leg3);
@@ -65,14 +71,14 @@ const makeChair = (x: number, y: number, z: number, scene: THREE.Scene, rotation
     width: 0.2,
     height: legHeight,
     depth: 0.2,
-    position: { x: x - 0.4, y: y - legHeight/2, z: z + 1 - 0.3 + 0.05 },
+    position: { x: x - 0.4, y: y - legHeight / 2, z: z + 1 - 0.3 + 0.05 },
     color: COLORS.WOOD,
   });
   groupChair.add(leg4);
 
   groupChair.rotateY(rotation);
   scene.add(groupChair);
-}
+};
 
 /*
  * Template Scene - Copy this file to create your scene
@@ -105,21 +111,24 @@ export class CoffeeShop implements SceneInterface {
     });
     scene.add(ground);
     // load a texture, set wrap mode to repeat
-    new THREE.TextureLoader().load( "public/wooden-floor.jpg" , (texture) => {
-      texture.wrapS = THREE.RepeatWrapping;
-      texture.wrapT = THREE.RepeatWrapping;
-      texture.repeat.set( 4, 4 );
-      ground.material = new THREE.MeshLambertMaterial({
-        map: texture,
-        color: COLORS.SUNSET_ORANGE,
-        side: THREE.DoubleSide,
-      });
-      ground.material.needsUpdate = true;
-    }, undefined, (err) => {
-      console.error('Error loading texture:', err);
-    });
-
-
+    new THREE.TextureLoader().load(
+      'public/wooden-floor.jpg',
+      (texture) => {
+        texture.wrapS = THREE.RepeatWrapping;
+        texture.wrapT = THREE.RepeatWrapping;
+        texture.repeat.set(4, 4);
+        ground.material = new THREE.MeshLambertMaterial({
+          map: texture,
+          color: COLORS.SUNSET_ORANGE,
+          side: THREE.DoubleSide,
+        });
+        ground.material.needsUpdate = true;
+      },
+      undefined,
+      (err) => {
+        console.error('Error loading texture:', err);
+      }
+    );
 
     // TODO: Replace this example with your scene!
 
@@ -155,7 +164,7 @@ export class CoffeeShop implements SceneInterface {
       width: 15,
       height: height,
       depth: 1.5,
-      position: { x: 15/2, y: height/2, z: -5 },
+      position: { x: 15 / 2, y: height / 2, z: -5 },
       color: COLORS.METAL,
     });
     scene.add(bar);
@@ -164,13 +173,12 @@ export class CoffeeShop implements SceneInterface {
     light.position.set(0, 10, 0);
     scene.add(light);
 
-    makeChair(5,1.5,5, scene, 1);
-    makeChair(7,1.5,5, scene, 2);
-    makeChair(10,1.5,10, scene, 0);
-    makeChair(9,1.5,10, scene, 0);
-    makeChair(1,1.5,10, scene, 0);
-    makeChair(3,1.5,10, scene, 0);
-
+    makeChair(5, 1.5, 5, scene, 1);
+    makeChair(7, 1.5, 5, scene, 2);
+    makeChair(10, 1.5, 10, scene, 0);
+    makeChair(9, 1.5, 10, scene, 0);
+    makeChair(1, 1.5, 10, scene, 0);
+    makeChair(3, 1.5, 10, scene, 0);
 
     // TODO: Add more objects to build your amazing scene!
     // Available shapes:
