@@ -7,6 +7,8 @@ const SCENE_CONFIGS = {
   'template-scene': './template-scene/index.js',
   'captain-morgan-two': './captain-morgan-two/index.js',
   // 'your-scene-id': './your-folder/index.js',
+  'coffee-shop': './coffee-shop/index.js',
+  'boat-barbecue-scene': './boat-barbecue/index.js',
 } as const;
 
 export const SCENE_REGISTRY = Object.entries(SCENE_CONFIGS).map(
