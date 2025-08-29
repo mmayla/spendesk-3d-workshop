@@ -166,7 +166,7 @@ export default function SceneSelector() {
                     </p>
 
                     <button
-                      onClick={() => navigate(`/${scene.sceneId}`)}
+                      onClick={() => navigate(`/scene/${scene.sceneId}`)}
                       style={{
                         width: '100%',
                         padding: '12px',

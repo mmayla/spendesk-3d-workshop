@@ -9,7 +9,8 @@ function App() {
       <div style={{ width: '100%', height: '100vh', overflow: 'auto' }}>
         <Routes>
           <Route path="/" element={<SceneSelector />} />
-          <Route path="/:sceneId" element={<ScenePreview />} />
+          <Route path="/spendesk-3d-workshop" element={<SceneSelector />} />
+          <Route path="/scene/:sceneId" element={<ScenePreview />} />
         </Routes>
       </div>
     </Router>
