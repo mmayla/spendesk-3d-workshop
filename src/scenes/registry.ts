@@ -6,7 +6,7 @@ const SCENE_CONFIGS = {
   'space-station': './space-station/index.js',
   'template-scene': './template-scene/index.js',
   'coffee-shop': './coffee-shop/index.js',
-  // 'your-scene-id': './your-folder/index.js',
+  'boat-barbecue-scene': './boat-barbecue/index.js',
 } as const;
 
 export const SCENE_REGISTRY = Object.entries(SCENE_CONFIGS).map(
