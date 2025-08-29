@@ -145,7 +145,7 @@ const makeTable = (x: number, y: number, z: number, scene: THREE.Scene) => {
 export class CoffeeShop implements SceneInterface {
   readonly sceneId = 'coffee-shop';
   readonly sceneName = 'Coffee shop'; // Your scene's display name
-  readonly description = 'A nice cosy coffee shop with a few plants';
+  readonly description = 'A nice cosy coffee shop with a few plants - By Felix G. and Chloé';
 
   /**
    * Build your 3D scene here!
